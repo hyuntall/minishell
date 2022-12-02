@@ -12,3 +12,4 @@
 
 void	setting_signal(void);
 void	handle_prompt(void);
+char	**process_line(char *input);
