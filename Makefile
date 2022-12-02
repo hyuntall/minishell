@@ -8,7 +8,7 @@ LIBFT = libft/libft.a
 
 NAME = minishell
 
-SRCS = minishell.c signal.c check_input.c
+SRCS = src/minishell.c src/signal.c src/check_input.c
 
 OBJS = $(SRCS:.c=.o)
 
