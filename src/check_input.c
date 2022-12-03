@@ -6,7 +6,7 @@ static char *read_line(char **line)
 	return (*line);
 }
 
-static int check_quote(char *line)
+static char	check_quote(char *line)
 {
 	int	i = -1;
 	char quote = 0;
@@ -27,31 +27,37 @@ static int check_quote(char *line)
 				continue ;
 		}
 	}
-	return (quote == 0);
+	return (quote);
 }
 
-static int check_line(char *line)
+static int check_line(char **line)
 {
 	//TODO NULL string, empty string
-	if (ft_strlen(line) == 0)
+	if (ft_strlen(*line) == 0)
 		return (0);
 
 	//TODO blank string
 	int i = -1;
 	size_t blank_cnt = 0;
-	while (line[++i])
+	while ((*line)[++i])
 	{
-		if (line[i] == ' ')
+		if ((*line)[i] == ' ')
 			++blank_cnt;
 	}
-	if (blank_cnt == ft_strlen(line))
+	if (blank_cnt == ft_strlen(*line))
 		return (0);
-
 	//TODO unclosed quotes
-	if (check_quote(line) == FALSE)
-		return (0);
+	char quote = check_quote(*line);
+	while (quote)
+	{
+		*line = ft_strjoin(*line, "\n");
+		*line = ft_strjoin(*line, readline("> "));
+		//printf("join line = %s@\n", *line);
+		quote = check_quote(*line);
+	}
 	return (1);
 }
+
 void	free_cmds(char **cmds)
 {
 	int		i;
@@ -61,6 +67,7 @@ void	free_cmds(char **cmds)
 		free(cmds[i++]);
 	free(cmds);
 }
+
 void handle_prompt(void)
 {
 	char 	*line;
@@ -70,13 +77,13 @@ void handle_prompt(void)
 	while (read_line(&line))
 	{
 		add_history(line);
-		if (check_line(line) == FALSE)
+		if (check_line(&line) == FALSE)
 		{
 			free(line);
 			line = NULL;
 			continue ;
 		}
-	printf("%s\n", line);   //TODO_check readline
+		printf("input line = %s\n", line);   //TODO_check readline
 		//parser -> one string, unspecified special characters(\ ; )
 		cmds = process_line(line);
 		i = 0;
