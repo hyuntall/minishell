@@ -52,10 +52,20 @@ static int check_line(char *line)
 		return (0);
 	return (1);
 }
+void	free_cmds(char **cmds)
+{
+	int		i;
 
+	i = 0;
+	while (cmds[i])
+		free(cmds[i++]);
+	free(cmds);
+}
 void handle_prompt(void)
 {
-	char *line;
+	char 	*line;
+	char	**cmds;
+	int		i;
 
 	while (read_line(&line))
 	{
@@ -66,8 +76,16 @@ void handle_prompt(void)
 			line = NULL;
 			continue ;
 		}
-		printf("%s\n", line);   //TODO_check readline
+	printf("%s\n", line);   //TODO_check readline
 		//parser -> one string, unspecified special characters(\ ; )
+		cmds = process_line(line);
+		i = 0;
+		while (cmds[i])
+		{
+			printf("cmd[%d]: %s\n", i, cmds[i]);
+			i++;
+		}
+		free(cmds);
 		free(line);
 		line = NULL;
 	}
