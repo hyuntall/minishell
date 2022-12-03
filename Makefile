@@ -1,14 +1,19 @@
 CC = cc
 CFLAGS = -Wall -Wextra -Werror -Iinclude
 
-READLINE_LIB = -lreadline -L/goinfre/$(USER)/.brew/opt/readline/lib
-READLINE_INC = -I/goinfre/$(USER)/.brew/opt/readline/include
+# 클러스터
+# READLINE_LIB = -lreadline -L/goinfre/$(USER)/.brew/opt/readline/lib
+# READLINE_INC = -I/goinfre/$(USER)/.brew/opt/readline/include
+
+# MAC 인텔
+READLINE_LIB = -lreadline -L/usr/local/opt/readline/lib
+READLINE_INC = -I/usr/local/opt/readline/include
 
 LIBFT = libft/libft.a
 
 NAME = minishell
 
-SRCS = src/minishell.c src/signal.c src/check_input.c src/processing_line.c
+SRCS = src/minishell.c src/signal.c src/check_input.c src/process_line.c
 
 OBJS = $(SRCS:.c=.o)
 
