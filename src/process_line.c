@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   process_line.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hanjiwon <hanjiwon@student.42.fr>          +#+  +:+       +#+        */
+/*   By: hyuncpar <hyuncpar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/02 16:42:09 by hyuncpar          #+#    #+#             */
-/*   Updated: 2022/12/03 23:37:03 by hanjiwon         ###   ########.fr       */
+/*   Updated: 2022/12/04 21:35:23 by hyuncpar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,44 +26,67 @@ char	*join_line(char *input, char *word)
 	return (str);
 }
 
-char	**process_line(char *input)
-{printf("in process line = %s\n",input);
-	char	*str;
-	char	**cmds;
-	int		i;
+int		parse_type(t_line *args, char *input, int index, int i)
+{
 	int		j;
-	int		isquote;
+
+	j = 0;
+	if (i - index)
+		arg_insert(args, ft_substr(input, index, i - index), NORM);
+	if (input[i] == '\'')
+	{
+		while (input[i + j + 1] != '\'')
+			j++;
+		arg_insert(args, ft_substr(input, ++i, j), QUOT);
+		i += j + 1;
+	}
+	else if (input[i] == '"')
+	{
+		while (input[i + j + 1] != '"')
+			j++;
+		arg_insert(args, ft_substr(input, ++i, j), DQUT);
+		i += j + 1;
+	}
+	else if (input[i] == ' ')
+	{
+		while (input[i + j + 1] == ' ')
+			j++;
+		arg_insert(args, ft_substr(input, ++i, j), SPCE);
+		i += j;
+	}
+	else if (input[i] == '\\')
+	{
+		arg_insert(args, ft_substr(input, ++i, 1), BSLH);
+		i++;
+	}
+	else if (input[i] == '$')
+	{
+		while (input[i + j + 1] != ' ' && input[i + j + 1])
+			j++;
+		arg_insert(args, ft_substr(input, ++i, j), DOLR);
+		i += j;
+	}
+	return (i);
+}
+
+void	process_line(t_line *args, char *input)
+{
+	int		i;
+	int		index;
 
 	i = 0;
-	j = 0;
-	isquote = 0;
-	str = ft_strdup("");
+	index = 0;
 	while (input[i])
 	{
-		if (input[i] == '\'')
+		if (input [i] == '\'' || input[i] == '"' || input[i] == ' ' \
+		|| input[i] == '\\' || input[i] == '$')
 		{
-			str = join_line(str, ft_substr(input, j, i - j));
-			i++;
-			j = i;
-			isquote = 1 - isquote;
-		}
-		else if (input[i] == '"')
-		{
-			// process dquote
-		}
-		else if (input[i] == ' ' && !isquote)
-		{
-			str = join_line(str, ft_substr(input, j, i - j));
-			str = join_line(str, ft_strdup("'"));
-			i++;
-			j = i;
+			i = parse_type(args, input, index, i);
+			index = i;
 		}
 		else
 			i++;
 	}
-	str = join_line(str, ft_substr(input, j, i - j));
-	cmds = ft_split(str, '\'');
-	free(str);
-	str = 0;
-	return (cmds);
+	if (i - index)
+		arg_insert(args, ft_substr(input, index, i - index), NORM);
 }

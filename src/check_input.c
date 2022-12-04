@@ -68,11 +68,19 @@ void	free_cmds(char **cmds)
 	free(cmds);
 }
 
+void	init_line(t_line *line)
+{
+	line->head = 0;
+	line->tail = 0;
+}
+
 void handle_prompt(void)
 {
-	char 	*line;
-	char	**cmds;
-	int		i;
+	char		*line;
+	const char	type[100][100] = {"NORM", "SPCE", "QUOT", "DQUT", "BSLH", "DOLR"};
+	int			i;
+	t_line		args;
+	t_arg		*arg;
 
 	while (read_line(&line))
 	{
@@ -85,14 +93,15 @@ void handle_prompt(void)
 		}
 		printf("input line = %s\n", line);   //TODO_check readline
 		//parser -> one string, unspecified special characters(\ ; )
-		cmds = process_line(line);
-		i = 0;
-		while (cmds[i])
+		init_line(&args);
+		process_line(&args, line);
+		arg = args.head;
+		while (arg)
 		{
-			printf("cmd[%d]: %s\n", i, cmds[i]);
-			i++;
+			printf("cmd: %10s type: %10s\n", arg->value, type[arg->type]);
+			arg = arg->next;
 		}
-		free(cmds);
+		i = 0;
 		free(line);
 		line = NULL;
 	}
