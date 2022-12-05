@@ -6,7 +6,7 @@
 /*   By: hyuncpar <hyuncpar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/05 16:38:08 by jiwonhan          #+#    #+#             */
-/*   Updated: 2022/12/05 17:17:01 by hyuncpar         ###   ########.fr       */
+/*   Updated: 2022/12/05 22:34:44 by hyuncpar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,9 +81,6 @@ static int check_line(char **line)
 void handle_prompt(void)
 {
 	char		*line;
-	const char	type[100][100] = {"NORM","SPCE","QUOT","DQUT",\
-	"BSLH","DOLR","PIPE","DPIP","DAND","SEMC","DSEM","RIGT",\
-	"DRGT","LEFT", "DLFT","EROR"};
 	t_line		args;
 	t_arg		*arg;
 
@@ -102,11 +99,18 @@ void handle_prompt(void)
 		init_line(&args);
 		process_line(&args, line);
 		arg = args.head;
+		printf("cmd: ");
 		while (arg)
 		{
-			printf("cmd: %10s type: %10s\n", arg->value, type[arg->type]);
+			if (arg->type == SPCE)
+				printf("\ncmd: ");
+			else if (arg->type == DOLR)
+				printf("%s", getenv(arg->value));
+			else
+				printf("%s", arg->value);
 			arg = arg->next;
 		}
+		printf("\n");
 		free(line);
 		line = NULL;
 	}
