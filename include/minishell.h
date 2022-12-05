@@ -20,7 +20,15 @@ enum	e_type
 	QUOT,
 	DQUT,
 	BSLH,
-	DOLR
+	DOLR,
+	PIPE,
+	DPIP,
+	SEMC,
+	DSEM,
+	RIGT,
+	DRGT,
+	LEFT,
+	EROR
 };
 
 typedef	struct s_arg
