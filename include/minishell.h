@@ -40,4 +40,7 @@ void	setting_signal(void);
 void	handle_prompt(void);
 void	process_line(t_line *line, char *input);
 void	arg_insert(t_line *line, char *value, int type);
+void	free_cmds(char **cmds);
+void	init_line(t_line *line);
+
 #endif

@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   check_input.c                                      :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: jiwonhan <jiwonhan@student.42seoul.kr>     +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/12/05 16:38:08 by jiwonhan          #+#    #+#             */
+/*   Updated: 2022/12/05 16:38:59 by jiwonhan         ###   ########seoul.kr  */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "minishell.h"
 
 static char *read_line(char **line)
@@ -11,10 +23,12 @@ static char	check_quote(char *line)
 	int	i = -1;
 	char quote = 0;
 
+	if (!line)
+		return (0);
 	while (line[++i])
 	{
-		if ((line[i] == '\\' && line[i + 1] == '\'') || \
-			(line[i] == '\\' && line[i + 1] == '\"'))
+		if ((line[i] == '\\' && ((int)(ft_strlen(line)) - 1 != i + 1) && line[i + 1] == '\'') || \
+			(line[i] == '\\' && ((int)(ft_strlen(line)) - 1 != i + 1) && line[i + 1] == '\"'))
 		{
 			++i;
 			continue ;
@@ -64,22 +78,6 @@ static int check_line(char **line)
 	return (1);
 }
 
-void	free_cmds(char **cmds)
-{
-	int		i;
-
-	i = 0;
-	while (cmds[i])
-		free(cmds[i++]);
-	free(cmds);
-}
-
-void	init_line(t_line *line)
-{
-	line->head = 0;
-	line->tail = 0;
-}
-
 void handle_prompt(void)
 {
 	char		*line;
@@ -97,7 +95,8 @@ void handle_prompt(void)
 			continue ;
 		}
 		printf("input line = %s\n", line);   //TODO_check readline
-		//parser -> one string, unspecified special characters(\ ; )
+		if (!line)
+			continue ;
 		init_line(&args);
 		process_line(&args, line);
 		arg = args.head;

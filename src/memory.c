@@ -1,21 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   minishell.c                                        :+:      :+:    :+:   */
+/*   memory.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jiwonhan <jiwonhan@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/12/05 16:38:12 by jiwonhan          #+#    #+#             */
-/*   Updated: 2022/12/05 16:39:07 by jiwonhan         ###   ########seoul.kr  */
+/*   Created: 2022/12/05 16:38:06 by jiwonhan          #+#    #+#             */
+/*   Updated: 2022/12/05 16:38:41 by jiwonhan         ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int main(int ac, char *av[])
+void	free_cmds(char **cmds)
 {
-	(void)ac;(void)av;
-	setting_signal();
-	handle_prompt();	//TODO func name bad
-	return (0);
+	int		i;
+
+	i = 0;
+	while (cmds[i])
+		free(cmds[i++]);
+	free(cmds);
+}
+
+void	init_line(t_line *line)
+{
+	line->head = 0;
+	line->tail = 0;
 }
