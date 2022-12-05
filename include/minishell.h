@@ -23,11 +23,13 @@ enum	e_type
 	DOLR,
 	PIPE,
 	DPIP,
+	DAND,
 	SEMC,
 	DSEM,
 	RIGT,
 	DRGT,
 	LEFT,
+	DLFT,
 	EROR
 };
 
@@ -50,5 +52,5 @@ void	process_line(t_line *line, char *input);
 void	arg_insert(t_line *line, char *value, int type);
 void	free_cmds(char **cmds);
 void	init_line(t_line *line);
-
+int		tokenize_line(t_line *args, char *input, int index, int i);
 #endif

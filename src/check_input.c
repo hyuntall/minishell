@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   check_input.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jiwonhan <jiwonhan@student.42seoul.kr>     +#+  +:+       +#+        */
+/*   By: hyuncpar <hyuncpar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/05 16:38:08 by jiwonhan          #+#    #+#             */
-/*   Updated: 2022/12/05 16:38:59 by jiwonhan         ###   ########seoul.kr  */
+/*   Updated: 2022/12/05 17:17:01 by hyuncpar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,7 +81,9 @@ static int check_line(char **line)
 void handle_prompt(void)
 {
 	char		*line;
-	const char	type[100][100] = {"NORM", "SPCE", "QUOT", "DQUT", "BSLH", "DOLR"};
+	const char	type[100][100] = {"NORM","SPCE","QUOT","DQUT",\
+	"BSLH","DOLR","PIPE","DPIP","DAND","SEMC","DSEM","RIGT",\
+	"DRGT","LEFT", "DLFT","EROR"};
 	t_line		args;
 	t_arg		*arg;
 
