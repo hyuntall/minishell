@@ -13,6 +13,12 @@ static char	check_quote(char *line)
 
 	while (line[++i])
 	{
+		if ((line[i] == '\\' && line[i + 1] == '\'') || \
+			(line[i] == '\\' && line[i + 1] == '\"'))
+		{
+			++i;
+			continue ;
+		}
 		if (line[i] == '\'' || line[i] == '"')
 		{
 			if (quote == 0)
@@ -78,7 +84,6 @@ void handle_prompt(void)
 {
 	char		*line;
 	const char	type[100][100] = {"NORM", "SPCE", "QUOT", "DQUT", "BSLH", "DOLR"};
-	int			i;
 	t_line		args;
 	t_arg		*arg;
 
@@ -101,7 +106,6 @@ void handle_prompt(void)
 			printf("cmd: %10s type: %10s\n", arg->value, type[arg->type]);
 			arg = arg->next;
 		}
-		i = 0;
 		free(line);
 		line = NULL;
 	}
