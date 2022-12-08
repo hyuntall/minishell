@@ -6,7 +6,7 @@
 /*   By: hyuncpar <hyuncpar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/05 17:36:45 by hyuncpar          #+#    #+#             */
-/*   Updated: 2022/12/05 18:20:22 by hyuncpar         ###   ########.fr       */
+/*   Updated: 2022/12/08 18:46:31 by hyuncpar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,27 +90,25 @@ int	tokenize_redir(t_line *args, char *input, int i, int type)
 int	tokenize_etc(t_line *args, char *input, int i, int type)
 {
 	int		size;
-	char	c;
 
-	size = 0;
+	size = 1;
 	if (type == SPCE)
-	{
-		c = ' ';
 		while (input[i + size + 1] == ' ')
 			size++;
-	}
 	else if (type == BSLH)
-	{
-		c = '\\';
-		size++;
-	}
+		i++;
 	else if (type == DOLR)
 	{
-		c = '$';
+		i++;
 		while (input[i + size + 1] != ' ' && input[i + size + 1])
 			size++;
+		if (size == 1)
+		{
+			arg_insert(args, ft_strdup("$"), NORM);
+			return (i);
+		}
 	}
-	arg_insert(args, ft_substr(input, ++i, size), type);
+	arg_insert(args, ft_substr(input, i, size), type);
 	i += size;
 	return (i);
 }
