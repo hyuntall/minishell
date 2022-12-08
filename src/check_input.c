@@ -6,7 +6,7 @@
 /*   By: hyuncpar <hyuncpar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/05 16:38:08 by jiwonhan          #+#    #+#             */
-/*   Updated: 2022/12/05 22:34:44 by hyuncpar         ###   ########.fr       */
+/*   Updated: 2022/12/08 18:52:21 by hyuncpar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,18 +99,12 @@ void handle_prompt(void)
 		init_line(&args);
 		process_line(&args, line);
 		arg = args.head;
-		printf("cmd: ");
 		while (arg)
 		{
-			if (arg->type == SPCE)
-				printf("\ncmd: ");
-			else if (arg->type == DOLR)
-				printf("%s", getenv(arg->value));
-			else
-				printf("%s", arg->value);
+			printf("arg: %10s type: %10d len: %10zu\n", arg->value, arg->type, ft_strlen(arg->value));
 			arg = arg->next;
 		}
-		printf("\n");
+		free_tokens(&args);
 		free(line);
 		line = NULL;
 	}
