@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   check_input.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jiwonhan <jiwonhan@student.42seoul.kr>     +#+  +:+       +#+        */
+/*   By: hyuncpar <hyuncpar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/05 16:38:08 by jiwonhan          #+#    #+#             */
-/*   Updated: 2022/12/09 18:06:32 by jiwonhan         ###   ########seoul.kr  */
+/*   Updated: 2022/12/09 20:15:37 by hyuncpar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,21 +81,28 @@ static int check_line(char **line)
 void main_loop(void)
 {
 	char			*line;
-	t_token_list	*token_list;
+	t_token_list	token_list;
 	t_token			*token;
-	t_parse_tree	*parse_tree;
+	//t_parse_tree	*parse_tree;
 
 	while (read_line(&line))
 	{
 		add_history(line);
-		check_line(line);	//TODO jiwon, false=> free 
-		token_list = analize_line(line);	//TODO 
+		check_line(&line); //TODO jiwon, false=> free
+		token_list = analize_line(token_list, line);	//TODO
 		free(line);
-		if (!token_list)
+		if (!token_list.head)
 			continue ;
-		parse_tree = parse(token_list);
-		execute(parse_tree);	//TODO 
-		free (parse_tree);
+		token = token_list.head;
+		while (token)
+		{
+			printf("arg: %10s type: %10d len: %10zu\n", token->value, token->type, ft_strlen(token->value));
+			token = token->next;
+		}
+
+		//parse_tree = parse(token_list);
+		//execute(parse_tree);	//TODO 
+		//free (parse_tree);
 	}
 
 

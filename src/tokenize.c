@@ -6,13 +6,13 @@
 /*   By: hyuncpar <hyuncpar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/05 17:36:45 by hyuncpar          #+#    #+#             */
-/*   Updated: 2022/12/08 18:46:31 by hyuncpar         ###   ########.fr       */
+/*   Updated: 2022/12/09 20:42:48 by hyuncpar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	tokenize_quote(t_line *args, char *input, int i, int type)
+int	tokenize_quote(t_token_list *token_list, char *input, int i, t_token_type type)
 {
 	int		size;
 	char	c;
@@ -24,12 +24,12 @@ int	tokenize_quote(t_line *args, char *input, int i, int type)
 	size = 0;
 	while (input[i + size + 1] != c)
 		size++;
-	arg_insert(args, ft_substr(input, ++i, size), type);
+	token_insert(token_list, ft_substr(input, ++i, size), type);
 	i += size + 1;
 	return (i);
 }
 
-int	tokenize_operator(t_line *args, char *input, int i, int type)
+int	tokenize_oper(t_token_list *token_list, char *input, int i, t_token_type type)
 {
 	int		size;
 	int		d_oper;
@@ -49,16 +49,15 @@ int	tokenize_operator(t_line *args, char *input, int i, int type)
 	while (input[i + size + 1] == c)
 		size++;
 	if (!size)
-		arg_insert(args, ft_substr(input, i, 1), type);
+		token_insert(token_list, ft_substr(input, i, 1), type);
 	else if (size == 1)
-		arg_insert(args, ft_substr(input, i, 2), d_oper);
+		token_insert(token_list, ft_substr(input, i, 2), d_oper);
 	else
-		arg_insert(args, ft_substr(input, i, size + 1), EROR);
-	i += size + 1;
-	return (i);
+		return (unexpecte_token(type, ft_substr(input, i, size + 1)));
+	return (i + size + 1);
 }
 
-int	tokenize_redir(t_line *args, char *input, int i, int type)
+int	tokenize_redir(t_token_list *token_list, char *input, int i, int type)
 {
 	int		size;
 	int		d_oper;
@@ -78,65 +77,62 @@ int	tokenize_redir(t_line *args, char *input, int i, int type)
 	while (input[i + size + 1] == '>')
 		size++;
 	if (!size)
-		arg_insert(args, ft_substr(input, i, 1), type);
+		token_insert(token_list, ft_substr(input, i, 1), type);
 	else if (size == 1)
-		arg_insert(args, ft_substr(input, i, 2), d_oper);
+		token_insert(token_list, ft_substr(input, i, 2), d_oper);
 	else
-		arg_insert(args, ft_substr(input, i, size + 1), EROR);
+		return (unexpecte_token(type, ft_substr(input, i, size + 1)));
 	i += size + 1;
 	return (i);
 }
 
-int	tokenize_etc(t_line *args, char *input, int i, int type)
+int	tokenize_etc(t_token_list *token_list, char *input, int i, int type)
 {
 	int		size;
 
 	size = 1;
 	if (type == SPCE)
-		while (input[i + size + 1] == ' ')
+		while (input[i + size] == ' ')
 			size++;
 	else if (type == BSLH)
 		i++;
 	else if (type == DOLR)
 	{
-		i++;
-		while (input[i + size + 1] != ' ' && input[i + size + 1])
+		while (input[i + size] && input[i + size] != ' ')
 			size++;
 		if (size == 1)
 		{
-			arg_insert(args, ft_strdup("$"), NORM);
-			return (i);
+			token_insert(token_list, ft_strdup("$"), NORM);
+			return (++i);
 		}
 	}
-	arg_insert(args, ft_substr(input, i, size), type);
+	token_insert(token_list, ft_substr(input, i, size), type);
 	i += size;
 	return (i);
 }
 
-int	tokenize_line(t_line *args, char *input, int index, int i)
+int	tokenize_line(t_token_list *token_list, char *input, int index, int i)
 {
-	int		j;
-
-	j = 0;
 	if (i - index)
-		arg_insert(args, ft_substr(input, index, i - index), NORM);
+		token_insert(token_list, ft_substr(input, index, i - index), NORM);
 	if (input[i] == '\'')
-		i = tokenize_quote(args, input, i, QUOT);
+		i = tokenize_quote(token_list, input, i, QUOT);
 	else if (input[i] == '"')
-		i = tokenize_quote(args, input, i, DQUT);
+		i = tokenize_quote(token_list, input, i, DQUT);
 	else if (input[i] == ' ')
-		i = tokenize_etc(args, input, i, SPCE);
+		i = tokenize_etc(token_list, input, i, SPCE);
 	else if (input[i] == '\\')
-		i = tokenize_etc(args, input, i, BSLH);
+		i = tokenize_etc(token_list, input, i, BSLH);
 	else if (input[i] == '$')
-		i = tokenize_etc(args, input, i, DOLR);
+		i = tokenize_etc(token_list, input, i, DOLR);
 	else if (input[i] == '|')
-		i = tokenize_operator(args, input, i, PIPE);
+		i = tokenize_oper(token_list, input, i, PIPE);
 	else if (input[i] == '&')
-		i = tokenize_operator(args, input, i, NORM);
+		i = tokenize_oper(token_list, input, i, NORM);
 	else if (input[i] == '>')
-		i = tokenize_redir(args, input, i, RIGT);
+		i = tokenize_redir(token_list, input, i, RIGT);
 	else if (input[i] == '<')
-		i = tokenize_redir(args, input, i, LEFT);
+		i = tokenize_redir(token_list, input, i, LEFT);
+	printf("%d\n", i);
 	return (i);
 }
