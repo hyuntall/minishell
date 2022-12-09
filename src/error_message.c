@@ -1,34 +1,20 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   memory.c                                           :+:      :+:    :+:   */
+/*   error_message.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: hyuncpar <hyuncpar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/12/05 16:38:06 by jiwonhan          #+#    #+#             */
-/*   Updated: 2022/12/09 19:55:46 by hyuncpar         ###   ########.fr       */
+/*   Created: 2022/12/09 18:49:28 by hyuncpar          #+#    #+#             */
+/*   Updated: 2022/12/09 20:03:03 by hyuncpar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	free_tokens(t_token_list *token_list)
+int	unexpecte_token(t_token_type type, char *str)
 {
-	t_token	*token;
-	t_token	*tmp;
-
-	token = token_list->head;
-	while (token)
-	{
-		tmp = token;
-		token = tmp->next;
-		free(tmp->value);
-		free(tmp);
-	}
-}
-
-void	init_token_list(t_token_list *token_list)
-{
-	token_list->head = 0;
-	token_list->tail = 0;
+	printf("error %d %s\n", type, str);
+	free(str);
+	return (-1);
 }
