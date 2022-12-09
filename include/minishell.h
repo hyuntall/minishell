@@ -8,43 +8,21 @@
 #include <string.h>
 #include <unistd.h>
 #include <termios.h>
+#include "tokenization.h"
+#include "parse_tree.h"
+
 #include "../libft/libft.h"
 
 #define FALSE 0
 #define TRUE 1
 
-enum	e_type
-{
-	NORM,
-	SPCE,
-	QUOT,
-	DQUT,
-	BSLH,
-	DOLR,
-	PIPE,
-	DPIP,
-	DAND,
-	SEMC,
-	DSEM,
-	RIGT,
-	DRGT,
-	LEFT,
-	DLFT,
-	EROR
-};
 
-typedef	struct s_arg
+typedef struct s_minishell
 {
-	char			*value;
-	int				type;
-	struct s_arg	*next;
-}	t_arg;
-
-typedef struct s_line
-{
-	t_arg	*head;
-	t_arg	*tail;
-}	t_line;
+	char **path;
+	char **envp;
+	int	status;
+}				t_minishell;
 
 void	setting_signal(void);
 void	handle_prompt(void);

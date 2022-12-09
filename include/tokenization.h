@@ -1,22 +1,49 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   minishell.c                                        :+:      :+:    :+:   */
+/*   tokenization.h                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jiwonhan <jiwonhan@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/12/05 16:38:12 by jiwonhan          #+#    #+#             */
-/*   Updated: 2022/12/09 17:35:15 by jiwonhan         ###   ########seoul.kr  */
+/*   Created: 2022/12/09 16:41:09 by jiwonhan          #+#    #+#             */
+/*   Updated: 2022/12/09 17:37:58 by jiwonhan         ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#ifndef TOKENIZATION_H
+# define TOKENIZATION_H
 
-int main(int ac, char *av[])
+typedef enum	e_token_type
 {
-	//check_arg(ac, av)
-	//init() => signal, envp
-	setting_signal();
-	main_loop();
-	return (0);
-}
+	NORM,
+	SPCE,
+	QUOT,
+	DQUT,
+	BSLH,
+	DOLR,
+	PIPE,
+	DPIP,
+	DAND,
+	SEMC,
+	DSEM,
+	RIGT,
+	DRGT,
+	LEFT,
+	DLFT, 
+	EROR
+}			t_token_type;
+
+typedef	struct s_token
+{
+	char			*value;
+	t_token_type	type;
+	struct s_token	*next;
+}	t_token;
+
+typedef struct s_token_list
+{
+	t_token	*head;
+	t_token	*tail;
+}	t_token_list;
+
+#endif
