@@ -1,22 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   minishell.c                                        :+:      :+:    :+:   */
+/*   parse_tree.h                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jiwonhan <jiwonhan@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/12/05 16:38:12 by jiwonhan          #+#    #+#             */
-/*   Updated: 2022/12/09 17:35:15 by jiwonhan         ###   ########seoul.kr  */
+/*   Created: 2022/12/09 17:44:44 by jiwonhan          #+#    #+#             */
+/*   Updated: 2022/12/09 17:54:53 by jiwonhan         ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
+#ifndef PARSE_TREE_H
+# define PARSE_TREE_H
+
 #include "minishell.h"
 
-int main(int ac, char *av[])
+typedef struct s_parse_tree
 {
-	//check_arg(ac, av)
-	//init() => signal, envp
-	setting_signal();
-	main_loop();
-	return (0);
-}
+	t_parse_tree	*up, *left, *right;
+	t_token			*token;
+	t_token_type	type;
+	t_cmd_tbl		*tbl;	//TODO 
+	char			*origin
+}				t_parse_tree;
+
+#endif

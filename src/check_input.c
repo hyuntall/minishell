@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   check_input.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hyuncpar <hyuncpar@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jiwonhan <jiwonhan@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/05 16:38:08 by jiwonhan          #+#    #+#             */
-/*   Updated: 2022/12/08 18:52:21 by hyuncpar         ###   ########.fr       */
+/*   Updated: 2022/12/09 18:06:32 by jiwonhan         ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,13 +78,29 @@ static int check_line(char **line)
 	return (1);
 }
 
-void handle_prompt(void)
+void main_loop(void)
 {
-	char		*line;
-	t_line		args;
-	t_arg		*arg;
+	char			*line;
+	t_token_list	*token_list;
+	t_token			*token;
+	t_parse_tree	*parse_tree;
 
 	while (read_line(&line))
+	{
+		add_history(line);
+		check_line(line);	//TODO jiwon, false=> free 
+		token_list = analize_line(line);	//TODO 
+		free(line);
+		if (!token_list)
+			continue ;
+		parse_tree = parse(token_list);
+		execute(parse_tree);	//TODO 
+		free (parse_tree);
+	}
+
+
+
+	/*while (read_line(&line))
 	{
 		add_history(line);
 		if (check_line(&line) == FALSE)
@@ -107,6 +123,6 @@ void handle_prompt(void)
 		free_tokens(&args);
 		free(line);
 		line = NULL;
-	}
+	}*/
 	return ;
 }
