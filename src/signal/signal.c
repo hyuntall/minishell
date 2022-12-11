@@ -6,7 +6,7 @@
 /*   By: jiwonhan <jiwonhan@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/05 16:38:17 by jiwonhan          #+#    #+#             */
-/*   Updated: 2022/12/05 16:38:17 by jiwonhan         ###   ########seoul.kr  */
+/*   Updated: 2022/12/09 21:05:33 by jiwonhan         ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,11 +33,11 @@ void	handler(int sig)
 
 void	setting_signal(void)
 {
-	struct termios term;
+	struct termios	term;
+
 	tcgetattr(STDIN_FILENO, &term);
 	term.c_lflag &= ~(ECHOCTL);
 	tcsetattr(STDIN_FILENO, TCSANOW, &term);
-	
 	signal(SIGINT, handler);	// CTRL + C
 	signal(SIGTERM, handler);	// CTRL + D
 	signal(SIGQUIT, handler);	// CTRL + /
