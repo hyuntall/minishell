@@ -6,7 +6,7 @@
 /*   By: hyuncpar <hyuncpar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/09 16:41:09 by jiwonhan          #+#    #+#             */
-/*   Updated: 2022/12/09 20:03:15 by hyuncpar         ###   ########.fr       */
+/*   Updated: 2022/12/13 14:35:39 by hyuncpar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ typedef enum	e_token_type
 	RIGT,
 	DRGT,
 	LEFT,
-	DLFT, 
+	DLFT,
 	EROR
 }			t_token_type;
 
@@ -40,6 +40,7 @@ typedef	struct s_token
 	char			*value;
 	t_token_type	type;
 	struct s_token	*next;
+	struct s_token	*prev;
 }	t_token;
 
 typedef struct s_token_list

@@ -6,7 +6,7 @@
 /*   By: hyuncpar <hyuncpar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/04 21:36:48 by hyuncpar          #+#    #+#             */
-/*   Updated: 2022/12/09 20:03:40 by hyuncpar         ###   ########.fr       */
+/*   Updated: 2022/12/13 14:18:49 by hyuncpar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,10 +18,11 @@ t_token	*token_new(char *value, int type)
 
 	token = (t_token *)malloc(sizeof(t_token));
 	if (!token)
-		return (0);
+		return (NULL);
 	token->value = value;
 	token->type = type;
-	token->next = 0;
+	token->next = NULL;
+	token->prev = NULL;
 	return (token);
 }
 
@@ -38,7 +39,8 @@ void	token_insert(t_token_list *token_list, char *value, t_token_type type)
 	else
 	{	
 		token_list->tail->next = token;
+		token->prev = token_list->tail;
 		token_list->tail = token_list->tail->next;
-		token_list->tail->next = 0;
+		token_list->tail->next = NULL;
 	}
 }
