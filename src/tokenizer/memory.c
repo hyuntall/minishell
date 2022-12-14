@@ -3,32 +3,51 @@
 /*                                                        :::      ::::::::   */
 /*   memory.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hyuncpar <hyuncpar@student.42.fr>          +#+  +:+       +#+        */
+/*   By: hanjiwon <hanjiwon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/05 16:38:06 by jiwonhan          #+#    #+#             */
-/*   Updated: 2022/12/09 19:55:46 by hyuncpar         ###   ########.fr       */
+/*   Updated: 2022/12/14 20:56:50 by hanjiwon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+#include "tokenization.h"
 
-void	free_tokens(t_token_list *token_list)
+t_token	*init_token(char *value, int type)
 {
 	t_token	*token;
+
+	token = (t_token *)malloc(sizeof(t_token));
+	if (!token)
+		return (NULL);
+	ft_memset(token, 0, sizeof(t_token));
+	token->value = value;
+	token->type = type;
+	return (token);
+}
+
+void	insert_token(t_token **head_token, t_token *new_token)
+{
+	if (!*head_token)
+	{
+		*head_token = new_token;
+		return ;
+	}
+	while ((*head_token)->next)
+		head_token = &((*head_token)->next);
+	(*head_token)->next = new_token;
+	new_token->prev = *head_token;
+}
+
+void	free_tokens(t_token *token)
+{
 	t_token	*tmp;
 
-	token = token_list->head;
 	while (token)
 	{
 		tmp = token;
-		token = tmp->next;
+		token = token->next;
 		free(tmp->value);
 		free(tmp);
 	}
-}
-
-void	init_token_list(t_token_list *token_list)
-{
-	token_list->head = 0;
-	token_list->tail = 0;
 }

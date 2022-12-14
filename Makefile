@@ -6,17 +6,18 @@ CFLAGS = -Wall -Wextra -Werror -Iinclude
 # READLINE_INC = -I/goinfre/$(USER)/.brew/opt/readline/include
 
 # MAC 인텔
-# READLINE_LIB = -lreadline -L/usr/local/opt/readline/lib
-# READLINE_INC = -I/usr/local/opt/readline/include
+ READLINE_LIB = -lreadline -L/usr/local/opt/readline/lib
+ READLINE_INC = -I/usr/local/opt/readline/include
 
 LIBFT = libft/libft.a
 
 NAME = minishell
 
-SRCS = src/minishell.c src/main_loop.c src/signal/signal.c \
-		src/parser/analize_line.c src/parser/memory.c src/parser/token_list.c \
-		src/parser/tokenize.c src/parser/process_token.c \
-		src/utils/error_message.c src/utils/utils.c
+SRCS = src/minishell.c src/main_loop.c src/analize_line.c \
+		src/utils/error_message.c src/utils/utils.c \
+		src/signal/signal.c \
+		src/tokenizer/process_token.c src/tokenizer/memory.c \
+		src/tokenizer/tokenize.c src/tokenizer/tokenizer.c \
 
 OBJS = $(SRCS:.c=.o)
 
