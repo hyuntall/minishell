@@ -1,43 +1,46 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   analize_line.c                                     :+:      :+:    :+:   */
+/*   tokenizer.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hyuncpar <hyuncpar@student.42.fr>          +#+  +:+       +#+        */
+/*   By: hanjiwon <hanjiwon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/02 16:42:09 by hyuncpar          #+#    #+#             */
-/*   Updated: 2022/12/09 20:34:41 by hyuncpar         ###   ########.fr       */
+/*   Updated: 2022/12/14 21:01:21 by hanjiwon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+#include "tokenization.h"
 
-t_token_list	analize_line(t_token_list token_list, char *input)
+t_token	*tokenizer(char *input)
 {
+	//word split->skip space
 	int		i;
 	int		index;
+	t_token	*ret;
 
 	i = 0;
 	index = 0;
-	init_token_list(&token_list);
+	ret = NULL;
 	while (input && input[i])
 	{
 		if (input [i] == '\'' || input[i] == '"' || input[i] == ' ' \
 		|| input[i] == '\\' || input[i] == '$' || input[i] == '|' \
 		|| input[i] == '&' || input[i] == '>' || input[i] == '<')
 		{
-			i = tokenize_line(&token_list, input, index, i);
+			i = tokenize_line(&ret, input, index, i);
 			index = i;
 		}
 		else
 			i++;
-		if (i == TOKEN_ERROR)
+		if (i == TOKEN_ERROR)	//TODO minishell status change
 		{
-			free_tokens(&token_list);
-			return (token_list);
+			free_tokens(ret);
+			return (ret);
 		}
 	}
 	if (i - index)
-		token_insert(&token_list, ft_substr(input, index, i - index), NORM);
-	return (token_list);
+		insert_token(&ret, init_token(ft_substr(input, index, i - index), NORM));
+	return (ret);
 }

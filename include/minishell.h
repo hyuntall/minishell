@@ -8,9 +8,6 @@
 #include <string.h>
 #include <unistd.h>
 #include <termios.h>
-#include "tokenization.h"
-// #include "parse_tree.h"
-
 #include "../libft/libft.h"
 
 #define FALSE 0
@@ -24,7 +21,7 @@ typedef struct s_minishell
 }				t_minishell;
 
 void	setting_signal(void);
-void 	main_loop(void);
-void	init(void);
+void 	main_loop(t_minishell *minishell);
+void	init(t_minishell *minishell);
 void	check_arg(int ac, char *av[]);
 #endif

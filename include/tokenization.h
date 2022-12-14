@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   tokenization.h                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hyuncpar <hyuncpar@student.42.fr>          +#+  +:+       +#+        */
+/*   By: hanjiwon <hanjiwon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/09 16:41:09 by jiwonhan          #+#    #+#             */
-/*   Updated: 2022/12/13 16:10:31 by hyuncpar         ###   ########.fr       */
+/*   Updated: 2022/12/14 20:58:12 by hanjiwon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,8 @@
 # define TOKENIZATION_H
 
 # define TOKEN_ERROR -1
+
+typedef	struct s_token t_token;
 
 typedef enum	e_token_type
 {
@@ -36,26 +38,25 @@ typedef enum	e_token_type
 	EROR  // Error
 }			t_token_type;
 
-typedef	struct s_token
+struct s_token
 {
 	char			*value;
 	t_token_type	type;
-	struct s_token	*next;
-	struct s_token	*prev;
-}	t_token;
+	t_token			*next;
+	t_token			*prev;
+};
 
-typedef struct s_token_list
-{
-	t_token	*head;
-	t_token	*tail;
-}	t_token_list;
+t_token	*analize_line(t_minishell *minishell, char *input);
+t_token	*tokenizer(char *input);
+int	tokenize_quote(t_token **token, char *input, int i, t_token_type type);
+int	tokenize_oper(t_token **token, char *input, int i, t_token_type type);
+int	tokenize_redir(t_token **token, char *input, int i, int type);
+int	tokenize_etc(t_token **token, char *input, int i, int type);
+int	tokenize_line(t_token **token, char *input, int index, int i);
+t_token	*init_token(char *value, int type);
+void	insert_token(t_token **head_token, t_token *new_token);
+char	*process_dquote(char *str);
+void	free_tokens(t_token *token);
+int	unexpecte_token(t_token_type type, char *str);
 
-void			init_line(t_token_list *line);
-void			token_insert(t_token_list *line, char *value, t_token_type type);
-int				tokenize_line(t_token_list *args, char *input, int index, int i);
-t_token_list	analize_line(t_token_list token_list, char *input);
-int				unexpecte_token(t_token_type type, char *str);
-void			free_tokens(t_token_list *token_list);
-void			init_token_list(t_token_list *token_list);
-char			*process_dquote(char *str);
 #endif

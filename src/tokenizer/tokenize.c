@@ -3,16 +3,17 @@
 /*                                                        :::      ::::::::   */
 /*   tokenize.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hyuncpar <hyuncpar@student.42.fr>          +#+  +:+       +#+        */
+/*   By: hanjiwon <hanjiwon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/05 17:36:45 by hyuncpar          #+#    #+#             */
-/*   Updated: 2022/12/13 14:35:31 by hyuncpar         ###   ########.fr       */
+/*   Updated: 2022/12/14 21:02:52 by hanjiwon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+#include "tokenization.h"
 
-int	tokenize_quote(t_token_list *token_list, char *input, int i, t_token_type type)
+int	tokenize_quote(t_token **token, char *input, int i, t_token_type type)
 {
 	int		size;
 	char	c;
@@ -24,16 +25,16 @@ int	tokenize_quote(t_token_list *token_list, char *input, int i, t_token_type ty
 	size = 0;
 	while (input[i + size + 1] != c)
 		size++;
-	token_insert(token_list, ft_substr(input, ++i, size), type);
+	insert_token(token, init_token(ft_substr(input, ++i, size), type));
 	i += size + 1;
 	return (i);
 }
 
-int	tokenize_oper(t_token_list *token_list, char *input, int i, t_token_type type)
+int	tokenize_oper(t_token **token, char *input, int i, t_token_type type)
 {
 	int		size;
 	int		d_oper;
-	char	c;
+	char	c ;
 
 	if (type == PIPE)
 	{
@@ -49,44 +50,44 @@ int	tokenize_oper(t_token_list *token_list, char *input, int i, t_token_type typ
 	while (input[i + size + 1] == c)
 		size++;
 	if (!size)
-		token_insert(token_list, ft_substr(input, i, 1), type);
+		insert_token(token, init_token(ft_substr(input, i, 1), type));
 	else if (size == 1)
-		token_insert(token_list, ft_substr(input, i, 2), d_oper);
+		insert_token(token, init_token(ft_substr(input, i, 2), d_oper));
 	else
 		return (unexpecte_token(type, ft_substr(input, i, size + 1)));
 	return (i + size + 1);
 }
 
-int	tokenize_redir(t_token_list *token_list, char *input, int i, int type)
+int	tokenize_redir(t_token **token, char *input, int i, int type)
 {
 	int		size;
 	int		d_oper;
-	char	c;
+	//char	c;
 
 	size = 0;
 	if (type == RIGT)
 	{
-		c = '>';
+		//c = '>';
 		d_oper = DRGT;
 	}
 	else
 	{
-		c = '<';
+		//c = '<';
 		d_oper = DLFT;
 	}
 	while (input[i + size + 1] == '>')
 		size++;
 	if (!size)
-		token_insert(token_list, ft_substr(input, i, 1), type);
+		insert_token(token, init_token(ft_substr(input, i, 1), type));
 	else if (size == 1)
-		token_insert(token_list, ft_substr(input, i, 2), d_oper);
+		insert_token(token, init_token(ft_substr(input, i, 2), d_oper));
 	else
 		return (unexpecte_token(type, ft_substr(input, i, size + 1)));
 	i += size + 1;
 	return (i);
 }
 
-int	tokenize_etc(t_token_list *token_list, char *input, int i, int type)
+int	tokenize_etc(t_token **token, char *input, int i, int type)
 {
 	int		size;
 
@@ -103,37 +104,36 @@ int	tokenize_etc(t_token_list *token_list, char *input, int i, int type)
 			size++;
 		if (size == 1)
 		{
-			token_insert(token_list, ft_strdup("$"), NORM);
+			insert_token(token, init_token(ft_strdup("$"), NORM));
 			return (i);
 		}
 	}
-	token_insert(token_list, ft_substr(input, i, size), type);
+	insert_token(token, init_token(ft_substr(input, i, size), type));
 	i += size;
 	return (i);
 }
 
-int	tokenize_line(t_token_list *token_list, char *input, int index, int i)
+int	tokenize_line(t_token **token, char *input, int index, int i)
 {
 	if (i - index)
-		token_insert(token_list, ft_substr(input, index, i - index), NORM);
+		insert_token(token, init_token(ft_substr(input, index, i - index), NORM));
 	if (input[i] == '\'')
-		i = tokenize_quote(token_list, input, i, QUOT);
+		i = tokenize_quote(token, input, i, QUOT);
 	else if (input[i] == '"')
-		i = tokenize_quote(token_list, input, i, DQUT);
+		i = tokenize_quote(token, input, i, DQUT);
 	else if (input[i] == ' ')
-		i = tokenize_etc(token_list, input, i, SPCE);
+		i = tokenize_etc(token, input, i, SPCE);
 	else if (input[i] == '\\')
-		i = tokenize_etc(token_list, input, i, BSLH);
+		i = tokenize_etc(token, input, i, BSLH);
 	else if (input[i] == '$')
-		i = tokenize_etc(token_list, input, i, DOLR);
+		i = tokenize_etc(token, input, i, DOLR);
 	else if (input[i] == '|')
-		i = tokenize_oper(token_list, input, i, PIPE);
+		i = tokenize_oper(token, input, i, PIPE);
 	else if (input[i] == '&')
-		i = tokenize_oper(token_list, input, i, NORM);
+		i = tokenize_oper(token, input, i, NORM);
 	else if (input[i] == '>')
-		i = tokenize_redir(token_list, input, i, RIGT);
+		i = tokenize_redir(token, input, i, RIGT);
 	else if (input[i] == '<')
-		i = tokenize_redir(token_list, input, i, LEFT);
-	printf("%d\n", i);
+		i = tokenize_redir(token, input, i, LEFT);
 	return (i);
 }

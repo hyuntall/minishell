@@ -3,14 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   main_loop.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hyuncpar <hyuncpar@student.42.fr>          +#+  +:+       +#+        */
+/*   By: hanjiwon <hanjiwon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/05 16:38:08 by jiwonhan          #+#    #+#             */
-/*   Updated: 2022/12/13 15:16:32 by hyuncpar         ###   ########.fr       */
+/*   Updated: 2022/12/14 21:03:59 by hanjiwon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+#include "tokenization.h"
+#include "parse_tree.h"
 
 static char *read_line(char **line)
 {
@@ -78,22 +80,23 @@ static int check_line(char **line)
 	return (1);
 }
 
-void main_loop(void)
+void main_loop(t_minishell *minishell)
 {
 	char			*line;
-	t_token_list	token_list;
-	t_token			*token;
+	t_token			*tokenization;
 	//t_parse_tree	*parse_tree;
 
 	while (read_line(&line))
 	{
 		add_history(line);
 		check_line(&line); //TODO jiwon, false=> free
-		token_list = analize_line(token_list, line);	//TODO
+		printf("input: %s\n", line);	//TODO
+		tokenization = analize_line(minishell, line);	//TODO error처리를 위해 우선 minishell도 매개변수로 주었음
 		free(line);
-		if (!token_list.head)
+		if (!tokenization)
 			continue ;
-		token = token_list.head;
+		printf("tokenization result\n");	//TODO
+		t_token *token = tokenization;
 		while (token)
 		{
 			printf("arg: %10s type: %10d len: %10zu\n", token->value, token->type, ft_strlen(token->value));
@@ -101,8 +104,9 @@ void main_loop(void)
 				printf("<======= $: %s ========>\n", process_dquote(token->value));
 			token = token->next;
 		}
-
-		//parse_tree = parse(token_list);
+		//TODO tokenization result end
+		
+		//parse_tree = parse(token);
 		//execute(parse_tree);	//TODO 
 		//free (parse_tree);
 	}

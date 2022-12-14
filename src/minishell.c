@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jiwonhan <jiwonhan@student.42seoul.kr>     +#+  +:+       +#+        */
+/*   By: hanjiwon <hanjiwon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/05 16:38:12 by jiwonhan          #+#    #+#             */
-/*   Updated: 2022/12/09 21:23:04 by jiwonhan         ###   ########seoul.kr  */
+/*   Updated: 2022/12/14 20:11:13 by hanjiwon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,11 @@
 
 int main(int ac, char *av[])
 {
+	t_minishell	*minishell;
+
+	minishell = NULL;
 	check_arg(ac, av);
-	init();	//TODO hyuntall->envp
-	main_loop();
+	init(minishell);	//TODO hyuntall->envp
+	main_loop(minishell);
 	return (0);
 }
