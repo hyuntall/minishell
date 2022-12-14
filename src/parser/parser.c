@@ -6,7 +6,7 @@
 /*   By: hanjiwon <hanjiwon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/13 11:47:20 by jiwonhan          #+#    #+#             */
-/*   Updated: 2022/12/14 21:01:05 by hanjiwon         ###   ########.fr       */
+/*   Updated: 2022/12/14 22:38:49 by hanjiwon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,73 +24,71 @@ static t_parse_tree *init_parse_tree(void)
 }
 
 
-static int  find_tail_from_head(t_token *list, t_token *find, t_token_type type)
+/*static int  find_tail_from_head(t_token *head, t_token **find, t_token_type type)
 {
     //parenthesis check
     ssize_t parenthesis_cnt = 0;
-    t_token     *token;
-
-    token = list->head;
-    find->head = list->head;
     printf("in find tail from head\n");
-    while (token)
+    t_token *tmp;
+    while (head)
     {
+        tmp = head;
+        tmp->next = NULL;
         //check parenthesis
-        if ((token->type == type) && !parenthesis_cnt)
+        if ((head->type == type) && !parenthesis_cnt)
         {
-            find->tail = token;
+
             return (TRUE);
         }
-        token = token->next;
+        head = head->next;
     }
     return (FALSE);
-}
+}*/
 
-static void parse_token(t_parse_tree **parse_tree, t_token *list, t_parse_tree *prev_tree_node)
+/*static void insert_tree(t_parse_tree **parse_tree, t_token *find, t_parse_tree *prev_tree)
 {
-    t_token *find = NULL;
-    printf("%s\n", list->head->value);
+    t_parse_tree    *new_node;
 
-    //remove parenthesis
-    if (find_tail_from_head(list, find, DAND) == TRUE)
-    {printf("find head ~ tail\n");
-        t_token *token;
-        token = find->head;
-        while (token)
+    new_node = init_parse_tree();
+
+}*/
+
+void parse_token(t_parse_tree **parse_tree, t_token **head, t_parse_tree *prev_tree)
+{printf("in parse_token\n");(void)prev_tree;
+    //t_token *find;
+    //TODO remove parenthesis
+    /*if (find_tail_from_head(*head, &find, DAND) == TRUE)
+    {
+        t_token *tmp = find;
+        while (tmp)
         {
-            printf("%s\t",token->value);
-            token = token->next;
+            printf("%s\t", tmp->value);
+            tmp = tmp->next;
         }
-        printf("\n");
     }
-
-    if (!(*parse_tree) && list->head)   //single node
+        //insert_tree(parse_tree, find, prev_tree);
+    else if (find_tail_from_head(*head, &find, PIPE) == TRUE)
+        insert_tree(parse_tree, find, prev_tree);
+    else if (find_tail_from_head(*head, &find, DRGT) == TRUE)   //redirection?
+        insert_tree(parse_tree, find, prev_tree);
+    else */
+    if (!(*parse_tree) && *head)   //single node
     {
         *parse_tree = init_parse_tree();
-        (*parse_tree)->token = list->head;
+        (*parse_tree)->token = *head;
+        *head = NULL;
+        return ;
     }
     else
         return ;
-    (void)parse_tree;(void)prev_tree_node;
+    //TODO node->left, right
 }
 
 t_parse_tree *parser(t_token *token)
-{
+{printf("in parser\n");
     t_parse_tree    *parse_tree;
-    t_token         *token;
     
     parse_tree = NULL;
-    //
-    printf("in parser\n");
-    token = token->head;
-    while (token)
-    {
-        printf("arg: %10s type: %10d len: %10zu\n", token->value, token->type, ft_strlen(token->value));
-        if (token->type == 3)
-            printf("<======= $: %s ========>\n", process_dquote(token->value));
-        token = token->next;
-    }
-    printf("======parser tree start========\n");
-    parse_token(&parse_tree, token, NULL);
+    parse_token(&parse_tree, &token, NULL);
     return (parse_tree);
 }
