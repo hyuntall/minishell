@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   check_input.c                                      :+:      :+:    :+:   */
+/*   main_loop.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: hyuncpar <hyuncpar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/05 16:38:08 by jiwonhan          #+#    #+#             */
-/*   Updated: 2022/12/09 20:15:37 by hyuncpar         ###   ########.fr       */
+/*   Updated: 2022/12/13 15:16:32 by hyuncpar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,6 +97,8 @@ void main_loop(void)
 		while (token)
 		{
 			printf("arg: %10s type: %10d len: %10zu\n", token->value, token->type, ft_strlen(token->value));
+			if (token->type == 3)
+				printf("<======= $: %s ========>\n", process_dquote(token->value));
 			token = token->next;
 		}
 
