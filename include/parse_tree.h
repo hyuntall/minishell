@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_tree.h                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hanjiwon <hanjiwon@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jiwonhan <jiwonhan@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/09 17:44:44 by jiwonhan          #+#    #+#             */
-/*   Updated: 2022/12/14 19:24:06 by hanjiwon         ###   ########.fr       */
+/*   Updated: 2022/12/15 15:55:53 by jiwonhan         ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,4 +26,6 @@ struct s_parse_tree
 	t_token_type	type;
 };
 
+t_parse_tree *parser(t_token *tokenization);
+void parse_token(t_parse_tree **parse_tree, t_token **tokenized, t_parse_tree *prev_tree);
 #endif
