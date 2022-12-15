@@ -18,6 +18,7 @@ SRCS = src/minishell.c src/main_loop.c src/analize_line.c \
 		src/signal/signal.c \
 		src/tokenizer/process_token.c src/tokenizer/memory.c \
 		src/tokenizer/tokenize.c src/tokenizer/tokenizer.c \
+		src/parser/parser.c 
 
 OBJS = $(SRCS:.c=.o)
 

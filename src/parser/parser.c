@@ -6,7 +6,7 @@
 /*   By: hanjiwon <hanjiwon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/13 11:47:20 by jiwonhan          #+#    #+#             */
-/*   Updated: 2022/12/14 21:01:05 by hanjiwon         ###   ########.fr       */
+/*   Updated: 2022/12/14 23:10:53 by hanjiwon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,73 +24,71 @@ static t_parse_tree *init_parse_tree(void)
 }
 
 
-static int  find_tail_from_head(t_token *list, t_token *find, t_token_type type)
-{
+static int  find_tail_from_head(t_token *tokenized, t_token **find, t_token_type type)
+{printf("in find tail from head\n");
     //parenthesis check
     ssize_t parenthesis_cnt = 0;
-    t_token     *token;
 
-    token = list->head;
-    find->head = list->head;
-    printf("in find tail from head\n");
-    while (token)
+    t_token *head = tokenized;
+
+    while (tokenized)
     {
         //check parenthesis
-        if ((token->type == type) && !parenthesis_cnt)
+        if ((tokenized->type == type) && !parenthesis_cnt)
         {
-            find->tail = token;
+            tokenized->prev->next = NULL;
+            (*find) = head;
             return (TRUE);
         }
-        token = token->next;
+        tokenized = tokenized->next;
     }
     return (FALSE);
 }
 
-static void parse_token(t_parse_tree **parse_tree, t_token *list, t_parse_tree *prev_tree_node)
+/*static void insert_tree(t_parse_tree **parse_tree, t_token *find, t_parse_tree *prev_tree)
 {
-    t_token *find = NULL;
-    printf("%s\n", list->head->value);
+    t_parse_tree    *new_node;
 
-    //remove parenthesis
-    if (find_tail_from_head(list, find, DAND) == TRUE)
-    {printf("find head ~ tail\n");
-        t_token *token;
-        token = find->head;
-        while (token)
+    new_node = init_parse_tree();
+
+}*/
+
+void parse_token(t_parse_tree **parse_tree, t_token **tokenized, t_parse_tree *prev_tree)
+{printf("in parse_token\n");(void)prev_tree;
+    t_token *find;
+    //TODO remove parenthesis
+    if (find_tail_from_head(*tokenized, &find, DAND) == TRUE)
+    {
+        t_token *tmp = find;    //TODO check find(head ~ tail)
+        while (tmp)
         {
-            printf("%s\t",token->value);
-            token = token->next;
-        }
-        printf("\n");
+            printf("%s\t", tmp->value);
+            tmp = tmp->next;
+        }printf("\n");  //TODO check find(head ~ tail) end
+        printf("%s\n", (*tokenized)->value);
+        insert_tree(parse_tree, find, prev_tree);
     }
-
-    if (!(*parse_tree) && list->head)   //single node
+    /*else if (find_tail_from_head(*tokenized, &find, PIPE) == TRUE)
+        insert_tree(parse_tree, find, prev_tree);
+    else if (find_tail_from_head(*tokenized, &find, DRGT) == TRUE)   //redirection?
+        insert_tree(parse_tree, find, prev_tree);*/
+    if (!(*parse_tree) && *tokenized)   //single node
     {
         *parse_tree = init_parse_tree();
-        (*parse_tree)->token = list->head;
+        (*parse_tree)->token = *tokenized;
+        *tokenized = NULL;
+        return ;
     }
     else
         return ;
-    (void)parse_tree;(void)prev_tree_node;
+    //TODO node->left, right
 }
 
 t_parse_tree *parser(t_token *token)
-{
+{printf("in parser\n");
     t_parse_tree    *parse_tree;
-    t_token         *token;
     
     parse_tree = NULL;
-    //
-    printf("in parser\n");
-    token = token->head;
-    while (token)
-    {
-        printf("arg: %10s type: %10d len: %10zu\n", token->value, token->type, ft_strlen(token->value));
-        if (token->type == 3)
-            printf("<======= $: %s ========>\n", process_dquote(token->value));
-        token = token->next;
-    }
-    printf("======parser tree start========\n");
-    parse_token(&parse_tree, token, NULL);
+    parse_token(&parse_tree, &token, NULL);
     return (parse_tree);
 }

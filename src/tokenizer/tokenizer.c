@@ -6,7 +6,7 @@
 /*   By: hanjiwon <hanjiwon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/02 16:42:09 by hyuncpar          #+#    #+#             */
-/*   Updated: 2022/12/14 21:01:21 by hanjiwon         ###   ########.fr       */
+/*   Updated: 2022/12/14 21:39:29 by hanjiwon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 
 t_token	*tokenizer(char *input)
 {
-	//word split->skip space
+	//word split->remove space
 	int		i;
 	int		index;
 	t_token	*ret;
@@ -42,5 +42,6 @@ t_token	*tokenizer(char *input)
 	}
 	if (i - index)
 		insert_token(&ret, init_token(ft_substr(input, index, i - index), NORM));
+	//TODO remove space
 	return (ret);
 }

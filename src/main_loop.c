@@ -6,7 +6,7 @@
 /*   By: hanjiwon <hanjiwon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/05 16:38:08 by jiwonhan          #+#    #+#             */
-/*   Updated: 2022/12/14 21:03:59 by hanjiwon         ###   ########.fr       */
+/*   Updated: 2022/12/14 23:07:07 by hanjiwon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,7 +84,7 @@ void main_loop(t_minishell *minishell)
 {
 	char			*line;
 	t_token			*tokenization;
-	//t_parse_tree	*parse_tree;
+	t_parse_tree	*parse_tree;
 
 	while (read_line(&line))
 	{
@@ -103,39 +103,17 @@ void main_loop(t_minishell *minishell)
 			if (token->type == 3)
 				printf("<======= $: %s ========>\n", process_dquote(token->value));
 			token = token->next;
-		}
-		//TODO tokenization result end
-		
-		//parse_tree = parse(token);
+		}	//TODO tokenization result end
+		parse_tree = parser(tokenization);
+		/*t_token *tmp = parse_tree->token;	//TODO parse tree result 
+		while (tmp)
+		{
+			printf("%s\t", tmp->value);
+			tmp = tmp->next;
+		}*/(void)parse_tree;
+		printf("\n");	//TODO parse tree result end
 		//execute(parse_tree);	//TODO 
 		//free (parse_tree);
 	}
-
-
-
-	/*while (read_line(&line))
-	{
-		add_history(line);
-		if (check_line(&line) == FALSE)
-		{
-			free(line);
-			line = NULL;
-			continue ;
-		}
-		printf("input line = %s\n", line);   //TODO_check readline
-		if (!line)
-			continue ;
-		init_line(&args);
-		process_line(&args, line);
-		arg = args.head;
-		while (arg)
-		{
-			printf("arg: %10s type: %10d len: %10zu\n", arg->value, arg->type, ft_strlen(arg->value));
-			arg = arg->next;
-		}
-		free_tokens(&args);
-		free(line);
-		line = NULL;
-	}*/
 	return ;
 }
