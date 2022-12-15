@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hanjiwon <hanjiwon@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jiwonhan <jiwonhan@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/13 11:47:20 by jiwonhan          #+#    #+#             */
-/*   Updated: 2022/12/14 23:10:53 by hanjiwon         ###   ########.fr       */
+/*   Updated: 2022/12/15 15:58:54 by jiwonhan         ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,7 @@ void parse_token(t_parse_tree **parse_tree, t_token **tokenized, t_parse_tree *p
             tmp = tmp->next;
         }printf("\n");  //TODO check find(head ~ tail) end
         printf("%s\n", (*tokenized)->value);
-        insert_tree(parse_tree, find, prev_tree);
+        //insert_tree(parse_tree, find, prev_tree);
     }
     /*else if (find_tail_from_head(*tokenized, &find, PIPE) == TRUE)
         insert_tree(parse_tree, find, prev_tree);
