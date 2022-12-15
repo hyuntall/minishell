@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   tokenize.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hanjiwon <hanjiwon@student.42.fr>          +#+  +:+       +#+        */
+/*   By: hyuncpar <hyuncpar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/05 17:36:45 by hyuncpar          #+#    #+#             */
-/*   Updated: 2022/12/14 21:02:52 by hanjiwon         ###   ########.fr       */
+/*   Updated: 2022/12/15 16:31:36 by hyuncpar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,20 +62,20 @@ int	tokenize_redir(t_token **token, char *input, int i, int type)
 {
 	int		size;
 	int		d_oper;
-	//char	c;
+	char	c;
 
 	size = 0;
 	if (type == RIGT)
 	{
-		//c = '>';
+		c = '>';
 		d_oper = DRGT;
 	}
 	else
 	{
-		//c = '<';
+		c = '<';
 		d_oper = DLFT;
 	}
-	while (input[i + size + 1] == '>')
+	while (input[i + size + 1] == c)
 		size++;
 	if (!size)
 		insert_token(token, init_token(ft_substr(input, i, 1), type));
