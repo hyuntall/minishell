@@ -3,16 +3,17 @@
 /*                                                        :::      ::::::::   */
 /*   main_loop.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jiwonhan <jiwonhan@student.42seoul.kr>     +#+  +:+       +#+        */
+/*   By: hanjiwon <hanjiwon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/05 16:38:08 by jiwonhan          #+#    #+#             */
-/*   Updated: 2022/12/15 16:00:07 by jiwonhan         ###   ########seoul.kr  */
+/*   Updated: 2022/12/16 17:49:53 by hanjiwon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 #include "tokenization.h"
 #include "parse_tree.h"
+static void print_parse_tree(t_parse_tree *parse_tree, int level);	//TODO
 
 static char *read_line(char **line)
 {
@@ -95,7 +96,7 @@ void main_loop(t_minishell *minishell)
 		free(line);
 		if (!tokenization)
 			continue ;
-		printf("tokenization result\n");	//TODO
+		printf(">>tokenization result<<\n");	//TODO
 		t_token *token = tokenization;
 		while (token)
 		{
@@ -104,16 +105,35 @@ void main_loop(t_minishell *minishell)
 				printf("<======= $: %s ========>\n", process_dquote(token->value));
 			token = token->next;
 		}	//TODO tokenization result end
-		parse_tree = parser(tokenization);
-		/*t_token *tmp = parse_tree->token;	//TODO parse tree result 
-		while (tmp)
-		{
-			printf("%s\t", tmp->value);
-			tmp = tmp->next;
-		}*/(void)parse_tree;
-		printf("\n");	//TODO parse tree result end
+		parse_tree = parser(tokenization);//(void)parse_tree;
+		printf(">>parse tree result<<\n");	//TODO
+		print_parse_tree(parse_tree, 0);
+		//TODO parse tree result end
 		//execute(parse_tree);	//TODO 
 		//free (parse_tree);
 	}
 	return ;
+}
+
+static void print_node(t_token *token)
+{
+	t_token *tmp;
+
+	tmp = token;
+	while (tmp)
+	{
+		printf("%s\t", tmp->value);
+		tmp = tmp->next;
+	}
+	printf("\n");
+}
+
+static void print_parse_tree(t_parse_tree *parse_tree, int level)
+{
+	printf("level%d root(%d)\t", level, parse_tree->type);
+	print_node(parse_tree->token);
+	if (parse_tree->left)
+		print_parse_tree(parse_tree->left, level + 1);
+	if (parse_tree->right)
+		print_parse_tree(parse_tree->right, level + 1);
 }
