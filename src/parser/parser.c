@@ -6,7 +6,7 @@
 /*   By: hanjiwon <hanjiwon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/13 11:47:20 by jiwonhan          #+#    #+#             */
-/*   Updated: 2022/12/16 17:48:24 by hanjiwon         ###   ########.fr       */
+/*   Updated: 2022/12/16 18:02:52 by hanjiwon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 #include "tokenization.h"
 
 int  find_head_from_tail(t_token *tail, t_token **find, t_token_type type)
-{
+{printf("in find head from tail\n");
     //parenthesis check
     ssize_t parenthesis_cnt = 0;
 
@@ -24,7 +24,7 @@ int  find_head_from_tail(t_token *tail, t_token **find, t_token_type type)
         //check parenthesis
         if ((tail->type == type) && !parenthesis_cnt)
         {
-            (*find) = tail;
+            *find = tail;
             return (TRUE);
         }
         tail = tail->prev;
@@ -34,8 +34,8 @@ int  find_head_from_tail(t_token *tail, t_token **find, t_token_type type)
 }
 
 static void go_left_node(t_parse_tree **parse_tree)
-{
-    t_token *next_tail;
+{printf("in go left\n");
+    t_token         *next_tail;
     t_parse_tree    *prev_tree;
 
     prev_tree = *parse_tree;
@@ -45,8 +45,8 @@ static void go_left_node(t_parse_tree **parse_tree)
 }
 
 static void go_right_node(t_parse_tree **parse_tree)
-{
-    t_token *next_tail;
+{printf("in go right\n");
+    t_token         *next_tail;
     t_parse_tree    *prev_tree;
 
     prev_tree = *parse_tree;
@@ -56,22 +56,11 @@ static void go_right_node(t_parse_tree **parse_tree)
 }
 
 void parse_token(t_parse_tree **parse_tree, t_token **tail, t_parse_tree *prev_tree)
-{(void)prev_tree;
+{
     t_token *find;
-
     //TODO remove parenthesis
     if (find_head_from_tail(*tail, &find, DAND) == TRUE)
-    {
         insert_tree(parse_tree, find, prev_tree);
-        /*// TODO split head ~ tail result
-        t_token *tmp = find;
-        while (tmp)
-        {
-            printf("%s\t", tmp->value);
-            tmp = tmp->next;
-        }
-        printf("tail: %s\n", (*tail)->value); //TODO*/
-    }
     else if (find_head_from_tail(*tail, &find, PIPE) == TRUE)
         insert_tree(parse_tree, find, prev_tree);
     /*else if (find_head_from_tail(*tail, &find, DRGT) == TRUE)   //redirection?
@@ -86,8 +75,8 @@ void parse_token(t_parse_tree **parse_tree, t_token **tail, t_parse_tree *prev_t
     else
         return ;
     //TODO node->left, right
-    go_left_node(parse_tree);
     go_right_node(parse_tree);
+    go_left_node(parse_tree);
 }
 
 

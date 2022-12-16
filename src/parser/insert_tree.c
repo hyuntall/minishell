@@ -52,12 +52,12 @@ void    get_right_node(t_parse_tree *parse_tree, t_token *token)
 }
 
 void insert_tree(t_parse_tree **parse_tree, t_token *find, t_parse_tree *prev_tree)
-{
+{printf("in insert tree\n");
 	t_parse_tree    *new_tree;
 
 	new_tree = init_parse_tree();   //new command 노드 만들어주기
 	set_new_node(new_tree, prev_tree, find);    //new node에 이전 parse tree에 연결
-	//find에서 left, right node setting
+	//new node의 left, right node 생성
 	get_left_node(new_tree, find);
 	get_right_node(new_tree, find);
 	//parse tree를 new_node까지 반영하기
