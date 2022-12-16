@@ -6,7 +6,7 @@
 /*   By: hanjiwon <hanjiwon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/13 11:47:20 by jiwonhan          #+#    #+#             */
-/*   Updated: 2022/12/16 18:02:52 by hanjiwon         ###   ########.fr       */
+/*   Updated: 2022/12/16 18:40:08 by hanjiwon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 #include "tokenization.h"
 
 int  find_head_from_tail(t_token *tail, t_token **find, t_token_type type)
-{printf("in find head from tail\n");
+{
     //parenthesis check
     ssize_t parenthesis_cnt = 0;
 
@@ -34,7 +34,7 @@ int  find_head_from_tail(t_token *tail, t_token **find, t_token_type type)
 }
 
 static void go_left_node(t_parse_tree **parse_tree)
-{printf("in go left\n");
+{
     t_token         *next_tail;
     t_parse_tree    *prev_tree;
 
@@ -45,7 +45,7 @@ static void go_left_node(t_parse_tree **parse_tree)
 }
 
 static void go_right_node(t_parse_tree **parse_tree)
-{printf("in go right\n");
+{
     t_token         *next_tail;
     t_parse_tree    *prev_tree;
 
@@ -75,8 +75,8 @@ void parse_token(t_parse_tree **parse_tree, t_token **tail, t_parse_tree *prev_t
     else
         return ;
     //TODO node->left, right
-    go_right_node(parse_tree);
     go_left_node(parse_tree);
+    go_right_node(parse_tree);
 }
 
 

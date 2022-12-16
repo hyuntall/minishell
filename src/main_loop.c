@@ -6,14 +6,13 @@
 /*   By: hanjiwon <hanjiwon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/05 16:38:08 by jiwonhan          #+#    #+#             */
-/*   Updated: 2022/12/16 17:49:53 by hanjiwon         ###   ########.fr       */
+/*   Updated: 2022/12/16 18:23:16 by hanjiwon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 #include "tokenization.h"
 #include "parse_tree.h"
-static void print_parse_tree(t_parse_tree *parse_tree, int level);	//TODO
 
 static char *read_line(char **line)
 {
@@ -115,7 +114,7 @@ void main_loop(t_minishell *minishell)
 	return ;
 }
 
-static void print_node(t_token *token)
+void print_node(t_token *token)
 {
 	t_token *tmp;
 
@@ -128,7 +127,7 @@ static void print_node(t_token *token)
 	printf("\n");
 }
 
-static void print_parse_tree(t_parse_tree *parse_tree, int level)
+void print_parse_tree(t_parse_tree *parse_tree, int level)
 {
 	printf("level%d root(%d)\t", level, parse_tree->type);
 	print_node(parse_tree->token);
