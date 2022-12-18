@@ -6,7 +6,7 @@
 /*   By: hyuncpar <hyuncpar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/09 20:59:14 by jiwonhan          #+#    #+#             */
-/*   Updated: 2022/12/18 21:25:28 by hyuncpar         ###   ########.fr       */
+/*   Updated: 2022/12/19 04:56:55 by hyuncpar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,5 +54,6 @@ void	init(t_minishell *minishell, char *envp[])
 	minishell->envp = envp;
 	minishell->path = get_env_path(envp);
 	minishell->status = 0;
+	minishell->pipe_num = 0;
 	setting_signal();
 }

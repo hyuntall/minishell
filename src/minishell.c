@@ -6,7 +6,7 @@
 /*   By: hyuncpar <hyuncpar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/05 16:38:12 by jiwonhan          #+#    #+#             */
-/*   Updated: 2022/12/18 20:33:09 by hyuncpar         ###   ########.fr       */
+/*   Updated: 2022/12/19 03:11:32 by hyuncpar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ void	a()
 
 int main(int ac, char *av[], char *envp[])
 {
-	atexit(a);
+	//atexit(a);
 	t_minishell	minishell;
 
 	//minishell = NULL;
