@@ -6,7 +6,7 @@
 /*   By: jiwonhan <jiwonhan@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/19 00:13:28 by jiwonhan          #+#    #+#             */
-/*   Updated: 2022/12/19 02:34:39 by jiwonhan         ###   ########seoul.kr  */
+/*   Updated: 2022/12/19 02:57:57 by jiwonhan         ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,10 +40,10 @@ t_cmd_tbl	**init_cmd_tbl(void)
 
 }
 
-void	ft_execve(t_minishell *minishell, t_cmd_tbl **cmd_tbl, char **arr)
+/*void	ft_execve(t_minishell *minishell, t_cmd_tbl **cmd_tbl, char **arr)
 {
 	
-}
+}*/
 void	echo(void)
 {
 	printf("echo\n");

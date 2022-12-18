@@ -6,7 +6,7 @@
 /*   By: jiwonhan <jiwonhan@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/15 17:57:15 by hyuncpar          #+#    #+#             */
-/*   Updated: 2022/12/19 02:57:21 by jiwonhan         ###   ########seoul.kr  */
+/*   Updated: 2022/12/19 02:58:13 by jiwonhan         ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -212,8 +212,8 @@ void	order_tree(t_minishell *minishell, t_parse_tree *tree)
 	{
 		arr = make_arr(tree->token);
 		if (check_builtin(cmd_tbl, arr[0]))
-		{
-			ft_execve(minishell, cmd_tbl, arr);
+		{printf("in builtin func\n");
+			//ft_execve(minishell, cmd_tbl, arr);
 		}
 		else
 		{
