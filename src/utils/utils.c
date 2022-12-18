@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hanjiwon <hanjiwon@student.42.fr>          +#+  +:+       +#+        */
+/*   By: hyuncpar <hyuncpar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/09 20:59:14 by jiwonhan          #+#    #+#             */
-/*   Updated: 2022/12/14 19:31:40 by hanjiwon         ###   ########.fr       */
+/*   Updated: 2022/12/18 21:25:28 by hyuncpar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,9 +23,36 @@ void	check_arg(int ac, char *av[])
 	}
 }
 
-void	init(t_minishell *minishell)
+// 옮겨야함
+char **get_env_path(char **envp)
 {
-	minishell = malloc(sizeof(t_minishell));
-	ft_memset(minishell, 0, sizeof(minishell));
+	char	**path;
+	char	**temp;
+	char	*tmp;
+
+	while (ft_strncmp("PATH", *envp, 4))
+		envp++;
+	path = ft_split(*envp + 5, ':');
+	temp = path;
+	while (*temp)
+	{
+		tmp = *temp;
+		if (tmp[ft_strlen(tmp) - 1] != '/')
+		{
+			*temp = ft_strjoin(*temp, "/");
+			free(tmp);
+		}
+		temp++;
+	}
+	return (path);
+}
+
+void	init(t_minishell *minishell, char *envp[])
+{
+	//minishell = malloc(sizeof(t_minishell));
+	//ft_memset(minishell, 0, sizeof(minishell));
+	minishell->envp = envp;
+	minishell->path = get_env_path(envp);
+	minishell->status = 0;
 	setting_signal();
 }

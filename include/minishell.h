@@ -22,6 +22,6 @@ typedef struct s_minishell
 
 void	setting_signal(void);
 void 	main_loop(t_minishell *minishell);
-void	init(t_minishell *minishell);
+void	init(t_minishell *minishell, char *envp[]);
 void	check_arg(int ac, char *av[]);
 #endif

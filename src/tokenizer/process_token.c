@@ -6,11 +6,12 @@
 /*   By: hyuncpar <hyuncpar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/13 14:41:34 by hyuncpar          #+#    #+#             */
-/*   Updated: 2022/12/13 16:21:09 by hyuncpar         ###   ########.fr       */
+/*   Updated: 2022/12/18 19:58:52 by hyuncpar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+#include "tokenization.h"
 
 char	*process_dquote(char *str)
 {
@@ -52,4 +53,25 @@ char	*process_dquote(char *str)
 		target = ft_strchr(target + len + 1, '$');
 	}
 	return (backup);
+}
+
+char	*process_token(t_token *token)
+{
+	char	*value;
+
+	if (token->type == DOLR)
+	{
+		value = getenv(token->value);
+		if (!value)
+			value = ft_strdup(" ");
+		token->value = value;
+	}
+	else if (token->type == DQUT)
+	{
+		value = process_dquote(token->value);
+		if (!value)
+			value = ft_strdup(" ");
+		token->value = value;
+	}
+	return (token->value);
 }

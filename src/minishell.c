@@ -3,22 +3,29 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hanjiwon <hanjiwon@student.42.fr>          +#+  +:+       +#+        */
+/*   By: hyuncpar <hyuncpar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/05 16:38:12 by jiwonhan          #+#    #+#             */
-/*   Updated: 2022/12/14 20:11:13 by hanjiwon         ###   ########.fr       */
+/*   Updated: 2022/12/18 20:33:09 by hyuncpar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int main(int ac, char *av[])
+void	a()
 {
-	t_minishell	*minishell;
+	printf("?????\n");
+	system("leaks minishell");
+}
 
-	minishell = NULL;
+int main(int ac, char *av[], char *envp[])
+{
+	atexit(a);
+	t_minishell	minishell;
+
+	//minishell = NULL;
 	check_arg(ac, av);
-	init(minishell);	//TODO hyuntall->envp
-	main_loop(minishell);
+	init(&minishell, envp);	//TODO hyuntall->envp
+	main_loop(&minishell);
 	return (0);
 }

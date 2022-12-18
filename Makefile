@@ -2,8 +2,8 @@ CC = cc
 CFLAGS = -Wall -Wextra -Werror -Iinclude
 
 # 클러스터
-# READLINE_LIB = -lreadline -L/goinfre/$(USER)/.brew/opt/readline/lib
-# READLINE_INC = -I/goinfre/$(USER)/.brew/opt/readline/include
+READLINE_LIB = -lreadline -L/goinfre/$(USER)/.brew/opt/readline/lib
+READLINE_INC = -I/goinfre/$(USER)/.brew/opt/readline/include
 
 # MAC 인텔
 # READLINE_LIB = -lreadline -L/usr/local/opt/readline/lib
@@ -18,7 +18,8 @@ SRCS = src/minishell.c src/main_loop.c src/analize_line.c \
 		src/signal/signal.c \
 		src/tokenizer/process_token.c src/tokenizer/memory.c \
 		src/tokenizer/tokenize.c src/tokenizer/tokenizer.c \
-		src/parser/parser.c src/parser/insert_tree.c src/parser/token_tool.c
+		src/parser/parser.c src/parser/insert_tree.c src/parser/token_tool.c \
+		src/order/order_tree.c
 
 OBJS = $(SRCS:.c=.o)
 
