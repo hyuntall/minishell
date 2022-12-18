@@ -1,5 +1,6 @@
 {
     "files.associations": {
-        "tokenization.h": "c"
-    }
+		"tokenization.h": "c",
+		"cmd.h": "c"
+	}
 }

@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   minishell.h                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: jiwonhan <jiwonhan@student.42seoul.kr>     +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/12/19 00:13:37 by jiwonhan          #+#    #+#             */
+/*   Updated: 2022/12/19 01:34:37 by jiwonhan         ###   ########seoul.kr  */
+/*                                                                            */
+/* ************************************************************************** */
+
 #ifndef MINISHELL_H
 # define MINISHELL_H
 
@@ -15,9 +27,9 @@
 
 typedef struct s_minishell
 {
-	char **path;
-	char **envp;
-	int	status;
+	char 		**path;
+	char 		**envp;
+	int			status;
 }				t_minishell;
 
 void	setting_signal(void);
