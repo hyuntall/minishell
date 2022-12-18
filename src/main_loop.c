@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main_loop.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hanjiwon <hanjiwon@student.42.fr>          +#+  +:+       +#+        */
+/*   By: hyuncpar <hyuncpar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/05 16:38:08 by jiwonhan          #+#    #+#             */
-/*   Updated: 2022/12/16 18:23:16 by hanjiwon         ###   ########.fr       */
+/*   Updated: 2022/12/18 22:34:04 by hyuncpar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,6 +80,16 @@ static int check_line(char **line)
 	return (1);
 }
 
+void	exev_line(t_minishell *minishell, t_parse_tree *parse_tree)
+{
+	pid_t	pid;
+
+	pid = fork();
+	wait(NULL);
+	if (!pid)
+		order_tree(minishell, parse_tree);
+}
+
 void main_loop(t_minishell *minishell)
 {
 	char			*line;
@@ -95,6 +105,7 @@ void main_loop(t_minishell *minishell)
 		free(line);
 		if (!tokenization)
 			continue ;
+		/*
 		printf(">>tokenization result<<\n");	//TODO
 		t_token *token = tokenization;
 		while (token)
@@ -103,10 +114,12 @@ void main_loop(t_minishell *minishell)
 			if (token->type == 3)
 				printf("<======= $: %s ========>\n", process_dquote(token->value));
 			token = token->next;
-		}	//TODO tokenization result end
+		}*/	//TODO tokenization result end
 		parse_tree = parser(tokenization);//(void)parse_tree;
-		printf(">>parse tree result<<\n");	//TODO
-		print_parse_tree(parse_tree, 0);
+		//printf(">>parse tree result<<\n");	//TODO
+		//print_parse_tree(parse_tree, 0);
+		exev_line(minishell, parse_tree);
+		free_tokens(parse_tree->token);
 		//TODO parse tree result end
 		//execute(parse_tree);	//TODO 
 		//free (parse_tree);
