@@ -6,7 +6,7 @@
 /*   By: hyuncpar <hyuncpar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/15 17:57:15 by hyuncpar          #+#    #+#             */
-/*   Updated: 2022/12/18 21:37:43 by hyuncpar         ###   ########.fr       */
+/*   Updated: 2022/12/19 02:32:23 by hyuncpar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,9 @@ int	arr_size(t_token *token)
 	flag = 1;
 	while (token)
 	{
-		if (token->type != SPCE && flag)
+		if (token->type >= RIGT && token->type <= DLFT)
+			token = token->next->next;
+		else if (token->type != SPCE && flag)
 		{
 			size++;
 			flag = 0;
@@ -59,22 +61,84 @@ int	arr_size(t_token *token)
 	return (size);
 }
 
+void	here_doc(char *limit)
+{
+	char	*line;
+	char	*temp;
+	int		fd;
+
+	fd = open("heredoc", O_RDWR | O_CREAT | O_TRUNC, 0777);
+	while (1)
+	{
+		line = readline("heredoc> ");
+		if (!ft_strncmp(line, limit, ft_strlen(line)))
+			break ;
+		temp = line;
+		line = ft_strjoin(temp, "\n");
+		free(temp);
+		ft_putstr_fd(line, fd);
+		free(line);
+		line = 0;
+	}
+	free(line);
+	line = 0;
+	close(fd);
+}
+
+void	redir(t_token_type type, char *filename)
+{
+	int	fd;
+
+	if (type == RIGT)
+	{
+		fd = open(filename, O_RDWR | O_CREAT | O_TRUNC, 0777);
+		dup2(fd, 1);
+	}
+	else if (type == DRGT)
+	{
+		fd = open(filename, O_RDWR | O_CREAT | O_APPEND, 0777);
+		dup2(fd, 1);
+	}
+	else if (type == LEFT)
+	{
+		fd = open(filename, O_RDWR, 0777);
+		dup2(fd, 0);
+	}
+	else if (type == DLFT)
+	{
+		here_doc(filename);
+		fd = open("heredoc", O_RDWR | O_CREAT, 0777);
+		dup2(fd, 0);
+		close(fd);
+		unlink("heredoc");
+	}
+}
+
 // 옮겨야함
 char	**make_arr(t_token *token)
 {
-	int		i;
-	int		size;
-	char	*str;
-	char	*temp;
-	char	**arr;
+	int				i;
+	int				size;
+	t_token_type	type;
+	char			*str;
+	char			*temp;
+	char			**arr;
 
 	i = 0;
 	size = arr_size(token);
 	arr = (char **)malloc(sizeof(char *) * (size + 1));
-	while (i < size)
+	type = 0;
+	while (token)
 	{
 		if (token->type == SPCE)
 			token = token->next;
+		if (token->type >= RIGT && token->type <= DLFT)
+		{
+			type = token->type;
+			token = token->next;
+			if (token->type == SPCE)
+				token = token->next;
+		}
 		str = ft_strdup("");
 		while (token && token->type != SPCE)
 		{
@@ -83,7 +147,11 @@ char	**make_arr(t_token *token)
 			free(temp);
 			token = token->next;
 		}
-		arr[i++] = str;
+		if (!type)
+			arr[i++] = str;
+		else
+			redir(type, str);
+		type = 0;
 	}
 	arr[i] = NULL;
 	return (arr);
@@ -122,7 +190,8 @@ void	order_tree(t_minishell *minishell, t_parse_tree *tree)
 	if (tree->type == PIPE)
 		pipeline(minishell, tree->left, tree->right);
 	else if (tree->type == DAND)
-		pipeline(minishell, tree->left, tree->right);
+		;
+		//pipeline(minishell, tree->left, tree->right);
 	else
 	{
 		arr = make_arr(tree->token);
