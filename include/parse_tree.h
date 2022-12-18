@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_tree.h                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jiwonhan <jiwonhan@student.42seoul.kr>     +#+  +:+       +#+        */
+/*   By: hanjiwon <hanjiwon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/09 17:44:44 by jiwonhan          #+#    #+#             */
-/*   Updated: 2022/12/15 15:55:53 by jiwonhan         ###   ########seoul.kr  */
+/*   Updated: 2022/12/16 18:23:11 by hanjiwon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,4 +28,13 @@ struct s_parse_tree
 
 t_parse_tree *parser(t_token *tokenization);
 void parse_token(t_parse_tree **parse_tree, t_token **tokenized, t_parse_tree *prev_tree);
+t_parse_tree *init_parse_tree(void);
+void set_new_node(t_parse_tree *new_node, t_parse_tree *prev_tree, t_token *find);
+void get_left_node(t_parse_tree *parse_tree, t_token *token);
+void insert_tree(t_parse_tree **parse_tree, t_token *find, t_parse_tree *prev_tree);
+t_token *get_tail_token(t_token *token);
+t_token *get_head_token(t_token *token);
+
+void print_node(t_token *token);
+void print_parse_tree(t_parse_tree *parse_tree, int level);
 #endif
