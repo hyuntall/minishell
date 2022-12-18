@@ -8,6 +8,7 @@
 #include <string.h>
 #include <unistd.h>
 #include <termios.h>
+#include <fcntl.h>
 #include "../libft/libft.h"
 
 #define FALSE 0
