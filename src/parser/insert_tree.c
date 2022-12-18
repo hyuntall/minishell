@@ -29,6 +29,27 @@ static void	set_left_token(t_token *token, t_token *find)
 		token->next = NULL;
 }
 
+static void	set_left_token_redirection(t_parse_tree *parse_tree, t_token *token)
+{
+	t_token	*left_tail;
+
+	left_tail = get_tail_token(parse_tree->token);
+	if (token->next->next)
+	{
+		if (left_tail)
+		{
+			left_tail->next = token->next->next;
+			left_tail->next->prev = left_tail;
+		}
+		else
+		{
+			parse_tree->token = token->next->next;
+			parse_tree->token->prev = NULL;
+		}
+		token->next->next = NULL;
+	}
+}
+
 void get_left_node(t_parse_tree *parse_tree, t_token *token)
 {
 	parse_tree->left = init_parse_tree();
@@ -39,6 +60,8 @@ void get_left_node(t_parse_tree *parse_tree, t_token *token)
 	parse_tree->left->type = NORM;
 	set_left_token(parse_tree->left->token, token);	//left->token의 이후 연결 끊기
 	token->prev = NULL;	//사용한 token 연결 끊기
+	if (token->type == DRGT)
+		set_left_token_redirection(parse_tree->left, token);
 }
 
 void    get_right_node(t_parse_tree *parse_tree, t_token *token)
@@ -49,6 +72,8 @@ void    get_right_node(t_parse_tree *parse_tree, t_token *token)
 	parse_tree->right->token->prev = NULL;
 	parse_tree->right->type = NORM;
 	token->next = NULL;
+	if (token->type == DRGT)
+		parse_tree->right->token->next = NULL;
 }
 
 void insert_tree(t_parse_tree **parse_tree, t_token *find, t_parse_tree *prev_tree)
