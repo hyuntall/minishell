@@ -3,15 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   order_tree.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hyuncpar <hyuncpar@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jiwonhan <jiwonhan@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/15 17:57:15 by hyuncpar          #+#    #+#             */
-/*   Updated: 2022/12/19 02:32:23 by hyuncpar         ###   ########.fr       */
+/*   Updated: 2022/12/19 02:58:13 by jiwonhan         ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 #include "parse_tree.h"
+#include "cmd.h"
 
 void	pipeline(t_minishell *minishell, t_parse_tree *left, t_parse_tree *right)
 {
@@ -181,11 +182,26 @@ char	*check_cmd(t_minishell *minishell, char *cmd)
 	return (cmd);
 }
 
+static int	check_builtin(t_cmd_tbl **cmd_tbl, const char *cmd)
+{
+	int	i;
+
+	i = -1;
+	if (ft_strncmp(cmd_tbl[0]->cmd, cmd, ft_strlen(cmd)) == 0)
+		return (TRUE);
+	/*while (++i < 7)
+		if (cmd_tbl[i].cmd == cmd)
+			return (TRUE);*/
+	return (FALSE);
+}
+
 void	order_tree(t_minishell *minishell, t_parse_tree *tree)
 {
 	t_token	*token;
 	char	**arr;
+	t_cmd_tbl	**cmd_tbl = NULL;
 
+	cmd_tbl = init_cmd_tbl();
 	token = tree->token;
 	if (tree->type == PIPE)
 		pipeline(minishell, tree->left, tree->right);
@@ -195,8 +211,15 @@ void	order_tree(t_minishell *minishell, t_parse_tree *tree)
 	else
 	{
 		arr = make_arr(tree->token);
-		execve(check_cmd(minishell, arr[0]), arr, minishell->envp);
-		perror(arr[0]);
-		exit(1);
+		if (check_builtin(cmd_tbl, arr[0]))
+		{printf("in builtin func\n");
+			//ft_execve(minishell, cmd_tbl, arr);
+		}
+		else
+		{
+			execve(check_cmd(minishell, arr[0]), arr, minishell->envp);
+			perror(arr[0]);
+			exit(1);
+		}
 	}
 }

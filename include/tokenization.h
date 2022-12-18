@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   tokenization.h                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hanjiwon <hanjiwon@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jiwonhan <jiwonhan@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/09 16:41:09 by jiwonhan          #+#    #+#             */
-/*   Updated: 2022/12/16 16:23:34 by hanjiwon         ###   ########.fr       */
+/*   Updated: 2022/12/19 00:13:44 by jiwonhan         ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
