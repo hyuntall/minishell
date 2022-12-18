@@ -6,7 +6,7 @@
 /*   By: hanjiwon <hanjiwon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/13 11:47:20 by jiwonhan          #+#    #+#             */
-/*   Updated: 2022/12/16 18:40:08 by hanjiwon         ###   ########.fr       */
+/*   Updated: 2022/12/18 20:33:07 by hanjiwon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,8 +63,8 @@ void parse_token(t_parse_tree **parse_tree, t_token **tail, t_parse_tree *prev_t
         insert_tree(parse_tree, find, prev_tree);
     else if (find_head_from_tail(*tail, &find, PIPE) == TRUE)
         insert_tree(parse_tree, find, prev_tree);
-    /*else if (find_head_from_tail(*tail, &find, DRGT) == TRUE)   //redirection?
-        insert_tree(parse_tree, find, prev_tree);*/
+    else if (find_head_from_tail((get_head_token(*tail)), &find, DRGT) == TRUE)   //redirection?
+        insert_tree(parse_tree, find, prev_tree);
     else if (!(*parse_tree) && *tail)   //single node
     {
         *parse_tree = init_parse_tree();
