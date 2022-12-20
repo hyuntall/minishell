@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hyuncpar <hyuncpar@student.42.fr>          +#+  +:+       +#+        */
+/*   By: hanjiwon <hanjiwon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/19 00:13:37 by jiwonhan          #+#    #+#             */
-/*   Updated: 2022/12/19 04:56:35 by hyuncpar         ###   ########.fr       */
+/*   Updated: 2022/12/20 17:42:44 by hanjiwon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,5 +39,5 @@ typedef struct s_minishell
 void	setting_signal(void);
 void 	main_loop(t_minishell *minishell);
 void	init(t_minishell *minishell, char *envp[]);
-void	check_arga(int ac, char *av[]);
+void	check_arg(int ac, char *av[]);
 #endif

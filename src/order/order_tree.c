@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   order_tree.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hyuncpar <hyuncpar@student.42.fr>          +#+  +:+       +#+        */
+/*   By: hanjiwon <hanjiwon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/15 17:57:15 by hyuncpar          #+#    #+#             */
-/*   Updated: 2022/12/19 05:08:29 by hyuncpar         ###   ########.fr       */
+/*   Updated: 2022/12/20 18:35:30 by hanjiwon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ void	pipeline(t_minishell *minishell, t_parse_tree *left, t_parse_tree *right)
 	int		fd[2];
 	int		pipes;
 	pid_t	pid;
-
+(void)pipes;
 	minishell->pipe_num++;
 	pipes = pipe(fd);
 	pid = fork();
@@ -201,7 +201,7 @@ static int	check_builtin(t_cmd_tbl *cmd_tbl, const char *cmd)
 {
 	int	i;
 
-	i = -1;
+	i = -1;printf("%s\n", cmd);
 	while (++i < cmd_tbl->max_element)
 	{
 		if (ft_strncmp(cmd_tbl->cmd[i].cmd, cmd, ft_strlen(cmd)) == 0)
@@ -214,7 +214,7 @@ void	order_tree(t_minishell *minishell, t_parse_tree *tree)
 {
 	t_token	*token;
 	char	**arr;
-
+(void)token;
 	minishell->cmd_tbl = init_cmd_tbl();
 	token = tree->token;
 	if (tree->type == PIPE)
