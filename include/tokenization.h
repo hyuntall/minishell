@@ -6,7 +6,7 @@
 /*   By: hanjiwon <hanjiwon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/09 16:41:09 by jiwonhan          #+#    #+#             */
-/*   Updated: 2022/12/20 18:14:07 by hanjiwon         ###   ########.fr       */
+/*   Updated: 2022/12/20 21:44:26 by hanjiwon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,6 @@ typedef enum e_special_symbols
 	PIPE_SYMBOLS = PIPE,
 	REDIRECTION = RIGT | DRGT | LEFT | DLFT
 }			t_special_symbols;
-
 
 struct s_token
 {

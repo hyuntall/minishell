@@ -6,7 +6,7 @@
 /*   By: hanjiwon <hanjiwon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/19 00:13:52 by jiwonhan          #+#    #+#             */
-/*   Updated: 2022/12/20 18:43:13 by hanjiwon         ###   ########.fr       */
+/*   Updated: 2022/12/20 23:12:11 by hanjiwon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,6 +62,21 @@ static void	set_left_token_redirection(t_parse_tree *parse_tree, t_token *token)
 	}
 }
 
+char	*tokentostring(t_token *token)
+{
+	char	*ret;
+	t_token	*tmp;
+
+	ret = malloc(1);
+	tmp = token;
+	while (tmp)
+	{
+		ret = ft_strjoin(ret, tmp->value);
+		tmp = tmp->next;
+	}
+	return (ret);
+}
+
 void get_left_node(t_parse_tree *parse_tree, t_token *token)
 {
 	parse_tree->left = init_parse_tree();
@@ -73,7 +88,12 @@ void get_left_node(t_parse_tree *parse_tree, t_token *token)
 	set_left_token(parse_tree->left->token, token);	//left->token의 이후 연결 끊기
 	token->prev = NULL;	//사용한 token 연결 끊기
 	if (token->type == RIGT || token->type == DRGT || token->type ==  LEFT || token->type == DLFT)
+	{
+		parse_tree->original = ft_strdup(tokentostring(parse_tree->left->token));
+		parse_tree->original = ft_strjoin(parse_tree->original, parse_tree->token->value);
+		parse_tree->original = ft_strjoin(parse_tree->original, tokentostring(token->next));
 		set_left_token_redirection(parse_tree->left, token);
+	}
 }
 
 void    get_right_node(t_parse_tree *parse_tree, t_token *token)
