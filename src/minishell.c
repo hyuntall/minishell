@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hyuncpar <hyuncpar@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jiwonhan <jiwonhan@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/05 16:38:12 by jiwonhan          #+#    #+#             */
-/*   Updated: 2022/12/18 20:33:09 by hyuncpar         ###   ########.fr       */
+/*   Updated: 2022/12/19 05:26:56 by jiwonhan         ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ void	a()
 
 int main(int ac, char *av[], char *envp[])
 {
-	atexit(a);
+	//atexit(a);
 	t_minishell	minishell;
 
 	//minishell = NULL;

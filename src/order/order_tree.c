@@ -6,7 +6,7 @@
 /*   By: jiwonhan <jiwonhan@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/15 17:57:15 by hyuncpar          #+#    #+#             */
-/*   Updated: 2022/12/19 02:58:13 by jiwonhan         ###   ########seoul.kr  */
+/*   Updated: 2022/12/19 05:22:48 by jiwonhan         ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -182,16 +182,16 @@ char	*check_cmd(t_minishell *minishell, char *cmd)
 	return (cmd);
 }
 
-static int	check_builtin(t_cmd_tbl **cmd_tbl, const char *cmd)
+static int	check_builtin(t_cmd_tbl *cmd_tbl, const char *cmd)
 {
 	int	i;
 
 	i = -1;
-	if (ft_strncmp(cmd_tbl[0]->cmd, cmd, ft_strlen(cmd)) == 0)
-		return (TRUE);
-	/*while (++i < 7)
-		if (cmd_tbl[i].cmd == cmd)
-			return (TRUE);*/
+	while (++i < cmd_tbl->max_element)
+	{
+		if (ft_strncmp(cmd_tbl->cmd[i].cmd, cmd, ft_strlen(cmd)) == 0)
+			return (TRUE);
+	}
 	return (FALSE);
 }
 
@@ -199,9 +199,8 @@ void	order_tree(t_minishell *minishell, t_parse_tree *tree)
 {
 	t_token	*token;
 	char	**arr;
-	t_cmd_tbl	**cmd_tbl = NULL;
 
-	cmd_tbl = init_cmd_tbl();
+	minishell->cmd_tbl = init_cmd_tbl();
 	token = tree->token;
 	if (tree->type == PIPE)
 		pipeline(minishell, tree->left, tree->right);
@@ -211,7 +210,7 @@ void	order_tree(t_minishell *minishell, t_parse_tree *tree)
 	else
 	{
 		arr = make_arr(tree->token);
-		if (check_builtin(cmd_tbl, arr[0]))
+		if (check_builtin(minishell->cmd_tbl, arr[0]))
 		{printf("in builtin func\n");
 			//ft_execve(minishell, cmd_tbl, arr);
 		}
