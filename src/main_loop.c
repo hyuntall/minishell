@@ -6,7 +6,7 @@
 /*   By: hyuncpar <hyuncpar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/05 16:38:08 by jiwonhan          #+#    #+#             */
-/*   Updated: 2022/12/18 22:34:04 by hyuncpar         ###   ########.fr       */
+/*   Updated: 2022/12/19 03:11:04 by hyuncpar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,7 +85,7 @@ void	exev_line(t_minishell *minishell, t_parse_tree *parse_tree)
 	pid_t	pid;
 
 	pid = fork();
-	wait(NULL);
+	waitpid(pid, NULL, 0);
 	if (!pid)
 		order_tree(minishell, parse_tree);
 }

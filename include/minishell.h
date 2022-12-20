@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jiwonhan <jiwonhan@student.42seoul.kr>     +#+  +:+       +#+        */
+/*   By: hyuncpar <hyuncpar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/19 00:13:37 by jiwonhan          #+#    #+#             */
-/*   Updated: 2022/12/19 04:52:43 by jiwonhan         ###   ########seoul.kr  */
+/*   Updated: 2022/12/19 04:56:35 by hyuncpar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,7 @@ typedef struct s_minishell
 	char 		**envp;
 	int			status;
 	t_cmd_tbl	*cmd_tbl;
+	int			pipe_num;
 }				t_minishell;
 
 void	setting_signal(void);
