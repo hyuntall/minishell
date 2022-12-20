@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   tokenization.h                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jiwonhan <jiwonhan@student.42seoul.kr>     +#+  +:+       +#+        */
+/*   By: hanjiwon <hanjiwon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/09 16:41:09 by jiwonhan          #+#    #+#             */
-/*   Updated: 2022/12/19 00:13:44 by jiwonhan         ###   ########seoul.kr  */
+/*   Updated: 2022/12/20 18:14:07 by hanjiwon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,14 @@ typedef enum	e_token_type
 	PARENTHESIS, // Parenthesis
 	EROR  // Error
 }			t_token_type;
+
+typedef enum e_special_symbols
+{
+	LOGICAL = DPIP | DAND,
+	PIPE_SYMBOLS = PIPE,
+	REDIRECTION = RIGT | DRGT | LEFT | DLFT
+}			t_special_symbols;
+
 
 struct s_token
 {
