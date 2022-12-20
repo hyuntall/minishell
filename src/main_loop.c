@@ -6,7 +6,7 @@
 /*   By: hanjiwon <hanjiwon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/05 16:38:08 by jiwonhan          #+#    #+#             */
-/*   Updated: 2022/12/20 18:22:56 by hanjiwon         ###   ########.fr       */
+/*   Updated: 2022/12/20 22:30:51 by hanjiwon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -115,11 +115,11 @@ void main_loop(t_minishell *minishell)
 				printf("<======= $: %s ========>\n", process_dquote(token->value));
 			token = token->next;
 		}*/	//TODO tokenization result end
-		parse_tree = parser(tokenization);//(void)parse_tree;
+		parse_tree = parser(tokenization);(void)parse_tree;
 		printf(">>parse tree result<<\n");	//TODO
 		print_parse_tree(parse_tree, 0);
-		exev_line(minishell, parse_tree);
-		free_tokens(parse_tree->token);
+		//exev_line(minishell, parse_tree);
+		//free_tokens(parse_tree->token);
 		//TODO parse tree result end
 		//execute(parse_tree);	//TODO 
 		//free (parse_tree);
@@ -144,6 +144,8 @@ void print_parse_tree(t_parse_tree *parse_tree, int level)
 {
 	printf("level%d root(%d)\t", level, parse_tree->type);
 	print_node(parse_tree->token);
+	if (parse_tree->original)
+		printf("\toriginal : %s\n", parse_tree->original);
 	if (parse_tree->left)
 		print_parse_tree(parse_tree->left, level + 1);
 	if (parse_tree->right)
