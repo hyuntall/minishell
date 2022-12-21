@@ -6,7 +6,7 @@
 /*   By: hyuncpar <hyuncpar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/13 14:41:34 by hyuncpar          #+#    #+#             */
-/*   Updated: 2022/12/21 17:27:13 by hyuncpar         ###   ########.fr       */
+/*   Updated: 2022/12/21 18:34:10 by hyuncpar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,6 +84,8 @@ t_token	*aasda(t_token **new_tokenizer, t_token *token, t_token_type type)
 	str = ft_strdup("");
 	while (token && token->type != SPCE)
 	{
+		if (type >= 11 && type <= 14 && token->type >= 6 && token->type <= 15)
+			unexpecte_token(token->type, token->value);
 		if (token->type >= 11 && token->type <= 14)
 			break ;
 		tmp = str;
@@ -115,6 +117,10 @@ t_token	*link_token(t_token *token)
 				if (token && token->type == SPCE)
 					token = token->next;
 				token = aasda(&new_tokenizer, token, type);
+				t_token *val = new_tokenizer;
+				while (val->next)
+					val = val->next;
+				redir(type, val->value);
 			}
 			else
 				token = aasda(&new_tokenizer, token, type);
@@ -122,6 +128,5 @@ t_token	*link_token(t_token *token)
 		else
 			token = token->next;
 	}
-	printf("%s\n", new_tokenizer->value);
 	return (new_tokenizer);
 }

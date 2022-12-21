@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   order_tree.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hanjiwon <hanjiwon@student.42.fr>          +#+  +:+       +#+        */
+/*   By: hyuncpar <hyuncpar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/15 17:57:15 by hyuncpar          #+#    #+#             */
-/*   Updated: 2022/12/20 18:35:30 by hanjiwon         ###   ########.fr       */
+/*   Updated: 2022/12/21 18:38:24 by hyuncpar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,7 +73,7 @@ void	print_pipe(int pipe_num)
 		write(1, "pipe ", 5);
 }
 
-void	here_doc(char *limit, int pipe_num)
+void	here_doc(char *limit)
 {
 	char	*line;
 	char	*temp;
@@ -82,7 +82,6 @@ void	here_doc(char *limit, int pipe_num)
 	fd = open("heredoc", O_RDWR | O_CREAT | O_TRUNC, 0777);
 	while (1)
 	{
-		print_pipe(pipe_num);
 		line = readline("heredoc> ");
 		if (!ft_strncmp(line, limit, ft_strlen(line)))
 			break ;
@@ -99,7 +98,7 @@ void	here_doc(char *limit, int pipe_num)
 	close(fd);
 }
 
-void	redir(t_minishell *minishell, t_token_type type, char *filename)
+void	redir(t_token_type type, char *filename)
 {
 	int	fd;
 
@@ -107,6 +106,7 @@ void	redir(t_minishell *minishell, t_token_type type, char *filename)
 	{
 		fd = open(filename, O_RDWR | O_CREAT | O_TRUNC, 0777);
 		dup2(fd, 1);
+		close(fd);
 	}
 	else if (type == DRGT)
 	{
@@ -120,16 +120,16 @@ void	redir(t_minishell *minishell, t_token_type type, char *filename)
 	}
 	else if (type == DLFT)
 	{
-		here_doc(filename, minishell->pipe_num);
-		fd = open("heredoc", O_RDWR | O_CREAT, 0777);
-		dup2(fd, 0);
-		close(fd);
+		here_doc(filename);
+		//fd = open("heredoc", O_RDWR | O_CREAT, 0777);
+		//dup2(fd, 0);
+		//close(fd);
 		unlink("heredoc");
 	}
 }
 
 // 옮겨야함
-char	**make_arr(t_minishell *minishell, t_token *token)
+char	**make_arr(t_token *token)
 {
 	int				i;
 	int				size;
@@ -166,7 +166,7 @@ char	**make_arr(t_minishell *minishell, t_token *token)
 		if (!type)
 			arr[i++] = str;
 		else
-			redir(minishell, type, str);
+			redir(type, str);
 		type = 0;
 	}
 	arr[i] = NULL;
@@ -201,7 +201,7 @@ static int	check_builtin(t_cmd_tbl *cmd_tbl, const char *cmd)
 {
 	int	i;
 
-	i = -1;printf("%s\n", cmd);
+	i = -1;
 	while (++i < cmd_tbl->max_element)
 	{
 		if (ft_strncmp(cmd_tbl->cmd[i].cmd, cmd, ft_strlen(cmd)) == 0)
@@ -214,7 +214,7 @@ void	order_tree(t_minishell *minishell, t_parse_tree *tree)
 {
 	t_token	*token;
 	char	**arr;
-(void)token;
+
 	minishell->cmd_tbl = init_cmd_tbl();
 	token = tree->token;
 	if (tree->type == PIPE)
@@ -224,16 +224,16 @@ void	order_tree(t_minishell *minishell, t_parse_tree *tree)
 		//pipeline(minishell, tree->left, tree->right);
 	else
 	{
-		arr = make_arr(minishell, tree->token);
+		arr = make_arr(tree->token);
 		if (check_builtin(minishell->cmd_tbl, arr[0]))
-		{printf("in builtin func\n");
-			//ft_execve(minishell, cmd_tbl, arr);
+		{
+			ft_execve(minishell, arr);
 		}
 		else
 		{
 			execve(check_cmd(minishell, arr[0]), arr, minishell->envp);
 			perror(arr[0]);
-			exit(1);
+			exit(1);	
 		}
 	}
 }
