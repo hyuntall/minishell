@@ -7,7 +7,7 @@ void print_node(t_token *token)
 	tmp = token;
 	while (tmp)
 	{
-		printf("%s\t", tmp->value);
+		printf("%s(%d)\t", tmp->value, tmp->type);
 		tmp = tmp->next;
 	}
 	printf("\n");
