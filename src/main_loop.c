@@ -6,7 +6,7 @@
 /*   By: jiwonhan <jiwonhan@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/05 16:38:08 by jiwonhan          #+#    #+#             */
-/*   Updated: 2022/12/21 16:49:50 by jiwonhan         ###   ########seoul.kr  */
+/*   Updated: 2022/12/21 19:59:33 by jiwonhan         ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,7 +100,7 @@ void main_loop(t_minishell *minishell)
 	{
 		add_history(line);
 		check_line(&line); //TODO jiwon, false=> free
-		printf("input: %s\n", line);	//TODO
+		//printf("input: %s\n", line);	//TODO
 		tokenization = analize_line(minishell, line);	//TODO error처리를 위해 우선 minishell도 매개변수로 주었음
 		free(line);
 		if (!tokenization)
@@ -115,7 +115,7 @@ void main_loop(t_minishell *minishell)
 				printf("<======= $: %s ========>\n", process_dquote(token->value));
 			token = token->next;
 		}*/	//TODO tokenization result end
-		parse_tree = parser(tokenization);(void)parse_tree;
+		parse_tree = parser(tokenization);//(void)parse_tree;
 		//printf(">>parse tree result<<\n");	//TODO
 		//print_parse_tree(parse_tree, 0);
 		exev_line(minishell, parse_tree);

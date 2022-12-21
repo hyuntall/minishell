@@ -6,22 +6,40 @@
 /*   By: jiwonhan <jiwonhan@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/19 00:13:28 by jiwonhan          #+#    #+#             */
-/*   Updated: 2022/12/21 19:52:05 by jiwonhan         ###   ########seoul.kr  */
+/*   Updated: 2022/12/21 17:24:06 by jiwonhan         ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 #include "cmd.h"
 
-void	pwd(char **arr)
-{
-	char *path;
 
-	(void)arr;
-	path = getcwd(NULL, 0);
-	if (!path)
-		return ;
-	printf("%s\n", path);
-	free(path);
-	path = NULL;
+void	cd(void)
+{
+	printf("cd\n");
+}
+
+void	pwd(void)
+{
+	printf("pwd\n");
+}
+
+void	ft_export(void)
+{
+	printf("ft_export\n");
+}
+
+void	unset(void)
+{
+	printf("unset\n");
+}
+
+void	env(void)
+{
+	printf("env\n");
+}
+
+void	ft_exit(void)
+{
+	printf("ft_exit\n");
 }
