@@ -6,7 +6,7 @@
 /*   By: hyuncpar <hyuncpar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/02 16:42:09 by hyuncpar          #+#    #+#             */
-/*   Updated: 2022/12/15 17:08:52 by hyuncpar         ###   ########.fr       */
+/*   Updated: 2022/12/21 21:07:05 by hyuncpar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,6 @@
 
 t_token	*tokenizer(char *input)
 {
-	//word split->remove space
 	int		i;
 	int		index;
 	t_token	*token;
@@ -28,7 +27,7 @@ t_token	*tokenizer(char *input)
 		if (input [i] == '\'' || input[i] == '"' || input[i] == ' ' \
 		|| input[i] == '\\' || input[i] == '$' || input[i] == '|' \
 		|| input[i] == '&' || input[i] == '>' || input[i] == '<' \
-		|| input[i] == '(')
+		|| input[i] == '(' || input[i] == ')')
 		{
 			i = tokenize_line(&token, input, index, i);
 			index = i;
@@ -43,6 +42,5 @@ t_token	*tokenizer(char *input)
 	}
 	if (i - index)
 		insert_token(&token, init_token(ft_substr(input, index, i - index), NORM));
-	//TODO remove space
 	return (token);
 }

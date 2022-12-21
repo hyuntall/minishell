@@ -6,7 +6,7 @@
 /*   By: hyuncpar <hyuncpar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/05 17:36:45 by hyuncpar          #+#    #+#             */
-/*   Updated: 2022/12/15 17:16:34 by hyuncpar         ###   ########.fr       */
+/*   Updated: 2022/12/21 21:11:15 by hyuncpar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -115,22 +115,10 @@ int	tokenize_etc(t_token **token, char *input, int i, int type)
 
 int	tokenize_prnth(t_token **token, char *input, int i)
 {
-	int		size;
-	int		cnt;
-
-	size = 0;
-	cnt = 0;
-	i++;
-	while (input[i + size] && (input[i + size] != ')' || cnt))
-	{
-		if (input[i + size] == '(')
-			cnt++;
-		else if (input[i + size] == ')')
-			cnt--;
-		size++;
-	}
-	insert_token(token, init_token(ft_substr(input, i, size), PARENTHESIS));
-	i += size;
+	if (input[i] == ')')
+		insert_token(token, init_token(ft_strdup(")"), PARENTHESIS_RIGHT));
+	else if (input[i] == '(')
+		insert_token(token, init_token(ft_strdup("("), PARENTHESIS_LEFT));
 	return (++i);
 }
 
@@ -156,7 +144,7 @@ int	tokenize_line(t_token **token, char *input, int index, int i)
 		i = tokenize_redir(token, input, i, RIGT);
 	else if (input[i] == '<')
 		i = tokenize_redir(token, input, i, LEFT);
-	else if (input[i] == '(')
+	else if (input[i] == '(' || input[i] == ')')
 		i = tokenize_prnth(token, input, i);
 	return (i);
 }

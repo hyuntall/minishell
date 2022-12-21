@@ -6,7 +6,7 @@
 /*   By: hyuncpar <hyuncpar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/15 17:57:15 by hyuncpar          #+#    #+#             */
-/*   Updated: 2022/12/21 18:38:24 by hyuncpar         ###   ########.fr       */
+/*   Updated: 2022/12/21 21:05:04 by hyuncpar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -228,6 +228,7 @@ void	order_tree(t_minishell *minishell, t_parse_tree *tree)
 		if (check_builtin(minishell->cmd_tbl, arr[0]))
 		{
 			ft_execve(minishell, arr);
+			exit(1);
 		}
 		else
 		{

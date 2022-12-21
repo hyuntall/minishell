@@ -6,7 +6,7 @@
 /*   By: hyuncpar <hyuncpar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/09 16:41:09 by jiwonhan          #+#    #+#             */
-/*   Updated: 2022/12/21 18:32:26 by hyuncpar         ###   ########.fr       */
+/*   Updated: 2022/12/21 21:09:57 by hyuncpar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,8 @@ typedef enum	e_token_type
 	DRGT, // Double Right (Append)
 	LEFT, // Left (Stdin)
 	DLFT, // Double Left (Heredoc)
-	PARENTHESIS, // Parenthesis
+	PARENTHESIS_LEFT, // Parenthesis
+	PARENTHESIS_RIGHT,
 	EROR  // Error
 }			t_token_type;
 

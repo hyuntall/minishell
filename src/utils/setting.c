@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   utils.c                                            :+:      :+:    :+:   */
+/*   setting.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hyuncpar <hyuncpar@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jiwonhan <jiwonhan@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/09 20:59:14 by jiwonhan          #+#    #+#             */
-/*   Updated: 2022/12/19 04:56:55 by hyuncpar         ###   ########.fr       */
+/*   Updated: 2022/12/21 20:33:45 by jiwonhan         ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,6 @@ void	check_arg(int ac, char *av[])
 	}
 }
 
-// 옮겨야함
 char **get_env_path(char **envp)
 {
 	char	**path;
@@ -49,8 +48,6 @@ char **get_env_path(char **envp)
 
 void	init(t_minishell *minishell, char *envp[])
 {
-	//minishell = malloc(sizeof(t_minishell));
-	//ft_memset(minishell, 0, sizeof(minishell));
 	minishell->envp = envp;
 	minishell->path = get_env_path(envp);
 	minishell->status = 0;
