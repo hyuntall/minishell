@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   tokenizer.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hyuncpar <hyuncpar@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jiwonhan <jiwonhan@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/02 16:42:09 by hyuncpar          #+#    #+#             */
-/*   Updated: 2022/12/15 17:08:52 by hyuncpar         ###   ########.fr       */
+/*   Updated: 2022/12/21 20:35:57 by jiwonhan         ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,6 @@
 
 t_token	*tokenizer(char *input)
 {
-	//word split->remove space
 	int		i;
 	int		index;
 	t_token	*token;
@@ -43,6 +42,5 @@ t_token	*tokenizer(char *input)
 	}
 	if (i - index)
 		insert_token(&token, init_token(ft_substr(input, index, i - index), NORM));
-	//TODO remove space
 	return (token);
 }

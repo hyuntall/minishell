@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   insert_tree.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hanjiwon <hanjiwon@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jiwonhan <jiwonhan@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/19 00:13:52 by jiwonhan          #+#    #+#             */
-/*   Updated: 2022/12/20 23:12:11 by hanjiwon         ###   ########.fr       */
+/*   Updated: 2022/12/21 20:49:41 by jiwonhan         ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,7 +96,7 @@ void get_left_node(t_parse_tree *parse_tree, t_token *token)
 	}
 }
 
-void    get_right_node(t_parse_tree *parse_tree, t_token *token)
+void	get_right_node(t_parse_tree *parse_tree, t_token *token)
 {
 	parse_tree->right = init_parse_tree();
 	parse_tree->right->up = parse_tree;
@@ -108,7 +108,7 @@ void    get_right_node(t_parse_tree *parse_tree, t_token *token)
 		parse_tree->right->token->next = NULL;
 }
 
-void insert_tree(t_parse_tree **parse_tree, t_token *find, t_parse_tree *prev_tree)
+void	insert_tree(t_parse_tree **parse_tree, t_token *find, t_parse_tree *prev_tree)
 {
 	t_parse_tree    *new_tree;
 

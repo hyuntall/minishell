@@ -6,7 +6,7 @@
 /*   By: jiwonhan <jiwonhan@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/19 00:21:45 by jiwonhan          #+#    #+#             */
-/*   Updated: 2022/12/21 17:41:02 by jiwonhan         ###   ########seoul.kr  */
+/*   Updated: 2022/12/21 19:49:43 by jiwonhan         ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,9 +35,9 @@ typedef struct s_cmd_tbl
 }				t_cmd_tbl;
 
 void	echo(char **arr);
-/*void	cd(void);
-void	pwd(void);
-void	ft_export(void);
+//void	cd(void);
+void	pwd(char **arr);
+/*void	ft_export(void);
 void	unset(void);
 void	env(void);
 void	ft_exit(void);*/

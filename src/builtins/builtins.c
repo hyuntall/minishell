@@ -6,7 +6,7 @@
 /*   By: jiwonhan <jiwonhan@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/21 17:23:18 by jiwonhan          #+#    #+#             */
-/*   Updated: 2022/12/21 17:41:42 by jiwonhan         ###   ########seoul.kr  */
+/*   Updated: 2022/12/21 20:07:17 by jiwonhan         ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,17 +27,17 @@ t_cmd_tbl	*init_cmd_tbl(void)
 	cmd_tbl = (t_cmd_tbl *)malloc(sizeof(t_cmd_tbl));
 	if (!cmd_tbl)
 		exit(-1);	//TODO error message
-	cmd_tbl->max_element = 1;
+	cmd_tbl->max_element = 2;
 	cmd_tbl->cmd = (t_cmd *)malloc(sizeof(t_cmd) * cmd_tbl->max_element);
 	if (!cmd_tbl->cmd)
 		exit(-1);	//TODO error message
 	setting_cmd(&cmd_tbl->cmd[0], ft_strdup("echo"), AC_ANY, "");
 	cmd_tbl->cmd[0].func = echo;
 	/*setting_cmd(&cmd_tbl->cmd[1], "cd", AC_LESS_1, "");
-	cmd_tbl->cmd[1].func = cd;
-	setting_cmd(&cmd_tbl->cmd[2], "pwd", AC_ZERO, "");
-	cmd_tbl->cmd[2].func = pwd;
-	setting_cmd(&cmd_tbl->cmd[3], "export", 0, "");
+	cmd_tbl->cmd[1].func = cd;*/
+	setting_cmd(&cmd_tbl->cmd[1], "pwd", AC_ZERO, "");
+	cmd_tbl->cmd[1].func = pwd;
+	/*setting_cmd(&cmd_tbl->cmd[3], "export", 0, "");
 	cmd_tbl->cmd[3].func = ft_export;
 	setting_cmd(&cmd_tbl->cmd[4], "unset", 0, "");
 	cmd_tbl->cmd[4].func = unset;
@@ -54,9 +54,12 @@ static int	check_builtin_arg(t_cmd *cmd, char **arr)
 	while (arr[argc])
 		argc++;
 	//printf("%d\t%d\n", cmd->argc, argc);
-	if ((cmd->argc == AC_ZERO && argc != 1) \
+	if ((cmd->argc == AC_ZERO && argc > 1) \
 		|| (cmd->argc == AC_LESS_1 && argc > 2))
-		return (FALSE);
+		{
+			printf("%s: too many arguments\n", arr[0]);
+			return (FALSE);
+		}
 	return (TRUE);
 }
 

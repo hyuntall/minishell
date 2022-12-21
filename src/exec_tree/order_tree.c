@@ -6,7 +6,7 @@
 /*   By: jiwonhan <jiwonhan@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/15 17:57:15 by hyuncpar          #+#    #+#             */
-/*   Updated: 2022/12/21 16:50:09 by jiwonhan         ###   ########seoul.kr  */
+/*   Updated: 2022/12/21 19:58:15 by jiwonhan         ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -228,6 +228,7 @@ void	order_tree(t_minishell *minishell, t_parse_tree *tree)
 		if (check_builtin(minishell->cmd_tbl, arr[0]))
 		{
 			ft_execve(minishell, arr);
+			exit(1);
 		}
 		else
 		{

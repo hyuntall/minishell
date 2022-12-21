@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hanjiwon <hanjiwon@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jiwonhan <jiwonhan@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/13 11:47:20 by jiwonhan          #+#    #+#             */
-/*   Updated: 2022/12/20 21:37:19 by hanjiwon         ###   ########.fr       */
+/*   Updated: 2022/12/21 20:44:54 by jiwonhan         ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,8 +102,8 @@ void parse_token(t_parse_tree **parse_tree, t_token **tail, t_parse_tree *prev_t
 
 t_parse_tree *parser(t_token *token)
 {
-	t_parse_tree    *parse_tree;
-	t_token         *tail;
+	t_parse_tree	*parse_tree;
+	t_token			*tail;
 	
 	parse_tree = NULL;
 	tail = get_tail_token(token);

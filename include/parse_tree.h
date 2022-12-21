@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_tree.h                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hanjiwon <hanjiwon@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jiwonhan <jiwonhan@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/09 17:44:44 by jiwonhan          #+#    #+#             */
-/*   Updated: 2022/12/20 23:09:13 by hanjiwon         ###   ########.fr       */
+/*   Updated: 2022/12/21 20:42:34 by jiwonhan         ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,9 +35,6 @@ void get_left_node(t_parse_tree *parse_tree, t_token *token);
 void insert_tree(t_parse_tree **parse_tree, t_token *find, t_parse_tree *prev_tree);
 t_token *get_tail_token(t_token *token);
 t_token *get_head_token(t_token *token);
-
-void print_node(t_token *token);
-void print_parse_tree(t_parse_tree *parse_tree, int level);
 
 char	*tokentostring(t_token *token);
 
