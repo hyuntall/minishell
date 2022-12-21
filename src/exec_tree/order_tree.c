@@ -6,7 +6,7 @@
 /*   By: hyuncpar <hyuncpar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/15 17:57:15 by hyuncpar          #+#    #+#             */
-/*   Updated: 2022/12/21 21:15:30 by hyuncpar         ###   ########.fr       */
+/*   Updated: 2022/12/21 21:24:34 by hyuncpar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,22 +43,12 @@ void	pipeline(t_minishell *minishell, t_parse_tree *left, t_parse_tree *right)
 int	arr_size(t_token *token)
 {
 	int	size;
-	int	flag;
 
 	size = 0;
-	flag = 1;
 	while (token)
 	{
-		if (token->type >= RIGT && token->type <= DLFT)
-			token = token->next->next;
-		else if (token->type != SPCE && flag)
-		{
-			size++;
-			flag = 0;
-		}
-		else if (token->type == SPCE)
-			flag = 1;
 		token = token->next;
+		size++;
 	}
 	return (size);
 }
@@ -123,41 +113,16 @@ char	**make_arr(t_token *token)
 {
 	int				i;
 	int				size;
-	t_token_type	type;
-	char			*str;
-	char			*temp;
 	char			**arr;
 
 	i = 0;
 	size = arr_size(token);
 	arr = (char **)malloc(sizeof(char *) * (size + 1));
-	type = 0;
-	while (token)
+	while (i < size)
 	{
-		if (token->type == SPCE)
-		{
-			token = token->next;
-			continue ;
-		}
-		if (token->type >= RIGT && token->type <= DLFT)
-		{
-			type = token->type;
-			token = token->next;
-			continue ;
-		}
-		str = ft_strdup("");
-		while (token && token->type != SPCE)
-		{
-			temp = str;
-			str = ft_strjoin(temp, process_token(token));
-			free(temp);
-			token = token->next;
-		}
-		if (!type)
-			arr[i++] = str;
-		else
-			redir(type, str);
-		type = 0;
+		arr[i] = token->value;
+		token = token->next;
+		i++;
 	}
 	arr[i] = NULL;
 	return (arr);
