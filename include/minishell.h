@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hanjiwon <hanjiwon@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jiwonhan <jiwonhan@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/19 00:13:37 by jiwonhan          #+#    #+#             */
-/*   Updated: 2022/12/20 17:42:44 by hanjiwon         ###   ########.fr       */
+/*   Updated: 2022/12/21 16:40:57 by jiwonhan         ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,4 +40,5 @@ void	setting_signal(void);
 void 	main_loop(t_minishell *minishell);
 void	init(t_minishell *minishell, char *envp[]);
 void	check_arg(int ac, char *av[]);
+void	ft_execve(t_minishell *minishell, char **arr);
 #endif
