@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   tokenizer.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jiwonhan <jiwonhan@student.42seoul.kr>     +#+  +:+       +#+        */
+/*   By: hyuncpar <hyuncpar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/02 16:42:09 by hyuncpar          #+#    #+#             */
-/*   Updated: 2022/12/21 20:35:57 by jiwonhan         ###   ########seoul.kr  */
+/*   Updated: 2022/12/21 21:07:05 by hyuncpar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ t_token	*tokenizer(char *input)
 		if (input [i] == '\'' || input[i] == '"' || input[i] == ' ' \
 		|| input[i] == '\\' || input[i] == '$' || input[i] == '|' \
 		|| input[i] == '&' || input[i] == '>' || input[i] == '<' \
-		|| input[i] == '(')
+		|| input[i] == '(' || input[i] == ')')
 		{
 			i = tokenize_line(&token, input, index, i);
 			index = i;

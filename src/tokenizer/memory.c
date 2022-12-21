@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   memory.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jiwonhan <jiwonhan@student.42seoul.kr>     +#+  +:+       +#+        */
+/*   By: hyuncpar <hyuncpar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/05 16:38:06 by jiwonhan          #+#    #+#             */
-/*   Updated: 2022/12/19 00:14:09 by jiwonhan         ###   ########seoul.kr  */
+/*   Updated: 2022/12/21 15:51:33 by hyuncpar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,15 @@ void	insert_token(t_token **head_token, t_token *new_token)
 		head_token = &((*head_token)->next);
 	(*head_token)->next = new_token;
 	new_token->prev = *head_token;
+}
+
+void	delete_token(t_token *token)
+{
+	token->prev->next = token->next;
+	token->next->prev = token->prev;
+	token->next = NULL;
+	token->prev = NULL;
+	free_tokens(token);
 }
 
 void	free_tokens(t_token *token)

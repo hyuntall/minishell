@@ -6,7 +6,7 @@
 /*   By: hyuncpar <hyuncpar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/13 14:41:34 by hyuncpar          #+#    #+#             */
-/*   Updated: 2022/12/18 19:58:52 by hyuncpar         ###   ########.fr       */
+/*   Updated: 2022/12/21 18:34:10 by hyuncpar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,4 +74,59 @@ char	*process_token(t_token *token)
 		token->value = value;
 	}
 	return (token->value);
+}
+
+t_token	*aasda(t_token **new_tokenizer, t_token *token, t_token_type type)
+{
+	char			*str;
+	char			*tmp;
+
+	str = ft_strdup("");
+	while (token && token->type != SPCE)
+	{
+		if (type >= 11 && type <= 14 && token->type >= 6 && token->type <= 15)
+			unexpecte_token(token->type, token->value);
+		if (token->type >= 11 && token->type <= 14)
+			break ;
+		tmp = str;
+		if (token->type == DQUT || token->type == DOLR)
+			str = ft_strjoin(tmp, process_token(token));
+		else
+			str = ft_strjoin(tmp, token->value);
+		free(tmp);
+		token = token->next;
+	}
+	insert_token(new_tokenizer, init_token(str, type));
+	return (token);
+}
+
+t_token	*link_token(t_token *token)
+{
+	t_token			*new_tokenizer;
+	t_token_type	type;
+
+	new_tokenizer = NULL;
+	while (token)
+	{
+		if (token->type != SPCE)
+		{
+			type = token->type;
+			if (token->type >= 11 && token->type <= 14)
+			{
+				token = token->next;
+				if (token && token->type == SPCE)
+					token = token->next;
+				token = aasda(&new_tokenizer, token, type);
+				t_token *val = new_tokenizer;
+				while (val->next)
+					val = val->next;
+				redir(type, val->value);
+			}
+			else
+				token = aasda(&new_tokenizer, token, type);
+		}
+		else
+			token = token->next;
+	}
+	return (new_tokenizer);
 }

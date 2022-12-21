@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   tokenization.h                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hanjiwon <hanjiwon@student.42.fr>          +#+  +:+       +#+        */
+/*   By: hyuncpar <hyuncpar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/09 16:41:09 by jiwonhan          #+#    #+#             */
-/*   Updated: 2022/12/20 21:44:26 by hanjiwon         ###   ########.fr       */
+/*   Updated: 2022/12/21 21:09:57 by hyuncpar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,8 @@ typedef enum	e_token_type
 	DRGT, // Double Right (Append)
 	LEFT, // Left (Stdin)
 	DLFT, // Double Left (Heredoc)
-	PARENTHESIS, // Parenthesis
+	PARENTHESIS_LEFT, // Parenthesis
+	PARENTHESIS_RIGHT,
 	EROR  // Error
 }			t_token_type;
 
@@ -62,10 +63,13 @@ int	tokenize_etc(t_token **token, char *input, int i, int type);
 int	tokenize_line(t_token **token, char *input, int index, int i);
 t_token	*init_token(char *value, int type);
 void	insert_token(t_token **head_token, t_token *new_token);
+void	delete_token(t_token *token);
 char	*process_dquote(char *str);
 void	free_tokens(t_token *token);
 int	unexpecte_token(t_token_type type, char *str);
 
+t_token	*link_token(t_token *token);
+void	redir(t_token_type type, char *filename);
 //jiwon
 t_token *get_head_token(t_token *token);
 t_token *get_tail_token(t_token *token);
