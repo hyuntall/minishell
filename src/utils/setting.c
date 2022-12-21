@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   setting.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jiwonhan <jiwonhan@student.42seoul.kr>     +#+  +:+       +#+        */
+/*   By: hyuncpar <hyuncpar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/09 20:59:14 by jiwonhan          #+#    #+#             */
-/*   Updated: 2022/12/21 20:33:45 by jiwonhan         ###   ########seoul.kr  */
+/*   Updated: 2022/12/21 21:15:55 by hyuncpar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,5 @@ void	init(t_minishell *minishell, char *envp[])
 	minishell->envp = envp;
 	minishell->path = get_env_path(envp);
 	minishell->status = 0;
-	minishell->pipe_num = 0;
 	setting_signal();
 }

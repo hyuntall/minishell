@@ -6,7 +6,7 @@
 /*   By: hyuncpar <hyuncpar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/15 17:57:15 by hyuncpar          #+#    #+#             */
-/*   Updated: 2022/12/21 21:05:04 by hyuncpar         ###   ########.fr       */
+/*   Updated: 2022/12/21 21:15:30 by hyuncpar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,8 +19,7 @@ void	pipeline(t_minishell *minishell, t_parse_tree *left, t_parse_tree *right)
 	int		fd[2];
 	int		pipes;
 	pid_t	pid;
-(void)pipes;
-	minishell->pipe_num++;
+
 	pipes = pipe(fd);
 	pid = fork();
 	wait(NULL);
@@ -62,15 +61,6 @@ int	arr_size(t_token *token)
 		token = token->next;
 	}
 	return (size);
-}
-
-void	print_pipe(int pipe_num)
-{
-	int	i;
-
-	i = 0;
-	while (i++ < pipe_num)
-		write(1, "pipe ", 5);
 }
 
 void	here_doc(char *limit)
