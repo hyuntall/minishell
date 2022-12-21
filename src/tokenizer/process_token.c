@@ -6,7 +6,7 @@
 /*   By: hyuncpar <hyuncpar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/13 14:41:34 by hyuncpar          #+#    #+#             */
-/*   Updated: 2022/12/21 16:54:51 by hyuncpar         ###   ########.fr       */
+/*   Updated: 2022/12/21 17:27:13 by hyuncpar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,11 +76,31 @@ char	*process_token(t_token *token)
 	return (token->value);
 }
 
+t_token	*aasda(t_token **new_tokenizer, t_token *token, t_token_type type)
+{
+	char			*str;
+	char			*tmp;
+
+	str = ft_strdup("");
+	while (token && token->type != SPCE)
+	{
+		if (token->type >= 11 && token->type <= 14)
+			break ;
+		tmp = str;
+		if (token->type == DQUT || token->type == DOLR)
+			str = ft_strjoin(tmp, process_token(token));
+		else
+			str = ft_strjoin(tmp, token->value);
+		free(tmp);
+		token = token->next;
+	}
+	insert_token(new_tokenizer, init_token(str, type));
+	return (token);
+}
+
 t_token	*link_token(t_token *token)
 {
 	t_token			*new_tokenizer;
-	char			*str;
-	char			*tmp;
 	t_token_type	type;
 
 	new_tokenizer = NULL;
@@ -88,28 +108,20 @@ t_token	*link_token(t_token *token)
 	{
 		if (token->type != SPCE)
 		{
-			str = ft_strdup("");
 			type = token->type;
-			while (token && token->type != SPCE)
+			if (token->type >= 11 && token->type <= 14)
 			{
-				tmp = str;
-				if (token->type >= 11 && token->type <= 14)
-				{
-					token = token->next;
-					if (token && token->type == SPCE)
-						token = token->next;
-				}
-				if (token->type == DQUT || token->type == DOLR)
-					str = ft_strjoin(tmp, process_token(token));
-				else
-					str = ft_strjoin(tmp, token->value);
-				free(tmp);
 				token = token->next;
+				if (token && token->type == SPCE)
+					token = token->next;
+				token = aasda(&new_tokenizer, token, type);
 			}
-			insert_token(&new_tokenizer, init_token(str, type));
+			else
+				token = aasda(&new_tokenizer, token, type);
 		}
 		else
 			token = token->next;
 	}
+	printf("%s\n", new_tokenizer->value);
 	return (new_tokenizer);
 }
