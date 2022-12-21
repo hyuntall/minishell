@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main_loop.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hanjiwon <hanjiwon@student.42.fr>          +#+  +:+       +#+        */
+/*   By: hyuncpar <hyuncpar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/05 16:38:08 by jiwonhan          #+#    #+#             */
-/*   Updated: 2022/12/20 22:30:51 by hanjiwon         ###   ########.fr       */
+/*   Updated: 2022/12/21 17:08:06 by hyuncpar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,19 +105,18 @@ void main_loop(t_minishell *minishell)
 		free(line);
 		if (!tokenization)
 			continue ;
-		/*
+		
 		printf(">>tokenization result<<\n");	//TODO
 		t_token *token = tokenization;
 		while (token)
 		{
 			printf("arg: %10s type: %10d len: %10zu\n", token->value, token->type, ft_strlen(token->value));
-			if (token->type == 3)
-				printf("<======= $: %s ========>\n", process_dquote(token->value));
 			token = token->next;
-		}*/	//TODO tokenization result end
-		parse_tree = parser(tokenization);(void)parse_tree;
-		printf(">>parse tree result<<\n");	//TODO
-		print_parse_tree(parse_tree, 0);
+		}	//TODO tokenization result end
+		
+		//parse_tree = parser(tokenization);(void)parse_tree;
+		//printf(">>parse tree result<<\n");	//TODO
+		//print_parse_tree(parse_tree, 0);
 		//exev_line(minishell, parse_tree);
 		//free_tokens(parse_tree->token);
 		//TODO parse tree result end

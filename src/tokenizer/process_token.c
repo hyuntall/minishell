@@ -6,7 +6,7 @@
 /*   By: hyuncpar <hyuncpar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/13 14:41:34 by hyuncpar          #+#    #+#             */
-/*   Updated: 2022/12/18 19:58:52 by hyuncpar         ###   ########.fr       */
+/*   Updated: 2022/12/21 16:54:51 by hyuncpar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,4 +74,42 @@ char	*process_token(t_token *token)
 		token->value = value;
 	}
 	return (token->value);
+}
+
+t_token	*link_token(t_token *token)
+{
+	t_token			*new_tokenizer;
+	char			*str;
+	char			*tmp;
+	t_token_type	type;
+
+	new_tokenizer = NULL;
+	while (token)
+	{
+		if (token->type != SPCE)
+		{
+			str = ft_strdup("");
+			type = token->type;
+			while (token && token->type != SPCE)
+			{
+				tmp = str;
+				if (token->type >= 11 && token->type <= 14)
+				{
+					token = token->next;
+					if (token && token->type == SPCE)
+						token = token->next;
+				}
+				if (token->type == DQUT || token->type == DOLR)
+					str = ft_strjoin(tmp, process_token(token));
+				else
+					str = ft_strjoin(tmp, token->value);
+				free(tmp);
+				token = token->next;
+			}
+			insert_token(&new_tokenizer, init_token(str, type));
+		}
+		else
+			token = token->next;
+	}
+	return (new_tokenizer);
 }
