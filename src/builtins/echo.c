@@ -1,45 +1,41 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   pwd.c                                              :+:      :+:    :+:   */
+/*   echo.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jiwonhan <jiwonhan@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/12/19 00:13:28 by jiwonhan          #+#    #+#             */
-/*   Updated: 2022/12/21 17:24:06 by jiwonhan         ###   ########seoul.kr  */
+/*   Created: 2022/12/21 16:50:32 by jiwonhan          #+#    #+#             */
+/*   Updated: 2022/12/21 17:54:37 by jiwonhan         ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 #include "cmd.h"
 
-
-void	cd(void)
+void	echo(char **arr)
 {
-	printf("cd\n");
-}
-
-void	pwd(void)
-{
-	printf("pwd\n");
-}
-
-void	ft_export(void)
-{
-	printf("ft_export\n");
-}
-
-void	unset(void)
-{
-	printf("unset\n");
-}
-
-void	env(void)
-{
-	printf("env\n");
-}
-
-void	ft_exit(void)
-{
-	printf("ft_exit\n");
+	int	i;
+	
+	if (!ft_strncmp(arr[1], "-n", ft_strlen(arr[1])))
+	{
+		i = 2;
+		while (arr[i])
+		{
+			printf("%s", arr[i++]);
+			if (arr[i])
+				printf(" ");
+		}
+	}
+	else
+	{
+		i = 1;
+		while (arr[i])
+		{
+			printf("%s", arr[i++]);
+			if (arr[i])
+				printf(" ");
+		}
+		printf("\n");
+	}
 }

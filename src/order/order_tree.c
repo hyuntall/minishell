@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   order_tree.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hanjiwon <hanjiwon@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jiwonhan <jiwonhan@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/15 17:57:15 by hyuncpar          #+#    #+#             */
-/*   Updated: 2022/12/20 18:35:30 by hanjiwon         ###   ########.fr       */
+/*   Updated: 2022/12/21 16:50:09 by jiwonhan         ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -201,7 +201,7 @@ static int	check_builtin(t_cmd_tbl *cmd_tbl, const char *cmd)
 {
 	int	i;
 
-	i = -1;printf("%s\n", cmd);
+	i = -1;
 	while (++i < cmd_tbl->max_element)
 	{
 		if (ft_strncmp(cmd_tbl->cmd[i].cmd, cmd, ft_strlen(cmd)) == 0)
@@ -214,7 +214,7 @@ void	order_tree(t_minishell *minishell, t_parse_tree *tree)
 {
 	t_token	*token;
 	char	**arr;
-(void)token;
+
 	minishell->cmd_tbl = init_cmd_tbl();
 	token = tree->token;
 	if (tree->type == PIPE)
@@ -226,14 +226,14 @@ void	order_tree(t_minishell *minishell, t_parse_tree *tree)
 	{
 		arr = make_arr(minishell, tree->token);
 		if (check_builtin(minishell->cmd_tbl, arr[0]))
-		{printf("in builtin func\n");
-			//ft_execve(minishell, cmd_tbl, arr);
+		{
+			ft_execve(minishell, arr);
 		}
 		else
 		{
 			execve(check_cmd(minishell, arr[0]), arr, minishell->envp);
 			perror(arr[0]);
-			exit(1);
+			exit(1);	
 		}
 	}
 }

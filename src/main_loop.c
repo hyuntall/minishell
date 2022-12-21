@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main_loop.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hanjiwon <hanjiwon@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jiwonhan <jiwonhan@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/05 16:38:08 by jiwonhan          #+#    #+#             */
-/*   Updated: 2022/12/20 22:30:51 by hanjiwon         ###   ########.fr       */
+/*   Updated: 2022/12/21 16:49:50 by jiwonhan         ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -116,13 +116,13 @@ void main_loop(t_minishell *minishell)
 			token = token->next;
 		}*/	//TODO tokenization result end
 		parse_tree = parser(tokenization);(void)parse_tree;
-		printf(">>parse tree result<<\n");	//TODO
-		print_parse_tree(parse_tree, 0);
-		//exev_line(minishell, parse_tree);
-		//free_tokens(parse_tree->token);
+		//printf(">>parse tree result<<\n");	//TODO
+		//print_parse_tree(parse_tree, 0);
+		exev_line(minishell, parse_tree);
+		free_tokens(parse_tree->token);
 		//TODO parse tree result end
 		//execute(parse_tree);	//TODO 
-		//free (parse_tree);
+		free (parse_tree);
 	}
 	return ;
 }
