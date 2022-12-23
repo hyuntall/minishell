@@ -6,7 +6,7 @@
 /*   By: hanjiwon <hanjiwon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/05 16:38:08 by jiwonhan          #+#    #+#             */
-/*   Updated: 2022/12/22 05:50:14 by hanjiwon         ###   ########.fr       */
+/*   Updated: 2022/12/23 20:15:52 by hanjiwon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,14 +104,15 @@ void main_loop(t_minishell *minishell)
 		free(line);
 		if (!tokenization)
 			continue ;
-		//print_tokenization_result(tokenization);	//TODO
+		print_tokenization_result(tokenization);//(void)parse_tree;//TODO
+		//heredoc(minishell, tokenization);		//heredoc here??!!!!
 		parse_tree = parser(tokenization);
 		(void)parse_tree;printf(">>parse tree result<<\n");print_parse_tree(parse_tree, 0);
 		//exev_line(minishell, parse_tree);
 		//free_tokens(parse_tree->token);
 		//TODO parse tree result end
 		//execute(parse_tree);	//TODO 
-		free (parse_tree);
+		//free (parse_tree);
 	}
 	return ;
 }

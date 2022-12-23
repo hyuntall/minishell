@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   insert_tree.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jiwonhan <jiwonhan@student.42seoul.kr>     +#+  +:+       +#+        */
+/*   By: hanjiwon <hanjiwon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/19 00:13:52 by jiwonhan          #+#    #+#             */
-/*   Updated: 2022/12/21 20:49:41 by jiwonhan         ###   ########seoul.kr  */
+/*   Updated: 2022/12/23 20:16:51 by hanjiwon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,12 +88,7 @@ void get_left_node(t_parse_tree *parse_tree, t_token *token)
 	set_left_token(parse_tree->left->token, token);	//left->token의 이후 연결 끊기
 	token->prev = NULL;	//사용한 token 연결 끊기
 	if (token->type == RIGT || token->type == DRGT || token->type ==  LEFT || token->type == DLFT)
-	{
-		parse_tree->original = ft_strdup(tokentostring(parse_tree->left->token));
-		parse_tree->original = ft_strjoin(parse_tree->original, parse_tree->token->value);
-		parse_tree->original = ft_strjoin(parse_tree->original, tokentostring(token->next));
 		set_left_token_redirection(parse_tree->left, token);
-	}
 }
 
 void	get_right_node(t_parse_tree *parse_tree, t_token *token)
