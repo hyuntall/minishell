@@ -6,7 +6,7 @@
 /*   By: hyuncpar <hyuncpar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/05 17:36:45 by hyuncpar          #+#    #+#             */
-/*   Updated: 2022/12/23 17:01:58 by hyuncpar         ###   ########.fr       */
+/*   Updated: 2022/12/23 17:25:35 by hyuncpar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,6 +81,12 @@ int	tokenize_redir(t_token **token, char *input, int i, int type)
 	return (i);
 }
 
+int	is_special_symbol(char c)
+{
+	return (c == '\'' || c == '"' || c == ' ' || c == '\\' || c == '$' \
+			|| c == '|' || c == '&' || c == '>' || c == '<' || c == '(' || c == ')');
+}
+
 int	tokenize_etc(t_token **token, char *input, int i, int type)
 {
 	int		size;
@@ -94,7 +100,7 @@ int	tokenize_etc(t_token **token, char *input, int i, int type)
 	else if (type == DOLR)
 	{
 		i++;
-		while (input[i + size] && input[i + size] != ' ')
+		while (input[i + size] && !is_special_symbol(input[i + size]))
 			size++;
 		if (size == 1)
 		{
