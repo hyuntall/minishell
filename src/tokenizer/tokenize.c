@@ -3,15 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   tokenize.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hyuncpar <hyuncpar@student.42.fr>          +#+  +:+       +#+        */
+/*   By: hanjiwon <hanjiwon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/05 17:36:45 by hyuncpar          #+#    #+#             */
-/*   Updated: 2022/12/21 21:11:15 by hyuncpar         ###   ########.fr       */
+/*   Updated: 2022/12/22 05:39:54 by hanjiwon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 #include "tokenization.h"
+#include "testcode.h"
 
 int	tokenize_quote(t_token **token, char *input, int i, t_token_type type)
 {

@@ -3,44 +3,48 @@
 /*                                                        :::      ::::::::   */
 /*   tokenizer.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hyuncpar <hyuncpar@student.42.fr>          +#+  +:+       +#+        */
+/*   By: hanjiwon <hanjiwon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/02 16:42:09 by hyuncpar          #+#    #+#             */
-/*   Updated: 2022/12/21 21:07:05 by hyuncpar         ###   ########.fr       */
+/*   Updated: 2022/12/22 05:46:31 by hanjiwon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 #include "tokenization.h"
+#include "testcode.h"
+static int	is_valid_char(char c)
+{
+	return (c == '\'' || c == '"' || c == ' ' || c == '\\' || c == '$' \
+			|| c == '|' || c == '&' || c == '>' || c == '<' || c == '(' || c == ')');
+}
 
 t_token	*tokenizer(char *input)
 {
-	int		i;
-	int		index;
+	int		end_index;
+	int		start_index;
 	t_token	*token;
 
-	i = 0;
-	index = 0;
+	end_index = 0;
+	start_index = 0;
 	token = NULL;
-	while (input && input[i])
+	while (input && input[end_index])
 	{
-		if (input [i] == '\'' || input[i] == '"' || input[i] == ' ' \
-		|| input[i] == '\\' || input[i] == '$' || input[i] == '|' \
-		|| input[i] == '&' || input[i] == '>' || input[i] == '<' \
-		|| input[i] == '(' || input[i] == ')')
+		if (is_valid_char(input[end_index]))
 		{
-			i = tokenize_line(&token, input, index, i);
-			index = i;
+			end_index = tokenize_line(&token, input, start_index, end_index);
+			start_index = end_index;
 		}
 		else
-			i++;
-		if (i == TOKEN_ERROR)	//TODO minishell status change
+			end_index++;
+		if (end_index == TOKEN_ERROR)	//TODO minishell status change
 		{
 			free_tokens(token);
 			return (token);
 		}
+		//print_node(token);
 	}
-	if (i - index)
-		insert_token(&token, init_token(ft_substr(input, index, i - index), NORM));
+	if (end_index - start_index)
+		insert_token(&token, init_token(ft_substr(input, start_index, end_index - start_index), NORM));
 	return (token);
 }
