@@ -6,7 +6,7 @@
 /*   By: hyuncpar <hyuncpar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/13 14:41:34 by hyuncpar          #+#    #+#             */
-/*   Updated: 2022/12/23 17:35:54 by hyuncpar         ###   ########.fr       */
+/*   Updated: 2022/12/23 18:12:05 by hyuncpar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,6 +102,37 @@ t_token	*link_words(t_token **new_tokenizer, t_token *token, t_token_type type)
 	return (token);
 }
 
+int	valid_lexical(t_token_type type, t_token *token)
+{
+	t_token_type	cur_type;
+
+	cur_type = token->type;
+	if (type == PIPE && cur_type != PIPE && cur_type >= 5 && cur_type <= 16)
+		return (0);
+	else if (type == DPIP && cur_type >= 5 && cur_type <= 16)
+		return (0);
+	else if (type == DAND && cur_type >= 5 && cur_type <= 16)
+		return (0);
+	else if (type == LEFT && cur_type >= 5 && cur_type <= 16)
+		return (0);
+	else if (type == DLFT && cur_type >= 5 && cur_type <= 16)
+		return (0);
+	else if (type == RIGT && cur_type >= 5 && cur_type <= 16)
+		return (0);
+	else if (type == DRGT && cur_type >= 5 && cur_type <= 16)
+		return (0);
+	return (1);
+}
+
+t_token	*error_lexical(t_token *token, char *value)
+{
+	ft_putstr_fd("minishell: syntax error near unexpected token `", 2);
+	ft_putstr_fd(value, 2);
+	ft_putstr_fd("'\n", 2);
+	free_tokens(token);
+	return (NULL);
+}
+
 t_token	*link_token(t_token *token)
 {
 	t_token			*new_tokenizer;
@@ -112,6 +143,8 @@ t_token	*link_token(t_token *token)
 	{
 		if (token->type != SPCE)
 		{
+			if (!valid_lexical(type, token))
+				return (error_lexical(new_tokenizer, token->value));
 			type = token->type;
 			if (token->type >= 1 && token->type <= 5)
 				token = link_words(&new_tokenizer, token, type);
