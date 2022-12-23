@@ -6,7 +6,7 @@
 /*   By: hanjiwon <hanjiwon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/13 11:47:20 by jiwonhan          #+#    #+#             */
-/*   Updated: 2022/12/23 19:30:52 by hanjiwon         ###   ########.fr       */
+/*   Updated: 2022/12/24 01:45:31 by hanjiwon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,9 +77,9 @@ static void go_right_node(t_parse_tree **parse_tree)
 
 void parse_token(t_parse_tree **parse_tree, t_token **tail, t_parse_tree *prev_tree)
 {
-	t_token *find = NULL;
+	t_token *find;
+	
 	check_parenthesis(parse_tree, tail);
-	print_node(find);
 	if (find_head_from_tail(*tail, &find, DPIP) == TRUE || find_head_from_tail(*tail, &find, DAND) == TRUE) //logical == and or
 		insert_tree(parse_tree, find, prev_tree);
 	else if (find_head_from_tail(*tail, &find, PIPE) == TRUE)
