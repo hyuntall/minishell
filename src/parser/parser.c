@@ -6,7 +6,7 @@
 /*   By: hanjiwon <hanjiwon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/13 11:47:20 by jiwonhan          #+#    #+#             */
-/*   Updated: 2022/12/24 01:45:31 by hanjiwon         ###   ########.fr       */
+/*   Updated: 2022/12/24 01:51:49 by hanjiwon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,12 +17,14 @@
 
 int  find_head_from_tail(t_token *tail, t_token **find, t_token_type type)
 {
-	//parenthesis check
-	ssize_t parenthesis_cnt = 0;
+	int parenthesis_cnt = 0;
 
 	while (tail)
 	{
-		//check parenthesis
+		if (tail->type == PARENTHESIS_LEFT)
+			++parenthesis_cnt;
+		else if (tail->type == PARENTHESIS_RIGHT)
+			--parenthesis_cnt;
 		if ((tail->type == type) && !parenthesis_cnt)
 		{
 			*find = tail;
@@ -36,12 +38,14 @@ int  find_head_from_tail(t_token *tail, t_token **find, t_token_type type)
 
 int  find_head_from_head(t_token *head, t_token **find, t_token_type type)
 {
-	//parenthesis check
-	ssize_t parenthesis_cnt = 0;
+	int parenthesis_cnt = 0;
 
 	while (head)
 	{
-		//check parenthesis
+		if (head->type == PARENTHESIS_LEFT)
+			++parenthesis_cnt;
+		else if (head->type == PARENTHESIS_RIGHT)
+			--parenthesis_cnt;
 		if ((head->type == type) && !parenthesis_cnt)
 		{
 			*find = head;
