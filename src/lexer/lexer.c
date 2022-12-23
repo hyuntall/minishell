@@ -6,7 +6,7 @@
 /*   By: hanjiwon <hanjiwon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/23 20:30:05 by hanjiwon          #+#    #+#             */
-/*   Updated: 2022/12/23 23:26:26 by hanjiwon         ###   ########.fr       */
+/*   Updated: 2022/12/23 23:57:56 by hanjiwon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,12 +74,42 @@ int check_parenthesis_lexer(t_token *token)
     return (TRUE);
 }
 
-int lexer(t_token *token)
- {
+int near_unexpected_token(t_token *token)
+{
     if (check_first_token(token) == FALSE)
         return (FALSE);
-    //parenthesis->하나의 쉘의 토큰이므로 구문검사..^^? 아닌가.. 어차피 서브쉘..들어가면..
     if (check_parenthesis_lexer(token) == FALSE)
+        return (FALSE);
+    return (TRUE);
+}
+
+int match_parenthesis_token(t_token *token)
+{
+    int cnt;
+
+    cnt = 0;
+    while (token)
+    {
+        if (token->type == PARENTHESIS_LEFT)
+            ++cnt;
+        else if (token->type == PARENTHESIS_RIGHT)
+            --cnt;
+        token = token->next;
+    }
+    if (cnt > 0)
+    {
+        not_match_token();
+        return (FALSE);
+    }
+    return (TRUE);
+}
+
+int lexer(t_token *token)
+ {
+    // PIPE, AND, OR이 연속으로 나오는 경우 => near_unexpected_token에 추가
+    if (near_unexpected_token(token) == FALSE)
+        return (FALSE);
+    if (match_parenthesis_token(token) == FALSE)
         return (FALSE);
     return (TRUE);
  }

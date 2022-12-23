@@ -6,7 +6,7 @@
 /*   By: hanjiwon <hanjiwon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/09 16:41:09 by jiwonhan          #+#    #+#             */
-/*   Updated: 2022/12/23 21:16:34 by hanjiwon         ###   ########.fr       */
+/*   Updated: 2022/12/23 23:56:36 by hanjiwon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,5 +75,5 @@ t_token	*error_lexical(t_token *token, char *value);
 //jiwon
 t_token *get_head_token(t_token *token);
 t_token *get_tail_token(t_token *token);
-
+void	not_match_token(void);
 #endif

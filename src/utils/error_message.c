@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   error_message.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jiwonhan <jiwonhan@student.42seoul.kr>     +#+  +:+       +#+        */
+/*   By: hanjiwon <hanjiwon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/09 18:49:28 by hyuncpar          #+#    #+#             */
-/*   Updated: 2022/12/19 00:14:22 by jiwonhan         ###   ########seoul.kr  */
+/*   Updated: 2022/12/23 23:57:39 by hanjiwon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,4 +18,10 @@ int	unexpecte_token(t_token_type type, char *str)
 	printf("error %d %s\n", type, str);
 	free(str);
 	return (-1);
+}
+
+void	not_match_token(void)
+{
+		ft_putstr_fd("minishell: syntax error not match token\n", 2);
+	return ;
 }

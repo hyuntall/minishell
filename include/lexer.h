@@ -6,7 +6,7 @@
 /*   By: hanjiwon <hanjiwon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/23 20:42:41 by hanjiwon          #+#    #+#             */
-/*   Updated: 2022/12/23 23:19:10 by hanjiwon         ###   ########.fr       */
+/*   Updated: 2022/12/23 23:43:53 by hanjiwon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,5 +26,6 @@ int check_parenthesis_lexer(t_token *token);
 int check_right_parenthesis(t_token *token);
 int matching_parenthesis(t_token *token);
 int check_left_parenthesis(t_token *token);
+int near_unexpected_token(t_token *token);
 
 #endif
