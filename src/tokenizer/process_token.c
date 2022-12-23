@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   process_token.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hyuncpar <hyuncpar@student.42.fr>          +#+  +:+       +#+        */
+/*   By: hanjiwon <hanjiwon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/13 14:41:34 by hyuncpar          #+#    #+#             */
-/*   Updated: 2022/12/23 18:12:05 by hyuncpar         ###   ########.fr       */
+/*   Updated: 2022/12/23 23:20:38 by hanjiwon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -143,8 +143,8 @@ t_token	*link_token(t_token *token)
 	{
 		if (token->type != SPCE)
 		{
-			if (!valid_lexical(type, token))
-				return (error_lexical(new_tokenizer, token->value));
+			/*if (!valid_lexical(type, token))
+				return (error_lexical(new_tokenizer, token->value));*/
 			type = token->type;
 			if (token->type >= 1 && token->type <= 5)
 				token = link_words(&new_tokenizer, token, type);

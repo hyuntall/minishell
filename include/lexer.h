@@ -1,34 +1,30 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   analize_line.c                                     :+:      :+:    :+:   */
+/*   lexer.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: hanjiwon <hanjiwon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/12/02 16:42:09 by hyuncpar          #+#    #+#             */
-/*   Updated: 2022/12/23 23:23:21 by hanjiwon         ###   ########.fr       */
+/*   Created: 2022/12/23 20:42:41 by hanjiwon          #+#    #+#             */
+/*   Updated: 2022/12/23 23:19:10 by hanjiwon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#ifndef LEXER_H
+# define LEXER_H
+
 #include "tokenization.h"
-#include "lexer.h"
 
-t_token	*analize_line(t_minishell *minishell, char *input)
+typedef enum e_lexer_type
 {
-	t_token	*tokenized;
-	t_token	*new_tokenized;
+    NOT_FIRST = PIPE | DPIP | DAND | PARENTHESIS_RIGHT
+}t_lexer_type;
 
-	tokenized = tokenizer(input);
-	if (!tokenized)
-		return (NULL);
-	new_tokenized = link_token(tokenized);
-	free_tokens(tokenized);
-	if (lexer(new_tokenized) == FALSE)
-	{
-		minishell->status = -1;
-		printf("minishell status -1\n");
-		return (NULL);
-	}
-	return (new_tokenized);
-}
+int lexer(t_token *token);
+int check_first_token(t_token *token);
+int check_parenthesis_lexer(t_token *token);
+int check_right_parenthesis(t_token *token);
+int matching_parenthesis(t_token *token);
+int check_left_parenthesis(t_token *token);
+
+#endif

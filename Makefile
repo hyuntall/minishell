@@ -21,6 +21,7 @@ SRCS = src/utils/testcode.c \
 		src/tokenizer/tokenize.c src/tokenizer/tokenizer.c \
 		src/parser/parser.c src/parser/insert_tree.c src/parser/token_tool.c \
 		src/parser/parenthesis.c \
+		src/lexer/lexer.c \
 		src/exec_tree/order_tree.c \
 		src/builtins/builtins.c src/builtins/echo.c src/builtins/pwd.c 
 
