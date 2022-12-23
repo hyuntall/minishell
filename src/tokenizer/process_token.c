@@ -6,7 +6,7 @@
 /*   By: hyuncpar <hyuncpar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/13 14:41:34 by hyuncpar          #+#    #+#             */
-/*   Updated: 2022/12/21 18:34:10 by hyuncpar         ###   ########.fr       */
+/*   Updated: 2022/12/23 17:01:37 by hyuncpar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,7 @@ char	*process_token(t_token *token)
 
 	if (token->type == DOLR)
 	{
-		value = getenv(token->value);
+		value = ft_strdup(getenv(token->value));
 		if (!value)
 			value = ft_strdup(" ");
 		token->value = value;
@@ -76,16 +76,18 @@ char	*process_token(t_token *token)
 	return (token->value);
 }
 
-t_token	*aasda(t_token **new_tokenizer, t_token *token, t_token_type type)
+t_token	*link_words(t_token **new_tokenizer, t_token *token, t_token_type type)
 {
 	char			*str;
 	char			*tmp;
 
-	str = ft_strdup("");
-	while (token && token->type != SPCE)
+	if (token->type == DQUT || token->type == DOLR)
+		str = ft_strdup(process_token(token));
+	else
+		str = ft_strdup(token->value);
+	token = token->next;
+	while (token && token->type >= 1 && token->type <= 5)
 	{
-		if (type >= 11 && type <= 14 && token->type >= 6 && token->type <= 15)
-			unexpecte_token(token->type, token->value);
 		if (token->type >= 11 && token->type <= 14)
 			break ;
 		tmp = str;
@@ -111,19 +113,13 @@ t_token	*link_token(t_token *token)
 		if (token->type != SPCE)
 		{
 			type = token->type;
-			if (token->type >= 11 && token->type <= 14)
-			{
-				token = token->next;
-				if (token && token->type == SPCE)
-					token = token->next;
-				token = aasda(&new_tokenizer, token, type);
-				t_token *val = new_tokenizer;
-				while (val->next)
-					val = val->next;
-				redir(type, val->value);
-			}
+			if (token->type >= 1 && token->type <= 5)
+				token = link_words(&new_tokenizer, token, type);
 			else
-				token = aasda(&new_tokenizer, token, type);
+			{
+				insert_token(&new_tokenizer, init_token(ft_strdup(token->value), type));
+				token = token->next;
+			}
 		}
 		else
 			token = token->next;

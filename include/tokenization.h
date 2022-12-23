@@ -6,7 +6,7 @@
 /*   By: hyuncpar <hyuncpar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/09 16:41:09 by jiwonhan          #+#    #+#             */
-/*   Updated: 2022/12/21 21:09:57 by hyuncpar         ###   ########.fr       */
+/*   Updated: 2022/12/23 16:31:04 by hyuncpar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,8 +19,8 @@ typedef	struct s_token t_token;
 
 typedef enum	e_token_type
 {
-	NORM, // Normal
 	SPCE, // Space
+	NORM, // Normal
 	QUOT, // Single Quote
 	DQUT, // Double Quote
 	BSLH, // Back Slash
