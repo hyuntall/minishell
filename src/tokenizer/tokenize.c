@@ -6,7 +6,7 @@
 /*   By: hyuncpar <hyuncpar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/05 17:36:45 by hyuncpar          #+#    #+#             */
-/*   Updated: 2022/12/23 17:25:35 by hyuncpar         ###   ########.fr       */
+/*   Updated: 2022/12/23 17:43:58 by hyuncpar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,13 +99,12 @@ int	tokenize_etc(t_token **token, char *input, int i, int type)
 		i++;
 	else if (type == DOLR)
 	{
-		i++;
 		while (input[i + size] && !is_special_symbol(input[i + size]))
 			size++;
 		if (size == 1)
 		{
 			insert_token(token, init_token(ft_strdup("$"), NORM));
-			return (i);
+			return (++i);
 		}
 	}
 	insert_token(token, init_token(ft_substr(input, i, size), type));
