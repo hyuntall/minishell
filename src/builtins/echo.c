@@ -3,17 +3,17 @@
 /*                                                        :::      ::::::::   */
 /*   echo.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jiwonhan <jiwonhan@student.42seoul.kr>     +#+  +:+       +#+        */
+/*   By: hanjiwon <hanjiwon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/21 16:50:32 by jiwonhan          #+#    #+#             */
-/*   Updated: 2022/12/21 20:03:48 by jiwonhan         ###   ########seoul.kr  */
+/*   Updated: 2022/12/27 01:22:26 by hanjiwon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 #include "cmd.h"
 
-void	echo(char **arr)
+void	echo(t_minishell *minishell, char **arr)
 {
 	int	i;
 
@@ -43,4 +43,5 @@ void	echo(char **arr)
 		}
 		printf("\n");
 	}
+	minishell->status = 100;
 }

@@ -1,28 +1,24 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   pwd.c                                              :+:      :+:    :+:   */
+/*   env.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: hanjiwon <hanjiwon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/12/19 00:13:28 by jiwonhan          #+#    #+#             */
-/*   Updated: 2022/12/27 01:22:22 by hanjiwon         ###   ########.fr       */
+/*   Created: 2022/12/27 03:03:32 by hanjiwon          #+#    #+#             */
+/*   Updated: 2022/12/27 03:05:34 by hanjiwon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 #include "cmd.h"
 
-void	pwd(t_minishell *minishell, char **arr)
+void	env(t_minishell *minishell, char **arr)
 {
-	char *path;
+    int i;
 
-	(void)arr;
-	path = getcwd(NULL, 0);
-	if (!path)
-		return ;
-	printf("%s\n", path);
-	free(path);
-	path = NULL;
-	minishell->status = 100;
+    (void)arr;
+    i = -1;
+    while (minishell->envp[++i])
+        printf("%s\n", minishell->envp[i]);
 }
