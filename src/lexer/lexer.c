@@ -6,7 +6,7 @@
 /*   By: hyuncpar <hyuncpar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/23 20:30:05 by hanjiwon          #+#    #+#             */
-/*   Updated: 2022/12/27 17:44:48 by hyuncpar         ###   ########.fr       */
+/*   Updated: 2022/12/27 18:01:23 by hyuncpar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,7 +91,7 @@ static int	is_special_token(t_token_type type)
 
 static int	is_logical(t_token_type type)
 {
-	// PIPE, AND, OR 다음에 개행이면 추가 입력 받아야되게 나와서 일단 에러처리
+	// bash에서는 PIPE, AND, OR 다음에 개행이면 추가 입력 받아야되게 나와서 일단 에러처리
 	if (type == PIPE || type == DPIP || type == DAND || type == NEW_LINE)
 		return (TRUE);
 	return (FALSE);
@@ -135,8 +135,8 @@ int match_parenthesis_token(t_token *token)
 }
 
 int lexer(t_token *token)
- {
-	while (token && token->type != NEW_LINE)
+{
+	while (token->type != NEW_LINE)
 	{
 		// PIPE, AND, OR이 연속으로 나오는 경우 => near_unexpected_token에 추가
 		if (near_unexpected_token(token) == FALSE)
@@ -145,5 +145,7 @@ int lexer(t_token *token)
 			return (FALSE);
 		token = token->next;
 	}
+	free(token->value);
+	token->prev->next = NULL;
 	return (TRUE);
- }
+}
