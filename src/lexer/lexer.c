@@ -6,7 +6,7 @@
 /*   By: hyuncpar <hyuncpar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/23 20:30:05 by hanjiwon          #+#    #+#             */
-/*   Updated: 2022/12/27 18:44:24 by hyuncpar         ###   ########.fr       */
+/*   Updated: 2022/12/27 21:13:23 by hyuncpar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,7 +73,8 @@ int check_parenthesis_lexer(t_token *token)
     }
     return (TRUE);
 }
-static int	is_redirection(t_token_type type)
+
+int	is_redirection(t_token_type type)
 {
 	if (type == LEFT || type == RIGT || type == DLFT || type == DRGT)
 		return (TRUE);
@@ -136,7 +137,9 @@ int match_parenthesis_token(t_token *token)
 
 int lexer(t_minishell *minishell, t_token *token)
 {
-	init_redir(minishell);
+	t_redir	*redir;
+
+	minishell->redir = new_redir();
 	while (token->type != NEW_LINE)
 	{
 		// PIPE, AND, OR이 연속으로 나오는 경우 => near_unexpected_token에 추가
@@ -148,8 +151,10 @@ int lexer(t_minishell *minishell, t_token *token)
 			input_heredoc(minishell, token->next->value);
 		else if (token->type == PIPE)
 		{
+			redir = new_redir();
+			redir->prev = minishell->redir;
+			minishell->redir->next = redir;
 			minishell->redir = minishell->redir->next;
-			init_redir(minishell);
 		}
 		token = token->next;
 	}

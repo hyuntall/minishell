@@ -6,7 +6,7 @@
 /*   By: hyuncpar <hyuncpar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/09 16:41:09 by jiwonhan          #+#    #+#             */
-/*   Updated: 2022/12/27 17:37:45 by hyuncpar         ###   ########.fr       */
+/*   Updated: 2022/12/27 19:00:55 by hyuncpar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,8 +69,10 @@ void	free_tokens(t_token *token);
 int	unexpecte_token(t_token_type type, char *str);
 
 t_token	*link_token(t_token *token);
-void	redir(t_token_type type, char *filename);
 void	error_lexical(t_token *token, char *value);
+
+// 어따놓지
+int		is_redirection(t_token_type type);
 
 //jiwon
 t_token *get_head_token(t_token *token);

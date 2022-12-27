@@ -6,7 +6,7 @@
 /*   By: hyuncpar <hyuncpar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/19 00:13:37 by jiwonhan          #+#    #+#             */
-/*   Updated: 2022/12/27 18:44:05 by hyuncpar         ###   ########.fr       */
+/*   Updated: 2022/12/27 21:11:34 by hyuncpar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,7 @@ struct s_redir
 	int		in;
 	int		out;
 	t_redir	*next;
+	t_redir *prev;
 };
 
 typedef struct s_minishell
@@ -50,5 +51,5 @@ void	check_arg(int ac, char *av[]);
 
 // 이거 어따 놓지
 void	input_heredoc(t_minishell *minishell, char *limit);
-void	init_redir(t_minishell *minishell);
+t_redir	*new_redir(void);
 #endif
