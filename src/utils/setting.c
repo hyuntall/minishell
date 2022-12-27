@@ -6,7 +6,7 @@
 /*   By: hyuncpar <hyuncpar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/09 20:59:14 by jiwonhan          #+#    #+#             */
-/*   Updated: 2022/12/21 21:15:55 by hyuncpar         ###   ########.fr       */
+/*   Updated: 2022/12/27 18:43:57 by hyuncpar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,14 @@ char **get_env_path(char **envp)
 		temp++;
 	}
 	return (path);
+}
+
+void	init_redir(t_minishell *minishell)
+{
+	minishell->redir = (t_redir)malloc(sizeof(t_redir));
+	minishell->redir->in = 0;
+	minishell->redir->out = 0;
+	minishell->redir->next = NULL;
 }
 
 void	init(t_minishell *minishell, char *envp[])

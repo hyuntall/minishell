@@ -6,7 +6,7 @@
 /*   By: hyuncpar <hyuncpar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/23 20:30:05 by hanjiwon          #+#    #+#             */
-/*   Updated: 2022/12/27 18:01:23 by hyuncpar         ###   ########.fr       */
+/*   Updated: 2022/12/27 18:44:24 by hyuncpar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -134,8 +134,9 @@ int match_parenthesis_token(t_token *token)
     return (TRUE);
 }
 
-int lexer(t_token *token)
+int lexer(t_minishell *minishell, t_token *token)
 {
+	init_redir(minishell);
 	while (token->type != NEW_LINE)
 	{
 		// PIPE, AND, OR이 연속으로 나오는 경우 => near_unexpected_token에 추가
@@ -143,6 +144,13 @@ int lexer(t_token *token)
 			return (FALSE);
 		if (match_parenthesis_token(token) == FALSE)
 			return (FALSE);
+		if (token->type == DLFT)
+			input_heredoc(minishell, token->next->value);
+		else if (token->type == PIPE)
+		{
+			minishell->redir = minishell->redir->next;
+			init_redir(minishell);
+		}
 		token = token->next;
 	}
 	free(token->value);

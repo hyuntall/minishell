@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   order_tree.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hanjiwon <hanjiwon@student.42.fr>          +#+  +:+       +#+        */
+/*   By: hyuncpar <hyuncpar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/15 17:57:15 by hyuncpar          #+#    #+#             */
-/*   Updated: 2022/12/27 01:14:28 by hanjiwon         ###   ########.fr       */
+/*   Updated: 2022/12/27 18:22:05 by hyuncpar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,31 +53,6 @@ int	arr_size(t_token *token)
 	return (size);
 }
 
-void	here_doc(char *limit)
-{
-	char	*line;
-	char	*temp;
-	int		fd;
-
-	fd = open("heredoc", O_RDWR | O_CREAT | O_TRUNC, 0777);
-	while (1)
-	{
-		line = readline("heredoc> ");
-		if (!ft_strncmp(line, limit, ft_strlen(line)))
-			break ;
-		temp = line;
-		line = ft_strjoin(temp, "\n");
-		free(temp);
-		temp = 0;
-		ft_putstr_fd(line, fd);
-		free(line);
-		line = 0;
-	}
-	free(line);
-	line = 0;
-	close(fd);
-}
-
 void	redir(t_token_type type, char *filename)
 {
 	int	fd;
@@ -97,14 +72,6 @@ void	redir(t_token_type type, char *filename)
 	{
 		fd = open(filename, O_RDWR, 0777);
 		dup2(fd, 0);
-	}
-	else if (type == DLFT)
-	{
-		here_doc(filename);
-		//fd = open("heredoc", O_RDWR | O_CREAT, 0777);
-		//dup2(fd, 0);
-		//close(fd);
-		unlink("heredoc");
 	}
 }
 
