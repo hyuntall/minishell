@@ -1,27 +1,31 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   error_message.c                                    :+:      :+:    :+:   */
+/*   lexer.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: hanjiwon <hanjiwon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/12/09 18:49:28 by hyuncpar          #+#    #+#             */
-/*   Updated: 2022/12/23 23:57:39 by hanjiwon         ###   ########.fr       */
+/*   Created: 2022/12/23 20:42:41 by hanjiwon          #+#    #+#             */
+/*   Updated: 2022/12/23 23:43:53 by hanjiwon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#ifndef LEXER_H
+# define LEXER_H
+
 #include "tokenization.h"
 
-int	unexpecte_token(t_token_type type, char *str)
+typedef enum e_lexer_type
 {
-	printf("error %d %s\n", type, str);
-	free(str);
-	return (-1);
-}
+    NOT_FIRST = PIPE | DPIP | DAND | PARENTHESIS_RIGHT
+}t_lexer_type;
 
-void	not_match_token(void)
-{
-		ft_putstr_fd("minishell: syntax error not match token\n", 2);
-	return ;
-}
+int lexer(t_token *token);
+int check_first_token(t_token *token);
+int check_parenthesis_lexer(t_token *token);
+int check_right_parenthesis(t_token *token);
+int matching_parenthesis(t_token *token);
+int check_left_parenthesis(t_token *token);
+int near_unexpected_token(t_token *token);
+
+#endif

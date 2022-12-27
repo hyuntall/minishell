@@ -6,8 +6,8 @@ CFLAGS = -Wall -Wextra -Werror -Iinclude
 # READLINE_INC = -I/goinfre/$(USER)/.brew/opt/readline/include
 
 # MAC 인텔
- READLINE_LIB = -lreadline -L/usr/local/opt/readline/lib
- READLINE_INC = -I/usr/local/opt/readline/include
+# READLINE_LIB = -lreadline -L/usr/local/opt/readline/lib
+# READLINE_INC = -I/usr/local/opt/readline/include
 
 LIBFT = libft/libft.a
 
@@ -20,8 +20,11 @@ SRCS = src/utils/testcode.c \
 		src/tokenizer/process_token.c src/tokenizer/memory.c \
 		src/tokenizer/tokenize.c src/tokenizer/tokenizer.c \
 		src/parser/parser.c src/parser/insert_tree.c src/parser/token_tool.c \
+		src/parser/parenthesis.c \
+		src/lexer/lexer.c \
 		src/exec_tree/order_tree.c \
-		src/builtins/builtins.c src/builtins/echo.c src/builtins/pwd.c 
+		src/builtins/builtins.c src/builtins/echo.c src/builtins/pwd.c src/builtins/cd.c \
+		src/builtins/env.c src/builtins/func.c
 
 OBJS = $(SRCS:.c=.o)
 

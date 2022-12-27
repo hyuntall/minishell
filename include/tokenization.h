@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   tokenization.h                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hyuncpar <hyuncpar@student.42.fr>          +#+  +:+       +#+        */
+/*   By: hanjiwon <hanjiwon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/09 16:41:09 by jiwonhan          #+#    #+#             */
-/*   Updated: 2022/12/23 16:31:04 by hyuncpar         ###   ########.fr       */
+/*   Updated: 2022/12/23 23:56:36 by hanjiwon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,8 +70,10 @@ int	unexpecte_token(t_token_type type, char *str);
 
 t_token	*link_token(t_token *token);
 void	redir(t_token_type type, char *filename);
+t_token	*error_lexical(t_token *token, char *value);
+
 //jiwon
 t_token *get_head_token(t_token *token);
 t_token *get_tail_token(t_token *token);
-
+void	not_match_token(void);
 #endif

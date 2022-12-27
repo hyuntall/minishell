@@ -6,7 +6,7 @@
 /*   By: hanjiwon <hanjiwon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/15 17:57:15 by hyuncpar          #+#    #+#             */
-/*   Updated: 2022/12/22 04:18:24 by hanjiwon         ###   ########.fr       */
+/*   Updated: 2022/12/27 01:14:28 by hanjiwon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -168,9 +168,10 @@ static int	check_builtin(t_cmd_tbl *cmd_tbl, const char *cmd)
 void	order_tree(t_minishell *minishell, t_parse_tree *tree)
 {
 	t_token	*token;(void)token;
+	t_cmd_tbl	*cmd_tbl;
 	char	**arr;
 
-	minishell->cmd_tbl = init_cmd_tbl();
+	cmd_tbl = init_cmd_tbl();
 	token = tree->token;
 	if (tree->type == PIPE)
 		pipeline(minishell, tree->left, tree->right);
@@ -180,9 +181,9 @@ void	order_tree(t_minishell *minishell, t_parse_tree *tree)
 	else
 	{
 		arr = make_arr(tree->token);
-		if (check_builtin(minishell->cmd_tbl, arr[0]))
+		if (check_builtin(cmd_tbl, arr[0]))
 		{
-			ft_execve(minishell, arr);
+			ft_execve(minishell, cmd_tbl, arr);
 			exit(1);
 		}
 		else
