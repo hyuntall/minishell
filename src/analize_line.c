@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   analize_line.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hanjiwon <hanjiwon@student.42.fr>          +#+  +:+       +#+        */
+/*   By: hyuncpar <hyuncpar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/02 16:42:09 by hyuncpar          #+#    #+#             */
-/*   Updated: 2022/12/23 23:23:21 by hanjiwon         ###   ########.fr       */
+/*   Updated: 2022/12/27 17:13:42 by hyuncpar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,9 @@ t_token	*analize_line(t_minishell *minishell, char *input)
 	t_token	*tokenized;
 	t_token	*new_tokenized;
 
+	input = ft_strjoin(input, "\n");
 	tokenized = tokenizer(input);
+	free(input);
 	if (!tokenized)
 		return (NULL);
 	new_tokenized = link_token(tokenized);
@@ -30,5 +32,6 @@ t_token	*analize_line(t_minishell *minishell, char *input)
 		printf("minishell status -1\n");
 		return (NULL);
 	}
+	
 	return (new_tokenized);
 }

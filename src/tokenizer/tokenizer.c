@@ -3,20 +3,22 @@
 /*                                                        :::      ::::::::   */
 /*   tokenizer.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hanjiwon <hanjiwon@student.42.fr>          +#+  +:+       +#+        */
+/*   By: hyuncpar <hyuncpar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/02 16:42:09 by hyuncpar          #+#    #+#             */
-/*   Updated: 2022/12/22 05:46:31 by hanjiwon         ###   ########.fr       */
+/*   Updated: 2022/12/27 17:15:40 by hyuncpar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 #include "tokenization.h"
 #include "testcode.h"
+
 static int	is_valid_char(char c)
 {
 	return (c == '\'' || c == '"' || c == ' ' || c == '\\' || c == '$' \
-			|| c == '|' || c == '&' || c == '>' || c == '<' || c == '(' || c == ')');
+			|| c == '|' || c == '&' || c == '>' || c == '<'  \
+			|| c == '(' || c == ')' || c == '\n');
 }
 
 t_token	*tokenizer(char *input)
