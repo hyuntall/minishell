@@ -6,7 +6,7 @@
 /*   By: hyuncpar <hyuncpar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/02 16:42:09 by hyuncpar          #+#    #+#             */
-/*   Updated: 2022/12/27 17:15:40 by hyuncpar         ###   ########.fr       */
+/*   Updated: 2022/12/27 17:49:31 by hyuncpar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,9 +44,6 @@ t_token	*tokenizer(char *input)
 			free_tokens(token);
 			return (token);
 		}
-		//print_node(token);
 	}
-	if (end_index - start_index)
-		insert_token(&token, init_token(ft_substr(input, start_index, end_index - start_index), NORM));
 	return (token);
 }
