@@ -6,14 +6,14 @@
 /*   By: hanjiwon <hanjiwon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/27 03:13:06 by hanjiwon          #+#    #+#             */
-/*   Updated: 2022/12/29 00:06:44 by hanjiwon         ###   ########.fr       */
+/*   Updated: 2022/12/29 02:54:18 by hanjiwon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 #include "cmd.h"
 
-int check_variable_name(const char *name)
+static int check_variable_name(const char *name)
 {
 	if (!ft_isalpha(*name) && *name != '_')
 		return (FALSE);
@@ -65,5 +65,12 @@ void	ft_export(t_minishell *minishell, char **arr)
 		else
 			split_key_value(minishell->envp, arr[i]);
 		++i;
+	}
+	printf("export result(%d)\n", minishell->envp->cnt);
+	t_envp *node = minishell->envp;
+	while (node)
+	{
+		printf("%s=%s\n", node->key, node->value);
+		node = node->next;
 	}
 }

@@ -6,7 +6,7 @@
 /*   By: hanjiwon <hanjiwon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/09 18:49:28 by hyuncpar          #+#    #+#             */
-/*   Updated: 2022/12/29 00:03:17 by hanjiwon         ###   ########.fr       */
+/*   Updated: 2022/12/29 03:02:33 by hanjiwon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,4 +42,11 @@ void	export_error_message(char *msg)
 	ft_putstr_fd("export: not an identifier: ", 2);
 	ft_putstr_fd(msg, 2);
 	ft_putstr_fd("\n", 2);
+}
+
+void	unset_error_message(char *msg)
+{
+	ft_putstr_fd("unset: ", 2);
+	ft_putstr_fd(msg, 2);
+	ft_putstr_fd(": invalid parameter name\n", 2);
 }
