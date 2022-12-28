@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hanjiwon <hanjiwon@student.42.fr>          +#+  +:+       +#+        */
+/*   By: hyuncpar <hyuncpar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/13 11:47:20 by jiwonhan          #+#    #+#             */
-/*   Updated: 2022/12/24 01:51:49 by hanjiwon         ###   ########.fr       */
+/*   Updated: 2022/12/28 16:16:20 by hyuncpar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,6 +87,8 @@ void parse_token(t_parse_tree **parse_tree, t_token **tail, t_parse_tree *prev_t
 	if (find_head_from_tail(*tail, &find, DPIP) == TRUE || find_head_from_tail(*tail, &find, DAND) == TRUE) //logical == and or
 		insert_tree(parse_tree, find, prev_tree);
 	else if (find_head_from_tail(*tail, &find, PIPE) == TRUE)
+		insert_tree(parse_tree, find, prev_tree);
+	else if (find_head_from_tail(*tail, &find, SEMC) == TRUE || find_head_from_tail(*tail, &find, DSEM) == TRUE)
 		insert_tree(parse_tree, find, prev_tree);
 	else if (find_head_from_head((get_head_token(*tail)), &find, RIGT) == TRUE || find_head_from_head((get_head_token(*tail)), &find, DRGT) == TRUE \
 			|| find_head_from_head((get_head_token(*tail)), &find, LEFT) == TRUE || find_head_from_head((get_head_token(*tail)), &find, DLFT) == TRUE)
