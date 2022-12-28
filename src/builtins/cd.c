@@ -6,7 +6,7 @@
 /*   By: hanjiwon <hanjiwon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/24 23:54:00 by hanjiwon          #+#    #+#             */
-/*   Updated: 2022/12/28 22:08:06 by hanjiwon         ###   ########.fr       */
+/*   Updated: 2022/12/28 22:20:20 by hanjiwon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,7 @@ void	go_to_new(t_envp *envp, char *path)
 	char	*new_path;
 
 	new_path = NULL;
-	//new_path check
+	//TODO new_path check
 	currentpwd = getcwd(NULL, 0);
 	if (!new_path)
 		new_path = ft_strdup(path);

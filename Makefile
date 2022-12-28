@@ -25,7 +25,7 @@ SRCS = src/utils/testcode.c \
 		src/heredoc/here_doc.c \
 		src/exec_tree/order_tree.c \
 		src/builtins/builtins.c src/builtins/echo.c src/builtins/pwd.c src/builtins/cd.c \
-		src/builtins/env.c src/builtins/func.c
+		src/builtins/env.c src/builtins/func.c src/builtins/export.c
 
 OBJS = $(SRCS:.c=.o)
 
