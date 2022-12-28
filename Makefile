@@ -16,7 +16,7 @@ NAME = minishell
 SRCS = src/utils/testcode.c \
 		src/minishell.c src/main_loop.c src/analize_line.c \
 		src/utils/error_message.c src/utils/setting.c \
-		src/signal/signal.c src/envp/envp_list.c\
+		src/signal/signal.c src/envp/envp_list.c src/envp/print_envp.c \
 		src/tokenizer/process_token.c src/tokenizer/memory.c \
 		src/tokenizer/tokenize.c src/tokenizer/tokenizer.c \
 		src/parser/parser.c src/parser/insert_tree.c src/parser/token_tool.c \

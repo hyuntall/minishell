@@ -6,7 +6,7 @@
 /*   By: hanjiwon <hanjiwon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/19 00:13:37 by jiwonhan          #+#    #+#             */
-/*   Updated: 2022/12/28 21:09:01 by hanjiwon         ###   ########.fr       */
+/*   Updated: 2022/12/28 21:40:23 by hanjiwon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,6 +61,7 @@ void	check_arg(int ac, char *av[]);
 //envp
 void	init_envp(t_envp **head, char **envp);
 char    **envp_to_dptr(t_envp *head);
+void    print_envp(t_minishell *minishell);
 
 // 이거 어따 놓지
 void	input_heredoc(t_minishell *minishell, char *limit);

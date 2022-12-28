@@ -6,96 +6,84 @@
 /*   By: hanjiwon <hanjiwon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/24 23:54:00 by hanjiwon          #+#    #+#             */
-/*   Updated: 2022/12/28 21:10:45 by hanjiwon         ###   ########.fr       */
+/*   Updated: 2022/12/28 22:08:06 by hanjiwon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 #include "cmd.h"
 
-/*char	*find_value(char **envp, char *find)
+t_envp	*find_value(t_envp *head, char *key)
 {
-	int	i;
-	int	j;
-
-	i = -1;
-	while (envp[++i])
-		if (!ft_strncmp(envp[i], find, ft_strlen(find)))
-		{
-			j = -1;
-			while (find[++j] && envp[i][j] && find[j] == envp[i][j]) ;
-			return (&envp[i][j]);
-		}
-	return (NULL);
+	while (head && ft_strncmp(head->key, key, ft_strlen(key) + 1))
+		head = head->next;
+	return (head);
 }
 
-void	update_path(char ***envp, char *key, char *value)
+void	update_path(t_envp **head, char *key, char *value)
 {
-	int	i;
-	char	*ret;
-
-	i = -1;
-	while ((*envp)[++i])
+	while (*head && ft_strncmp((*head)->key, key, ft_strlen(key) + 1))
+		head = &((*head)->next);
+	if (*head)
 	{
-		if (!ft_strncmp((*envp)[i], key, ft_strlen(key)))
-		{
-			ret = ft_strdup(ft_strjoin(key, value));
-			(*envp)[i] = ret;
-			printf("\t%s\n", (*envp)[i]);
-			return ;
-		}
+		free((*head)->value);
+		(*head)->value = ft_strdup(value);
 	}
 }
 
-void	go_to_home(char **envp)
+void	go_to_home(t_envp *envp)
 {
-	char	*home;
+	t_envp	*home;
 	char	*currentpwd;
 
-	home = find_value(envp, "HOME=");
+	home = find_value(envp, "HOME");
 	if (!home)
 		return ;
 	currentpwd = getcwd(NULL, 0);
-	update_path(&envp, "OLDPWD=", currentpwd);
-	update_path(&envp, "PWD=", home);
-	home = find_value(envp, "HOME=");
+	update_path(&envp, "OLDPWD", currentpwd);
+	update_path(&envp, "PWD", home->value);
 	free(currentpwd);
 }
 
-void	go_to_oldpwd(char **envp)
+void	go_to_oldpwd(t_envp *envp)
 {
-	char	*oldpwd;
+	t_envp	*oldpwd;
 	char	*currentpwd;
 
-	oldpwd = find_value(envp, "OLDPWD=");
+	oldpwd = find_value(envp, "OLDPWD");
 	if (!oldpwd)
 		return ;
 	currentpwd = getcwd(NULL, 0);
-	update_path(&envp, "OLDPWD=", currentpwd);
-	update_path(&envp, "PWD=", oldpwd);
-	printf("%s\n", oldpwd);
+	update_path(&envp, "OLDPWD", currentpwd);
+	update_path(&envp, "PWD", oldpwd->value);
 	free(currentpwd);
 
 }
 
-void	go_to_new(char **envp, char *path)
+void	go_to_new(t_envp *envp, char *path)
 {
 	char	*currentpwd;
+	char	*new_path;
 
+	new_path = NULL;
+	//new_path check
 	currentpwd = getcwd(NULL, 0);
-	update_path(&envp, "OLDPWD=", currentpwd);
-	update_path(&envp, "PWD=", path);
+	if (!new_path)
+		new_path = ft_strdup(path);
+	update_path(&envp, "OLDPWD", currentpwd);
+	update_path(&envp, "PWD", new_path);
 	free(currentpwd);
-}*/
+	free(new_path);
+}
 
 void	cd(t_minishell *minishell, char **arr)
-{(void)minishell;(void)arr;
-	/*printf("HOME=%s\nPWD=%s\nOLDPWD=%s\n", find_value(minishell->envp, "HOME="), find_value(minishell->envp, "PWD="), find_value(minishell->envp, "OLDPWD="));
+{
+	printf(">>Before\nHOME=%s\nPWD=%s\nOLDPWD=%s\n", find_value(minishell->envp, "HOME")->value, find_value(minishell->envp, "PWD")->value, find_value(minishell->envp, "OLDPWD")->value);
 	if (!arr[1])
 		go_to_home(minishell->envp);
 	else if (!ft_strncmp(arr[1], "-", 1))
 		go_to_oldpwd(minishell->envp);
 	else
 		go_to_new(minishell->envp, arr[1]);
-	printf("\n\nHOME=%s\nPWD=%s\nOLDPWD=%s\n", find_value(minishell->envp, "HOME="), find_value(minishell->envp, "PWD="), find_value(minishell->envp, "OLDPWD="));*/
+	printf(">>After\nHOME=%s\nPWD=%s\nOLDPWD=%s\n", find_value(minishell->envp, "HOME")->value, find_value(minishell->envp, "PWD")->value, find_value(minishell->envp, "OLDPWD")->value);
 }
