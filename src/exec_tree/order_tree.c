@@ -6,7 +6,7 @@
 /*   By: hanjiwon <hanjiwon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/15 17:57:15 by hyuncpar          #+#    #+#             */
-/*   Updated: 2022/12/28 19:21:02 by hanjiwon         ###   ########.fr       */
+/*   Updated: 2022/12/28 21:18:57 by hanjiwon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,22 @@ void	pipeline(t_minishell *minishell, t_parse_tree *left, t_parse_tree *right)
 		order_tree(minishell, left);
 		exit(0);
 	}
+}
+
+void	two_process(t_minishell *minishell, t_parse_tree *tree)
+{
+	pid_t	pid;
+
+	pid = fork();
+	if (pid)
+	{
+		if (tree->type == SEMC || tree->type == DPIP)
+			order_tree(minishell, tree->right);
+		else if (tree->type == DAND)
+			;
+	}
+	else
+		order_tree(minishell, tree->left);
 }
 
 int	arr_size(t_token *token)
@@ -176,9 +192,8 @@ void	order_tree(t_minishell *minishell, t_parse_tree *tree)
 	token = tree->token;
 	if (tree->type == PIPE)
 		pipeline(minishell, tree->left, tree->right);
-	else if (tree->type == DAND)
-		;
-		//pipeline(minishell, tree->left, tree->right);
+	else if (tree->type == DAND || tree->type == DPIP || tree->type == SEMC)
+		two_process(minishell, tree);
 	else if (is_redirection(tree->type))
 	{
 		redir(minishell, tree->type, tree->right->token->value);
