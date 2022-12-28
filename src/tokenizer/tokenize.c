@@ -6,7 +6,7 @@
 /*   By: hyuncpar <hyuncpar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/05 17:36:45 by hyuncpar          #+#    #+#             */
-/*   Updated: 2022/12/23 17:43:58 by hyuncpar         ###   ########.fr       */
+/*   Updated: 2022/12/27 17:19:03 by hyuncpar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,12 +112,14 @@ int	tokenize_etc(t_token **token, char *input, int i, int type)
 	return (i);
 }
 
-int	tokenize_prnth(t_token **token, char *input, int i)
+int	tokenize_prnth_or_newline(t_token **token, char *input, int i)
 {
 	if (input[i] == ')')
 		insert_token(token, init_token(ft_strdup(")"), PARENTHESIS_RIGHT));
 	else if (input[i] == '(')
 		insert_token(token, init_token(ft_strdup("("), PARENTHESIS_LEFT));
+	else
+		insert_token(token, init_token(ft_strdup("\n"), NEW_LINE));	
 	return (++i);
 }
 
@@ -143,7 +145,7 @@ int	tokenize_line(t_token **token, char *input, int index, int i)
 		i = tokenize_redir(token, input, i, RIGT);
 	else if (input[i] == '<')
 		i = tokenize_redir(token, input, i, LEFT);
-	else if (input[i] == '(' || input[i] == ')')
-		i = tokenize_prnth(token, input, i);
+	else if (input[i] == '(' || input[i] == ')' || input[i] == '\n')
+		i = tokenize_prnth_or_newline(token, input, i);
 	return (i);
 }

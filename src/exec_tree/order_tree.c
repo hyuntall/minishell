@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   order_tree.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hanjiwon <hanjiwon@student.42.fr>          +#+  +:+       +#+        */
+/*   By: hyuncpar <hyuncpar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/15 17:57:15 by hyuncpar          #+#    #+#             */
-/*   Updated: 2022/12/27 01:14:28 by hanjiwon         ###   ########.fr       */
+/*   Updated: 2022/12/27 21:21:37 by hyuncpar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,13 +30,16 @@ void	pipeline(t_minishell *minishell, t_parse_tree *left, t_parse_tree *right)
 		close(fd[0]);
 		waitpid(pid, NULL, 0);
 		order_tree(minishell, right);
+		exit(0);
 	}
 	else
 	{
 		dup2(fd[1], 1);
 		close(fd[0]);
 		close(fd[1]);
+		minishell->redir = minishell->redir->prev;
 		order_tree(minishell, left);
+		exit(0);
 	}
 }
 
@@ -53,59 +56,29 @@ int	arr_size(t_token *token)
 	return (size);
 }
 
-void	here_doc(char *limit)
-{
-	char	*line;
-	char	*temp;
-	int		fd;
-
-	fd = open("heredoc", O_RDWR | O_CREAT | O_TRUNC, 0777);
-	while (1)
-	{
-		line = readline("heredoc> ");
-		if (!ft_strncmp(line, limit, ft_strlen(line)))
-			break ;
-		temp = line;
-		line = ft_strjoin(temp, "\n");
-		free(temp);
-		temp = 0;
-		ft_putstr_fd(line, fd);
-		free(line);
-		line = 0;
-	}
-	free(line);
-	line = 0;
-	close(fd);
-}
-
-void	redir(t_token_type type, char *filename)
+void	redir(t_minishell *minishell, t_token_type type, char *filename)
 {
 	int	fd;
 
 	if (type == RIGT)
 	{
 		fd = open(filename, O_RDWR | O_CREAT | O_TRUNC, 0777);
-		dup2(fd, 1);
-		close(fd);
+		minishell->redir->out = fd;
 	}
 	else if (type == DRGT)
 	{
 		fd = open(filename, O_RDWR | O_CREAT | O_APPEND, 0777);
-		dup2(fd, 1);
+		minishell->redir->out = fd;
 	}
 	else if (type == LEFT)
 	{
 		fd = open(filename, O_RDWR, 0777);
-		dup2(fd, 0);
+		minishell->redir->in = fd;
 	}
-	else if (type == DLFT)
-	{
-		here_doc(filename);
-		//fd = open("heredoc", O_RDWR | O_CREAT, 0777);
-		//dup2(fd, 0);
-		//close(fd);
-		unlink("heredoc");
-	}
+	else
+		fd = 0;
+	if (fd == -1)
+		perror(filename);
 }
 
 // 옮겨야함
@@ -165,32 +138,55 @@ static int	check_builtin(t_cmd_tbl *cmd_tbl, const char *cmd)
 	return (FALSE);
 }
 
+void	exec_cmd(t_minishell *minishell, char **cmd)
+{
+	t_redir	*redir;
+	t_cmd_tbl	*cmd_tbl;
+
+	cmd_tbl = init_cmd_tbl();
+	redir = minishell->redir;
+	if (redir->in)
+	{
+		dup2(redir->in, 0);
+		close(redir->in);
+	}
+	if (redir->out)
+	{
+		dup2(redir->out, 1);
+		close(redir->out);
+	}
+	if (check_builtin(cmd_tbl, cmd[0]))
+	{
+		ft_execve(minishell, cmd_tbl, cmd);
+		exit(1);
+	}
+	else
+	{
+		execve(check_cmd(minishell, cmd[0]), cmd, minishell->envp);
+		perror(cmd[0]);
+		exit(1);
+	}
+}
+
 void	order_tree(t_minishell *minishell, t_parse_tree *tree)
 {
 	t_token	*token;(void)token;
-	t_cmd_tbl	*cmd_tbl;
 	char	**arr;
 
-	cmd_tbl = init_cmd_tbl();
 	token = tree->token;
 	if (tree->type == PIPE)
 		pipeline(minishell, tree->left, tree->right);
 	else if (tree->type == DAND)
 		;
 		//pipeline(minishell, tree->left, tree->right);
+	else if (is_redirection(tree->type))
+	{
+		redir(minishell, tree->type, tree->right->token->value);
+		order_tree(minishell, tree->left);
+	}
 	else
 	{
 		arr = make_arr(tree->token);
-		if (check_builtin(cmd_tbl, arr[0]))
-		{
-			ft_execve(minishell, cmd_tbl, arr);
-			exit(1);
-		}
-		else
-		{
-			execve(check_cmd(minishell, arr[0]), arr, minishell->envp);
-			perror(arr[0]);
-			exit(1);	
-		}
+		exec_cmd(minishell, arr);
 	}
 }
