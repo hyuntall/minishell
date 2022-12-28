@@ -6,7 +6,7 @@
 /*   By: hyuncpar <hyuncpar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/02 16:42:09 by hyuncpar          #+#    #+#             */
-/*   Updated: 2022/12/27 18:32:04 by hyuncpar         ###   ########.fr       */
+/*   Updated: 2022/12/28 19:50:18 by hyuncpar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,8 @@ t_token	*analize_line(t_minishell *minishell, char *input)
 	t_token	*tokenized;
 	t_token	*new_tokenized;
 
+	if (!ft_strlen(input))
+		return (NULL);
 	input = ft_strjoin(input, "\n");
 	tokenized = tokenizer(input);
 	free(input);
