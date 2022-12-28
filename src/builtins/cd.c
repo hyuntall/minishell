@@ -6,14 +6,14 @@
 /*   By: hanjiwon <hanjiwon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/24 23:54:00 by hanjiwon          #+#    #+#             */
-/*   Updated: 2022/12/27 02:59:08 by hanjiwon         ###   ########.fr       */
+/*   Updated: 2022/12/28 21:10:45 by hanjiwon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 #include "cmd.h"
 
-char	*find_value(char **envp, char *find)
+/*char	*find_value(char **envp, char *find)
 {
 	int	i;
 	int	j;
@@ -86,16 +86,16 @@ void	go_to_new(char **envp, char *path)
 	update_path(&envp, "OLDPWD=", currentpwd);
 	update_path(&envp, "PWD=", path);
 	free(currentpwd);
-}
+}*/
 
 void	cd(t_minishell *minishell, char **arr)
-{
-	printf("HOME=%s\nPWD=%s\nOLDPWD=%s\n", find_value(minishell->envp, "HOME="), find_value(minishell->envp, "PWD="), find_value(minishell->envp, "OLDPWD="));
+{(void)minishell;(void)arr;
+	/*printf("HOME=%s\nPWD=%s\nOLDPWD=%s\n", find_value(minishell->envp, "HOME="), find_value(minishell->envp, "PWD="), find_value(minishell->envp, "OLDPWD="));
 	if (!arr[1])
 		go_to_home(minishell->envp);
 	else if (!ft_strncmp(arr[1], "-", 1))
 		go_to_oldpwd(minishell->envp);
 	else
 		go_to_new(minishell->envp, arr[1]);
-	printf("\n\nHOME=%s\nPWD=%s\nOLDPWD=%s\n", find_value(minishell->envp, "HOME="), find_value(minishell->envp, "PWD="), find_value(minishell->envp, "OLDPWD="));
+	printf("\n\nHOME=%s\nPWD=%s\nOLDPWD=%s\n", find_value(minishell->envp, "HOME="), find_value(minishell->envp, "PWD="), find_value(minishell->envp, "OLDPWD="));*/
 }
