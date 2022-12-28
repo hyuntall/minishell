@@ -6,7 +6,7 @@
 /*   By: hanjiwon <hanjiwon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/28 18:29:36 by hanjiwon          #+#    #+#             */
-/*   Updated: 2022/12/28 21:08:44 by hanjiwon         ###   ########.fr       */
+/*   Updated: 2022/12/28 23:59:52 by hanjiwon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,3 +71,31 @@ void	init_envp(t_envp **node, char **envp)
     (*head)->cnt = i;
 }
 
+void    insert_envp(t_envp **node, const char *key, const char *value)
+{
+    t_envp  *new;
+    t_envp  *head;
+
+    head = *node;
+    while (*node && ft_strncmp((*node)->key, key, ft_strlen(key) + 1))
+		node = &((*node)->next);
+	if (*node)
+	{
+		free((*node)->value);
+        if (value)
+		    (*node)->value = ft_strdup(value);
+        else
+            (*node)->value = NULL;
+	}
+    new = malloc(sizeof(t_envp));
+    if (!new)
+        return ;
+    new->key = ft_strdup(key);
+    if (value)
+        new->value = ft_strdup(value);
+    else
+        new->value = NULL;
+    new->next = NULL;
+    *node = new;
+    head->cnt += 1;
+}

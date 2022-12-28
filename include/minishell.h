@@ -6,7 +6,7 @@
 /*   By: hanjiwon <hanjiwon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/19 00:13:37 by jiwonhan          #+#    #+#             */
-/*   Updated: 2022/12/28 22:33:03 by hanjiwon         ###   ########.fr       */
+/*   Updated: 2022/12/29 00:01:27 by hanjiwon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,8 @@ void	init_envp(t_envp **head, char **envp);
 char    **envp_to_dptr(t_envp *head);
 void    print_envp(t_minishell *minishell);
 void	print_sort_envp(t_minishell *minishell);
-
+void    insert_envp(t_envp **node, const char *key, const char *value);
+void	export_error_message(char *msg);
 // 이거 어따 놓지
 void	input_heredoc(t_minishell *minishell, char *limit);
 t_redir	*new_redir(void);
