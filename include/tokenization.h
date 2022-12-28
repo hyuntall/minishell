@@ -6,7 +6,7 @@
 /*   By: hyuncpar <hyuncpar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/09 16:41:09 by jiwonhan          #+#    #+#             */
-/*   Updated: 2022/12/27 19:00:55 by hyuncpar         ###   ########.fr       */
+/*   Updated: 2022/12/28 15:49:08 by hyuncpar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,8 @@ typedef enum e_special_symbols
 {
 	LOGICAL = DPIP | DAND,
 	PIPE_SYMBOLS = PIPE,
-	REDIRECTION = RIGT | DRGT | LEFT | DLFT
+	REDIRECTION = RIGT | DRGT | LEFT | DLFT,
+	SEMICOLON = SEMC | DSEM
 }			t_special_symbols;
 
 struct s_token

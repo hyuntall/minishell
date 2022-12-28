@@ -6,7 +6,7 @@
 /*   By: hyuncpar <hyuncpar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/23 20:30:05 by hanjiwon          #+#    #+#             */
-/*   Updated: 2022/12/27 21:13:23 by hyuncpar         ###   ########.fr       */
+/*   Updated: 2022/12/28 19:48:49 by hyuncpar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -158,7 +158,7 @@ int lexer(t_minishell *minishell, t_token *token)
 		}
 		token = token->next;
 	}
-	free(token->value);
 	token->prev->next = NULL;
+	free_tokens(token);
 	return (TRUE);
 }
