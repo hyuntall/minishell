@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   error_message.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hyuncpar <hyuncpar@student.42.fr>          +#+  +:+       +#+        */
+/*   By: hanjiwon <hanjiwon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/09 18:49:28 by hyuncpar          #+#    #+#             */
-/*   Updated: 2022/12/27 17:38:44 by hyuncpar         ###   ########.fr       */
+/*   Updated: 2022/12/29 03:02:33 by hanjiwon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,4 +35,18 @@ void	not_match_token(void)
 {
 		ft_putstr_fd("minishell: syntax error not match token\n", 2);
 	return ;
+}
+
+void	export_error_message(char *msg)
+{
+	ft_putstr_fd("export: not an identifier: ", 2);
+	ft_putstr_fd(msg, 2);
+	ft_putstr_fd("\n", 2);
+}
+
+void	unset_error_message(char *msg)
+{
+	ft_putstr_fd("unset: ", 2);
+	ft_putstr_fd(msg, 2);
+	ft_putstr_fd(": invalid parameter name\n", 2);
 }

@@ -6,7 +6,7 @@
 /*   By: hanjiwon <hanjiwon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/21 17:23:18 by jiwonhan          #+#    #+#             */
-/*   Updated: 2022/12/27 03:01:49 by hanjiwon         ###   ########.fr       */
+/*   Updated: 2022/12/28 21:35:03 by hanjiwon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,6 @@ static int	check_builtin_arg(t_cmd *cmd, char **arr)
 	int	argc = 0;
 	while (arr[argc])
 		argc++;
-	//printf("%d\t%d\n", cmd->argc, argc);
 	if ((cmd->argc == AC_ZERO && argc > 1) \
 		|| (cmd->argc == AC_LESS_1 && argc > 2))
 		{

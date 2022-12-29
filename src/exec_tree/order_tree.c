@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   order_tree.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hyuncpar <hyuncpar@student.42.fr>          +#+  +:+       +#+        */
+/*   By: hanjiwon <hanjiwon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/15 17:57:15 by hyuncpar          #+#    #+#             */
-/*   Updated: 2022/12/28 17:10:59 by hyuncpar         ###   ########.fr       */
+/*   Updated: 2022/12/28 21:18:57 by hanjiwon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -178,7 +178,7 @@ void	exec_cmd(t_minishell *minishell, char **cmd)
 	}
 	else
 	{
-		execve(check_cmd(minishell, cmd[0]), cmd, minishell->envp);
+		execve(check_cmd(minishell, cmd[0]), cmd, envp_to_dptr(minishell->envp));
 		perror(cmd[0]);
 		exit(1);
 	}
