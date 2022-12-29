@@ -6,7 +6,7 @@
 /*   By: hanjiwon <hanjiwon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/27 03:03:32 by hanjiwon          #+#    #+#             */
-/*   Updated: 2022/12/27 03:05:34 by hanjiwon         ###   ########.fr       */
+/*   Updated: 2022/12/29 00:13:18 by hanjiwon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,10 +15,6 @@
 
 void	env(t_minishell *minishell, char **arr)
 {
-    int i;
-
+    print_envp(minishell);
     (void)arr;
-    i = -1;
-    while (minishell->envp[++i])
-        printf("%s\n", minishell->envp[i]);
 }

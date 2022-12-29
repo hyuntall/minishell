@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   setting.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hyuncpar <hyuncpar@student.42.fr>          +#+  +:+       +#+        */
+/*   By: hanjiwon <hanjiwon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/09 20:59:14 by jiwonhan          #+#    #+#             */
-/*   Updated: 2022/12/27 21:16:59 by hyuncpar         ###   ########.fr       */
+/*   Updated: 2022/12/28 21:57:27 by hanjiwon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,8 +59,8 @@ t_redir	*new_redir(void)
 
 void	init(t_minishell *minishell, char *envp[])
 {
-	minishell->envp = envp;
 	minishell->path = get_env_path(envp);
 	minishell->status = 0;
+	init_envp(&(minishell->envp), envp);
 	setting_signal();
 }

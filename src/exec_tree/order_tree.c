@@ -6,7 +6,7 @@
 /*   By: hyuncpar <hyuncpar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/15 17:57:15 by hyuncpar          #+#    #+#             */
-/*   Updated: 2022/12/29 20:23:12 by hyuncpar         ###   ########.fr       */
+/*   Updated: 2022/12/29 20:31:34 by hyuncpar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -199,9 +199,9 @@ void	exec_cmd(t_minishell *minishell, char **cmds)
 	}
 	else
 	{
-		execve(cmd, cmds, minishell->envp);
+		execve(cmd, cmds,  envp_to_dptr(minishell->envp));
 		perror(cmd);
-		exit(minishell->status);
+		exit(1);
 	}
 }
 
