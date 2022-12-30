@@ -6,7 +6,7 @@
 /*   By: hyuncpar <hyuncpar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/09 16:41:09 by jiwonhan          #+#    #+#             */
-/*   Updated: 2022/12/28 15:49:08 by hyuncpar         ###   ########.fr       */
+/*   Updated: 2022/12/29 20:17:06 by hyuncpar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,7 @@ char	*process_dquote(char *str);
 void	free_tokens(t_token *token);
 int	unexpecte_token(t_token_type type, char *str);
 
-t_token	*link_token(t_token *token);
+t_token	*link_token(t_minishell *minishell, t_token *token);
 void	error_lexical(t_token *token, char *value);
 
 // 어따놓지

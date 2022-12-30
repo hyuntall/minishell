@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   order_tree.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hanjiwon <hanjiwon@student.42.fr>          +#+  +:+       +#+        */
+/*   By: hyuncpar <hyuncpar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/15 17:57:15 by hyuncpar          #+#    #+#             */
-/*   Updated: 2022/12/28 21:18:57 by hanjiwon         ###   ########.fr       */
+/*   Updated: 2022/12/29 20:31:34 by hyuncpar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,20 +17,23 @@
 void	pipeline(t_minishell *minishell, t_parse_tree *left, t_parse_tree *right)
 {
 	int		fd[2];
-	int		pipes;(void)pipes;
+	int		pipes;
 	pid_t	pid;
+	int		status;
 
 	pipes = pipe(fd);
 	pid = fork();
-	wait(NULL);
 	if (pid)
 	{
 		dup2(fd[0], 0);
 		close(fd[1]);
 		close(fd[0]);
-		waitpid(pid, NULL, 0);
+		waitpid(pid, &status, 0);
+		if (WIFEXITED(status))
+			minishell->status = WEXITSTATUS(status);
+		else if (WIFSIGNALED(status))
+			minishell->status = WTERMSIG(status);
 		order_tree(minishell, right);
-		exit(0);
 	}
 	else
 	{
@@ -39,21 +42,27 @@ void	pipeline(t_minishell *minishell, t_parse_tree *left, t_parse_tree *right)
 		close(fd[1]);
 		minishell->redir = minishell->redir->prev;
 		order_tree(minishell, left);
-		exit(0);
 	}
 }
 
 void	two_process(t_minishell *minishell, t_parse_tree *tree)
 {
 	pid_t	pid;
+	int		status;
 
 	pid = fork();
 	if (pid)
 	{
+		waitpid(pid, &status, 0);
+		if (WIFEXITED(status))
+			minishell->status = WEXITSTATUS(status);
+		else if (WIFSIGNALED(status))
+			minishell->status = WTERMSIG(status);
 		if (tree->type == SEMC || tree->type == DPIP)
 			order_tree(minishell, tree->right);
 		else if (tree->type == DAND)
-			;
+			if (!minishell->status)
+				order_tree(minishell, tree->right);
 	}
 	else
 		order_tree(minishell, tree->left);
@@ -72,7 +81,7 @@ int	arr_size(t_token *token)
 	return (size);
 }
 
-void	redir(t_minishell *minishell, t_token_type type, char *filename)
+void	set_redir(t_minishell *minishell, t_token_type type, char *filename)
 {
 	int	fd;
 
@@ -94,7 +103,11 @@ void	redir(t_minishell *minishell, t_token_type type, char *filename)
 	else
 		fd = 0;
 	if (fd == -1)
+	{
+		minishell->status = 1;
 		perror(filename);
+		exit(minishell->status);
+	}
 }
 
 // 옮겨야함
@@ -138,6 +151,7 @@ char	*check_cmd(t_minishell *minishell, char *cmd)
 		}
 		free(abs_path);
 	}
+	minishell->status = 127;
 	return (cmd);
 }
 
@@ -154,13 +168,8 @@ static int	check_builtin(t_cmd_tbl *cmd_tbl, const char *cmd)
 	return (FALSE);
 }
 
-void	exec_cmd(t_minishell *minishell, char **cmd)
+void	redirect(t_redir *redir)
 {
-	t_redir	*redir;
-	t_cmd_tbl	*cmd_tbl;
-
-	cmd_tbl = init_cmd_tbl();
-	redir = minishell->redir;
 	if (redir->in)
 	{
 		dup2(redir->in, 0);
@@ -171,15 +180,27 @@ void	exec_cmd(t_minishell *minishell, char **cmd)
 		dup2(redir->out, 1);
 		close(redir->out);
 	}
-	if (check_builtin(cmd_tbl, cmd[0]))
+}
+
+void	exec_cmd(t_minishell *minishell, char **cmds)
+{
+	t_redir	*redir;
+	t_cmd_tbl	*cmd_tbl;
+	char	*cmd;
+
+	cmd = check_cmd(minishell, cmds[0]);
+	cmd_tbl = init_cmd_tbl();
+	redir = minishell->redir;
+	redirect(redir);
+	if (check_builtin(cmd_tbl, cmd))
 	{
-		ft_execve(minishell, cmd_tbl, cmd);
+		ft_execve(minishell, cmd_tbl, cmds);
 		exit(1);
 	}
 	else
 	{
-		execve(check_cmd(minishell, cmd[0]), cmd, envp_to_dptr(minishell->envp));
-		perror(cmd[0]);
+		execve(cmd, cmds,  envp_to_dptr(minishell->envp));
+		perror(cmd);
 		exit(1);
 	}
 }
@@ -196,7 +217,7 @@ void	order_tree(t_minishell *minishell, t_parse_tree *tree)
 		two_process(minishell, tree);
 	else if (is_redirection(tree->type))
 	{
-		redir(minishell, tree->type, tree->right->token->value);
+		set_redir(minishell, tree->type, tree->right->token->value);
 		order_tree(minishell, tree->left);
 	}
 	else

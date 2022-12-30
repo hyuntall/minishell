@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main_loop.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hanjiwon <hanjiwon@student.42.fr>          +#+  +:+       +#+        */
+/*   By: hyuncpar <hyuncpar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/05 16:38:08 by jiwonhan          #+#    #+#             */
-/*   Updated: 2022/12/28 21:30:43 by hanjiwon         ###   ########.fr       */
+/*   Updated: 2022/12/29 20:31:46 by hyuncpar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,11 +83,16 @@ static int check_line(char **line)
 void	exev_line(t_minishell *minishell, t_parse_tree *parse_tree)
 {
 	pid_t	pid;
+	int		status;
 
 	pid = fork();
-	waitpid(pid, NULL, 0);
+	waitpid(pid, &status, 0);
 	if (!pid)
 		order_tree(minishell, parse_tree);
+	if (WIFEXITED(status))
+		minishell->status = WEXITSTATUS(status);
+	else if (WIFSIGNALED(status))
+		minishell->status = WTERMSIG(status);
 }
 
 void main_loop(t_minishell *minishell)
@@ -109,7 +114,7 @@ void main_loop(t_minishell *minishell)
 		parse_tree = parser(tokenization);
 		//(void)parse_tree;printf(">>parse tree result<<\n");print_parse_tree(parse_tree, 0);
 		exev_line(minishell, parse_tree);
-		free_tokens(parse_tree->token);
+		//free_tokens(parse_tree->token);
 		//TODO parse tree result end
 		//execute(parse_tree);	//TODO 
 		free (parse_tree);

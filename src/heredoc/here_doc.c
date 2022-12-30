@@ -6,7 +6,7 @@
 /*   By: hyuncpar <hyuncpar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/27 18:21:49 by hyuncpar          #+#    #+#             */
-/*   Updated: 2022/12/27 21:16:27 by hyuncpar         ###   ########.fr       */
+/*   Updated: 2022/12/29 20:14:21 by hyuncpar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ void	here_doc(char *limit)
 	while (1)
 	{
 		line = readline("heredoc> ");
-		if (!ft_strncmp(line, limit, ft_strlen(line)))
+		if (ft_strlen(line) && !ft_strcmp(line, limit))
 			break ;
 		temp = line;
 		line = ft_strjoin(temp, "\n");

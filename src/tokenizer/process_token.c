@@ -6,7 +6,7 @@
 /*   By: hyuncpar <hyuncpar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/13 14:41:34 by hyuncpar          #+#    #+#             */
-/*   Updated: 2022/12/27 17:35:04 by hyuncpar         ###   ########.fr       */
+/*   Updated: 2022/12/29 20:18:58 by hyuncpar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,15 +55,21 @@ char	*process_dquote(char *str)
 	return (backup);
 }
 
-char	*process_token(t_token *token)
+char	*process_token(t_minishell *minishell, t_token *token)
 {
 	char	*value;
 
 	if (token->type == DOLR)
 	{
-		value = ft_strdup(getenv(token->value));
+		if (!ft_strcmp(token->value, "?"))
+			value = ft_itoa(minishell->status);
+		else
+			value = getenv(token->value);
+		free(token->value);
 		if (!value)
 			value = ft_strdup(" ");
+		else
+			value = strdup(value);
 		token->value = value;
 	}
 	else if (token->type == DQUT)
@@ -76,13 +82,13 @@ char	*process_token(t_token *token)
 	return (token->value);
 }
 
-t_token	*link_words(t_token **new_tokenizer, t_token *token, t_token_type type)
+t_token	*link_words(t_minishell *minishell, t_token **new_tokenizer, t_token *token, t_token_type type)
 {
 	char			*str;
 	char			*tmp;
 
 	if (token->type == DQUT || token->type == DOLR)
-		str = ft_strdup(process_token(token));
+		str = ft_strdup(process_token(minishell, token));
 	else
 		str = ft_strdup(token->value);
 	token = token->next;
@@ -92,7 +98,7 @@ t_token	*link_words(t_token **new_tokenizer, t_token *token, t_token_type type)
 			break ;
 		tmp = str;
 		if (token->type == DQUT || token->type == DOLR)
-			str = ft_strjoin(tmp, process_token(token));
+			str = ft_strjoin(tmp, process_token(minishell, token));
 		else
 			str = ft_strjoin(tmp, token->value);
 		free(tmp);
@@ -124,7 +130,7 @@ int	valid_lexical(t_token_type type, t_token *token)
 	return (1);
 }
 
-t_token	*link_token(t_token *token)
+t_token	*link_token(t_minishell *minishell, t_token *token)
 {
 	t_token			*new_tokenizer;
 	t_token_type	type;
@@ -136,7 +142,7 @@ t_token	*link_token(t_token *token)
 		{
 			type = token->type;
 			if (token->type >= 1 && token->type <= 5)
-				token = link_words(&new_tokenizer, token, type);
+				token = link_words(minishell, &new_tokenizer, token, type);
 			else
 			{
 				insert_token(&new_tokenizer, init_token(ft_strdup(token->value), type));

@@ -6,7 +6,7 @@
 /*   By: hyuncpar <hyuncpar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/02 16:42:09 by hyuncpar          #+#    #+#             */
-/*   Updated: 2022/12/28 19:50:18 by hyuncpar         ###   ########.fr       */
+/*   Updated: 2022/12/29 20:26:45 by hyuncpar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,12 +26,12 @@ t_token	*analize_line(t_minishell *minishell, char *input)
 	free(input);
 	if (!tokenized)
 		return (NULL);
-	new_tokenized = link_token(tokenized);
+	new_tokenized = link_token(minishell, tokenized);
 	free_tokens(tokenized);
 	if (lexer(minishell, new_tokenized) == FALSE)
 	{
-		minishell->status = -1;
-		printf("minishell status -1\n");
+		minishell->status = 1;
+		printf("minishell status 1\n");
 		return (NULL);
 	}
 	return (new_tokenized);
