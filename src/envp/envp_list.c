@@ -6,7 +6,7 @@
 /*   By: hanjiwon <hanjiwon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/28 18:29:36 by hanjiwon          #+#    #+#             */
-/*   Updated: 2022/12/29 03:00:18 by hanjiwon         ###   ########.fr       */
+/*   Updated: 2022/12/30 21:26:49 by hanjiwon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,8 +36,8 @@ char    **envp_to_dptr(t_envp *head)
     char    *str;
     int     i;
 
+    ret = malloc(sizeof(char *) * (head->cnt + 1));
     i = 0;
-    ret = malloc(sizeof(char *) * head->cnt + 1);
     while (head)
     {
         ret[i] = ft_strjoin(head->key, "=");
