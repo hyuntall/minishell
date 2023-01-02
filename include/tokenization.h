@@ -6,7 +6,7 @@
 /*   By: hyuncpar <hyuncpar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/09 16:41:09 by jiwonhan          #+#    #+#             */
-/*   Updated: 2023/01/02 15:58:33 by hyuncpar         ###   ########.fr       */
+/*   Updated: 2023/01/02 16:29:07 by hyuncpar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,6 @@ int		tokenize_semicolon(t_token **token, char *input, int i);
 int		tokenize_prnth_or_newline(t_token **token, char *input, int i);
 
 // 토큰 구문 분석
-char	*process_dquote(char *str);
 t_token	*link_token(t_minishell *minishell, t_token *token);
 void	error_lexical(t_token *token, char *value);
 
