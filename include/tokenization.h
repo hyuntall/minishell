@@ -6,12 +6,14 @@
 /*   By: hyuncpar <hyuncpar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/09 16:41:09 by jiwonhan          #+#    #+#             */
-/*   Updated: 2023/01/02 16:29:07 by hyuncpar         ###   ########.fr       */
+/*   Updated: 2023/01/02 16:56:19 by hyuncpar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef TOKENIZATION_H
 # define TOKENIZATION_H
+
+#include "minishell.h"
 
 # define TOKEN_ERROR -1
 
@@ -78,6 +80,10 @@ void	free_tokens(t_token *token);
 
 // 어따놓지
 int		is_redirection(t_token_type type);
+void	set_redir(t_minishell *minishell, t_token_type type, char *filename);
+
+// 명령어 실행 전에 토큰화된 리스트를 투포인터로 변경
+char	**make_list_to_pointer(t_token *token);
 
 //jiwon
 t_token *get_head_token(t_token *token);

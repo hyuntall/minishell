@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hanjiwon <hanjiwon@student.42.fr>          +#+  +:+       +#+        */
+/*   By: hyuncpar <hyuncpar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/19 00:13:37 by jiwonhan          #+#    #+#             */
-/*   Updated: 2022/12/29 03:00:37 by hanjiwon         ###   ########.fr       */
+/*   Updated: 2023/01/02 16:56:10 by hyuncpar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,4 +71,7 @@ void    delete_envp(t_envp **node, const char *key);
 // 이거 어따 놓지
 void	input_heredoc(t_minishell *minishell, char *limit);
 t_redir	*new_redir(void);
+
+// 전위 순회 및 명령어 실행
+void	exec_cmd(t_minishell *minishell, char **cmds);
 #endif

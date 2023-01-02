@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   order_tree.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hanjiwon <hanjiwon@student.42.fr>          +#+  +:+       +#+        */
+/*   By: hyuncpar <hyuncpar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/15 17:57:15 by hyuncpar          #+#    #+#             */
-/*   Updated: 2022/12/30 21:29:22 by hanjiwon         ###   ########.fr       */
+/*   Updated: 2023/01/02 16:59:53 by hyuncpar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,27 +14,39 @@
 #include "parse_tree.h"
 #include "cmd.h"
 
-void	pipeline(t_minishell *minishell, t_parse_tree *left, t_parse_tree *right)
+void	process_parent(t_minishell *minishell, \
+t_parse_tree *right, pid_t pid, int *fd)
+{
+	int	status;
+
+	dup2(fd[0], 0);
+	close(fd[1]);
+	close(fd[0]);
+	waitpid(pid, &status, 0);
+	if (WIFEXITED(status))
+		minishell->status = WEXITSTATUS(status);
+	else if (WIFSIGNALED(status))
+		minishell->status = WTERMSIG(status);
+	order_tree(minishell, right);
+}
+
+/**
+ * @brief 
+ * pipe 연산 함수
+ * 자식프로세스는 현재 minishell 구조체에 저장된 redir 상태의 이전 노드를 전달한다.
+ * (구문 트리를 뒤에서부터 파싱했기 때문)
+ */
+void	pipeline(t_minishell *minishell, \
+t_parse_tree *left, t_parse_tree *right)
 {
 	int		fd[2];
 	int		pipes;
 	pid_t	pid;
-	int		status;
 
-	pipes = pipe(fd);(void)pipes;
+	pipes = pipe(fd);
 	pid = fork();
 	if (pid)
-	{
-		dup2(fd[0], 0);
-		close(fd[1]);
-		close(fd[0]);
-		waitpid(pid, &status, 0);
-		if (WIFEXITED(status))
-			minishell->status = WEXITSTATUS(status);
-		else if (WIFSIGNALED(status))
-			minishell->status = WTERMSIG(status);
-		order_tree(minishell, right);
-	}
+		process_parent(minishell, right, pid, fd);
 	else
 	{
 		dup2(fd[1], 1);
@@ -45,6 +57,13 @@ void	pipeline(t_minishell *minishell, t_parse_tree *left, t_parse_tree *right)
 	}
 }
 
+/**
+ * @brief 
+ * and, or, semicolon 연산 함수
+ * and의 경우 이전 명령어를 수행하는 자식프로세스의 종료 상태가 0이어야만 다음 명령어를 실행한다.
+ * @param minishell 
+ * @param tree 
+ */
 void	two_process(t_minishell *minishell, t_parse_tree *tree)
 {
 	pid_t	pid;
@@ -68,146 +87,18 @@ void	two_process(t_minishell *minishell, t_parse_tree *tree)
 		order_tree(minishell, tree->left);
 }
 
-int	arr_size(t_token *token)
-{
-	int	size;
-
-	size = 0;
-	while (token)
-	{
-		token = token->next;
-		size++;
-	}
-	return (size);
-}
-
-void	set_redir(t_minishell *minishell, t_token_type type, char *filename)
-{
-	int	fd;
-
-	if (type == RIGT)
-	{
-		fd = open(filename, O_RDWR | O_CREAT | O_TRUNC, 0777);
-		minishell->redir->out = fd;
-	}
-	else if (type == DRGT)
-	{
-		fd = open(filename, O_RDWR | O_CREAT | O_APPEND, 0777);
-		minishell->redir->out = fd;
-	}
-	else if (type == LEFT)
-	{
-		fd = open(filename, O_RDWR, 0777);
-		minishell->redir->in = fd;
-	}
-	else
-		fd = 0;
-	if (fd == -1)
-	{
-		minishell->status = 1;
-		perror(filename);
-		exit(minishell->status);
-	}
-}
-
-// 옮겨야함
-char	**make_arr(t_token *token)
-{
-	int				i;
-	int				size;
-	char			**arr;
-
-	i = 0;
-	size = arr_size(token);
-	arr = (char **)malloc(sizeof(char *) * (size + 1));
-	while (i < size)
-	{
-		arr[i] = token->value;
-		token = token->next;
-		i++;
-	}
-	arr[i] = NULL;
-	return (arr);
-}
-
-// 옮겨야함
-char	*check_cmd(t_minishell *minishell, char *cmd)
-{
-	int		i;
-	char	*abs_path;
-
-	i = -1;
-	if (!access(cmd, X_OK))
-		return (cmd);
-	if (cmd[0] == '/')
-		return (cmd);
-	while (minishell->path[++i])
-	{
-		abs_path = ft_strjoin(minishell->path[i], cmd);
-		if (!access(abs_path, X_OK))
-		{
-			free(cmd);
-			return (abs_path);
-		}
-		free(abs_path);
-	}
-	minishell->status = 127;
-	return (cmd);
-}
-
-static int	check_builtin(t_cmd_tbl *cmd_tbl, const char *cmd)
-{
-	int	i;
-
-	i = -1;
-	while (++i < cmd_tbl->max_element)
-	{
-		if (ft_strncmp(cmd_tbl->cmd[i].cmd, cmd, ft_strlen(cmd)) == 0)
-			return (TRUE);
-	}
-	return (FALSE);
-}
-
-void	redirect(t_redir *redir)
-{
-	if (redir->in)
-	{
-		dup2(redir->in, 0);
-		close(redir->in);
-	}
-	if (redir->out)
-	{
-		dup2(redir->out, 1);
-		close(redir->out);
-	}
-}
-
-void	exec_cmd(t_minishell *minishell, char **cmds)
-{
-	t_redir	*redir;
-	t_cmd_tbl	*cmd_tbl;
-	char	*cmd;
-
-	cmd = check_cmd(minishell, cmds[0]);
-	cmd_tbl = init_cmd_tbl();
-	redir = minishell->redir;
-	redirect(redir);
-	if (check_builtin(cmd_tbl, cmd))
-	{
-		ft_execve(minishell, cmd_tbl, cmds);
-		exit(1);
-	}
-	else
-	{
-		execve(cmd, cmds,  envp_to_dptr(minishell->envp));
-		perror(cmd);
-		exit(1);
-	}
-}
-
+/**
+ * @brief 
+ * 구문 트리를 전위 순회로 탐색하여 프로세스를 실행
+ * 각각 pipe, and, or, semicolon 별로 처리를 해주고
+ * 리다이렉션의 경우, 오른쪽 자식 노드의 value 값을 토대로 입출력 설정을 해준다.
+ * 그 외에 경우 리프 노트라고 간주하여 함수를 실행한다.
+ * @param minishell 
+ * @param tree 
+ */
 void	order_tree(t_minishell *minishell, t_parse_tree *tree)
 {
-	t_token	*token;(void)token;
+	t_token	*token;
 	char	**arr;
 
 	token = tree->token;
@@ -222,7 +113,7 @@ void	order_tree(t_minishell *minishell, t_parse_tree *tree)
 	}
 	else
 	{
-		arr = make_arr(tree->token);
+		arr = make_list_to_pointer(tree->token);
 		exec_cmd(minishell, arr);
 	}
 }

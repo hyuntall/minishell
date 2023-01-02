@@ -24,7 +24,7 @@ SRCS = src/utils/testcode.c \
 		src/parser/parenthesis.c \
 		src/lexer/lexer.c \
 		src/heredoc/here_doc.c \
-		src/exec_tree/order_tree.c \
+		src/exec_tree/order_tree.c src/exec_tree/exec_command.c src/exec_tree/setting_exec.c\
 		src/builtins/builtins.c src/builtins/echo.c src/builtins/pwd.c src/builtins/cd.c \
 		src/builtins/env.c src/builtins/exit.c src/builtins/export.c src/builtins/unset.c
 

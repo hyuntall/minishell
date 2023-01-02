@@ -23,6 +23,7 @@ void print_parse_tree(t_parse_tree *parse_tree, int level)
 		print_parse_tree(parse_tree->right, level + 1);
 }
 
+/*
 void	print_tokenization_result(t_token *tokenization)
 {
 	printf(">>tokenization result<<\n");
@@ -31,7 +32,8 @@ void	print_tokenization_result(t_token *tokenization)
 	{
 		printf("arg: %10s type: %10d len: %10zu\n", token->value, token->type, ft_strlen(token->value));
 		if (token->type == 3)
-			printf("<======= $: %s ========>\n", process_dquote(token->value));
+			printf("<======= $: %d ========>\n", process_dquote(token->value));
 		token = token->next;
 	}
 }
+*/
