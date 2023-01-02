@@ -19,11 +19,12 @@ SRCS = src/utils/testcode.c \
 		src/signal/signal.c src/envp/envp_list.c src/envp/print_envp.c \
 		src/tokenizer/process_token.c src/tokenizer/memory.c \
 		src/tokenizer/tokenize.c src/tokenizer/tokenizer.c \
+		src/tokenizer/tokenize_normal.c src/tokenizer/tokenize_special.c \
 		src/parser/parser.c src/parser/insert_tree.c src/parser/token_tool.c \
 		src/parser/parenthesis.c \
 		src/lexer/lexer.c \
 		src/heredoc/here_doc.c \
-		src/exec_tree/order_tree.c \
+		src/exec_tree/order_tree.c src/exec_tree/exec_command.c src/exec_tree/setting_exec.c\
 		src/builtins/builtins.c src/builtins/echo.c src/builtins/pwd.c src/builtins/cd.c \
 		src/builtins/env.c src/builtins/exit.c src/builtins/export.c src/builtins/unset.c
 

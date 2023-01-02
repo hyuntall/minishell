@@ -3,22 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   error_message.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hanjiwon <hanjiwon@student.42.fr>          +#+  +:+       +#+        */
+/*   By: hyuncpar <hyuncpar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/09 18:49:28 by hyuncpar          #+#    #+#             */
-/*   Updated: 2022/12/29 03:02:33 by hanjiwon         ###   ########.fr       */
+/*   Updated: 2023/01/02 15:58:28 by hyuncpar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 #include "tokenization.h"
-
-int	unexpecte_token(t_token_type type, char *str)
-{
-	printf("error %d %s\n", type, str);
-	free(str);
-	return (-1);
-}
 
 void	error_lexical(t_token *token, char *value)
 {
