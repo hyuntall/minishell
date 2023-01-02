@@ -6,7 +6,7 @@
 /*   By: hyuncpar <hyuncpar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/09 16:41:09 by jiwonhan          #+#    #+#             */
-/*   Updated: 2022/12/29 20:17:06 by hyuncpar         ###   ########.fr       */
+/*   Updated: 2023/01/02 15:58:33 by hyuncpar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,22 +55,27 @@ struct s_token
 	t_token			*prev;
 };
 
+// 라인 토큰화
 t_token	*analize_line(t_minishell *minishell, char *input);
 t_token	*tokenizer(char *input);
-int	tokenize_quote(t_token **token, char *input, int i, t_token_type type);
-int	tokenize_oper(t_token **token, char *input, int i, t_token_type type);
-int	tokenize_redir(t_token **token, char *input, int i, int type);
-int	tokenize_etc(t_token **token, char *input, int i, int type);
-int	tokenize_line(t_token **token, char *input, int index, int i);
+int		tokenize_line(t_token **token, char *input, int index, int i);
+int		tokenize_quote(t_token **token, char *input, int i, t_token_type type);
+int		tokenize_oper(t_token **token, char *input, int i, t_token_type type);
+int		tokenize_redir(t_token **token, char *input, int i, int type);
+int		tokenize_etc(t_token **token, char *input, int i, int type);
+int		tokenize_semicolon(t_token **token, char *input, int i);
+int		tokenize_prnth_or_newline(t_token **token, char *input, int i);
+
+// 토큰 구문 분석
+char	*process_dquote(char *str);
+t_token	*link_token(t_minishell *minishell, t_token *token);
+void	error_lexical(t_token *token, char *value);
+
+// 토큰 구조체 생성 및 제거
 t_token	*init_token(char *value, int type);
 void	insert_token(t_token **head_token, t_token *new_token);
 void	delete_token(t_token *token);
-char	*process_dquote(char *str);
 void	free_tokens(t_token *token);
-int	unexpecte_token(t_token_type type, char *str);
-
-t_token	*link_token(t_minishell *minishell, t_token *token);
-void	error_lexical(t_token *token, char *value);
 
 // 어따놓지
 int		is_redirection(t_token_type type);

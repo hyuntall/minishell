@@ -19,6 +19,7 @@ SRCS = src/utils/testcode.c \
 		src/signal/signal.c src/envp/envp_list.c src/envp/print_envp.c \
 		src/tokenizer/process_token.c src/tokenizer/memory.c \
 		src/tokenizer/tokenize.c src/tokenizer/tokenizer.c \
+		src/tokenizer/tokenize_normal.c src/tokenizer/tokenize_special.c \
 		src/parser/parser.c src/parser/insert_tree.c src/parser/token_tool.c \
 		src/parser/parenthesis.c \
 		src/lexer/lexer.c \
