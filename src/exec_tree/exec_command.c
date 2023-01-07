@@ -6,7 +6,7 @@
 /*   By: hanjiwon <hanjiwon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/02 16:42:10 by hyuncpar          #+#    #+#             */
-/*   Updated: 2023/01/07 18:53:32 by hanjiwon         ###   ########.fr       */
+/*   Updated: 2023/01/07 19:02:29 by hanjiwon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,13 +97,11 @@ char	*check_cmd(t_minishell *minishell, char *cmd)
 void	exec_cmd(t_minishell *minishell, char **cmds)
 {
 	t_redir		*redir;
-	t_cmd_tbl	*cmd_tbl;
 	char		*cmd;
 
-	cmd_tbl = init_cmd_tbl();
-	if (check_builtin(cmd_tbl, cmds[0]))
+	if (check_builtin(minishell->cmd_tbl, cmds[0]))
 	{
-		ft_execve(minishell, cmd_tbl, cmds);
+		ft_execve(minishell, minishell->cmd_tbl, cmds);
 		exit(1);
 	}
 	else

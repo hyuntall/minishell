@@ -6,11 +6,12 @@
 /*   By: hanjiwon <hanjiwon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/09 20:59:14 by jiwonhan          #+#    #+#             */
-/*   Updated: 2022/12/28 21:57:27 by hanjiwon         ###   ########.fr       */
+/*   Updated: 2023/01/07 19:02:04 by hanjiwon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+#include "cmd.h"
 
 void	check_arg(int ac, char *av[])
 {
@@ -62,5 +63,6 @@ void	init(t_minishell *minishell, char *envp[])
 	minishell->path = get_env_path(envp);
 	minishell->status = 0;
 	init_envp(&(minishell->envp), envp);
+	minishell->cmd_tbl = init_cmd_tbl();
 	setting_signal();
 }
