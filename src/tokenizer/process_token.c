@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   process_token.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hyuncpar <hyuncpar@student.42.fr>          +#+  +:+       +#+        */
+/*   By: hanjiwon <hanjiwon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/13 14:41:34 by hyuncpar          #+#    #+#             */
-/*   Updated: 2023/01/02 16:33:06 by hyuncpar         ###   ########.fr       */
+/*   Updated: 2023/01/07 18:53:06 by hanjiwon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -125,8 +125,6 @@ t_token *token, t_token_type type)
 	token = token->next;
 	while (token && token->type >= 1 && token->type <= 5)
 	{
-		if (token->type >= 11 && token->type <= 14)
-			break ;
 		tmp = str;
 		if (token->type == DQUT || token->type == DOLR)
 			str = ft_strjoin(tmp, process_token(minishell, token));

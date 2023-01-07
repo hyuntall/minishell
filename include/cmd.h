@@ -6,7 +6,7 @@
 /*   By: hanjiwon <hanjiwon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/19 00:21:45 by jiwonhan          #+#    #+#             */
-/*   Updated: 2022/12/28 18:20:01 by hanjiwon         ###   ########.fr       */
+/*   Updated: 2023/01/07 19:00:37 by hanjiwon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,24 +14,6 @@
 # define CMD_H
 
 #include "minishell.h"
-
-#define AC_ZERO		200		//명령어 인자 개수가 0인 경우
-#define AC_LESS_1	201		// 명령어 인자 개수가 0 또는 1인 경우
-#define AC_ANY		202		// 명령어 인자 개수가 제한 없는 경우(echo)
-
-typedef struct s_cmd
-{
-	char	*cmd;
-	void (*func)(t_minishell *minishell, char **arr);
-	int		argc;
-	char	*opt;
-}				t_cmd;
-
-typedef struct s_cmd_tbl
-{
-	int		max_element;
-	t_cmd	*cmd;
-}				t_cmd_tbl;
 
 void	echo(t_minishell *minishell, char **arr);
 void	cd(t_minishell *minishell, char **arr);

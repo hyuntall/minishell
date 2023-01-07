@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   order_tree.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hyuncpar <hyuncpar@student.42.fr>          +#+  +:+       +#+        */
+/*   By: hanjiwon <hanjiwon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/15 17:57:15 by hyuncpar          #+#    #+#             */
-/*   Updated: 2023/01/02 16:59:53 by hyuncpar         ###   ########.fr       */
+/*   Updated: 2023/01/07 18:54:03 by hanjiwon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ void	pipeline(t_minishell *minishell, \
 t_parse_tree *left, t_parse_tree *right)
 {
 	int		fd[2];
-	int		pipes;
+	int		pipes;(void)pipes;
 	pid_t	pid;
 
 	pipes = pipe(fd);
@@ -98,7 +98,7 @@ void	two_process(t_minishell *minishell, t_parse_tree *tree)
  */
 void	order_tree(t_minishell *minishell, t_parse_tree *tree)
 {
-	t_token	*token;
+	t_token	*token;(void)token;
 	char	**arr;
 
 	token = tree->token;
