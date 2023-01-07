@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_command.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hyuncpar <hyuncpar@student.42.fr>          +#+  +:+       +#+        */
+/*   By: hanjiwon <hanjiwon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/02 16:42:10 by hyuncpar          #+#    #+#             */
-/*   Updated: 2023/01/02 17:02:51 by hyuncpar         ###   ########.fr       */
+/*   Updated: 2023/01/07 18:53:32 by hanjiwon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,17 +100,17 @@ void	exec_cmd(t_minishell *minishell, char **cmds)
 	t_cmd_tbl	*cmd_tbl;
 	char		*cmd;
 
-	cmd = check_cmd(minishell, cmds[0]);
 	cmd_tbl = init_cmd_tbl();
-	redir = minishell->redir;
-	redirect(redir);
-	if (check_builtin(cmd_tbl, cmd))
+	if (check_builtin(cmd_tbl, cmds[0]))
 	{
 		ft_execve(minishell, cmd_tbl, cmds);
 		exit(1);
 	}
 	else
 	{
+		cmd = check_cmd(minishell, cmds[0]);
+		redir = minishell->redir;
+		redirect(redir);
 		execve(cmd, cmds, envp_to_dptr(minishell->envp));
 		perror(cmd);
 		exit(1);
