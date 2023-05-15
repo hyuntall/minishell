@@ -33,8 +33,44 @@ make
 ```shell
 ./minishell
 ```
+## 실행 예시
 
-5. MiniShell에서 지원하는 명령어를 입력하여 프로그램을 사용합니다.
+1. 기본 명령어 실행:
+
+```
+$ ls
+file1.txt file2.txt
+```
+
+위의 예시에서 `ls` 명령어를 입력하고 Enter 키를 누르면 현재 디렉토리의 파일 목록이 출력됩니다.
+
+2. 명령어 인자 전달:
+
+```
+$ echo Hello, world!
+Hello, world!
+```
+
+위의 예시에서 `echo` 명령어를 사용하여 "Hello, world!"라는 문자열을 출력합니다.
+
+3. 파일 입출력:
+
+```
+$ cat file.txt
+This is the content of the file.
+```
+
+위의 예시에서 `cat` 명령어를 사용하여 `file.txt` 파일의 내용을 터미널에 출력합니다.
+
+4. 파이프라인:
+
+```
+$ ls -l | grep "file"
+-rw-r--r-- 1 user group 1024 May 1 12:34 file1.txt
+-rw-r--r-- 1 user group 2048 May 2 10:45 file2.txt
+```
+
+위의 예시에서 `ls -l` 명령어로 파일 목록을 출력한 후, `grep "file"` 명령어를 사용하여 "file"이라는 단어가 포함된 행만 필터링합니다.
 
 ## 참고 사항
 
